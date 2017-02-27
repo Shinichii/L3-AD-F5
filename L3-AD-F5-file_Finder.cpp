@@ -1,4 +1,4 @@
-	#include "L3-AD-F5-file_Finder.h"
+#include "L3-AD-F5-file_Finder.h"
 
 /*
 
@@ -36,8 +36,8 @@ string choixElement(string extension)
 {
 	std::vector<string> listeFichiers;
 	unsigned int choix;
-	listingElements(listeFichiers, extension);
-	if(listeFichiers.size == 0)
+	fetchElements(listeFichiers, extension);
+	if(listeFichiers.size() == 0)
 	{
 		cout << "[WARNING] Aucun element du type : " << extension << " n'a ete trouve" << endl;
 		return NULL;

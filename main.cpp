@@ -1,10 +1,7 @@
-#include "include.h"
+#include <iostream>
 
 
 int main() {
-    cout << "Hello, World!new hworld" << endl;
-
-
-
+    std::cout << "Hello, World!new hworld" << std::endl;
     return 0;
 }

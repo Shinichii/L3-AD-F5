@@ -6,11 +6,12 @@
 
 #include <iostream>
 #include <string>
-#include <filesystem>
+#include <experimental/filesystem>
+#include <vector>
 
 using namespace std;
 
-namespace fs = std::experimental::filesystem 
+namespace fs = std::experimental::filesystem;
 
 bool extensionValide(string s, string extension);
 
