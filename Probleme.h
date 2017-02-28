@@ -11,11 +11,11 @@
 class Probleme {
 
 public:
-       list<Variable> Variable;
-       list<Contrainte> Contrainte;
+    //   list<Variable> Variable;
+    //   list<Contrainte> Contrainte;
 
 
-
+    Probleme(){}
 
 
 };

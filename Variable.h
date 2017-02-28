@@ -12,7 +12,9 @@ public :
     char *nom;
     list<int> domaine;
 
-private:
+public:
+
+    Variable(){}
 
 
 
