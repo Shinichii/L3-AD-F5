@@ -5,14 +5,16 @@
 #ifndef L3_AD_F5_VARIABLE_H
 #define L3_AD_F5_VARIABLE_H
 
-#include "include.h"
+#include "L3-AD-F5-include.h"
 
 class Variable {
 public :
     char *nom;
     list<int> domaine;
 
-private:
+public:
+
+    Variable(){}
 
 
 

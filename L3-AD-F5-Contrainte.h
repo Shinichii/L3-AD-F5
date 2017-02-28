@@ -5,9 +5,9 @@
 #ifndef L3_AD_F5_CONTRAINTE_H
 #define L3_AD_F5_CONTRAINTE_H
 
-#include "include.h"
+#include "L3-AD-F5-include.h"
 
-class Contrainte {
+class L3 {
 
 private:
     char Type;
@@ -18,7 +18,7 @@ private:
     list<int> Tableau;
 
 public:
-        Contrainte();
+        L3();
 
 };
 
