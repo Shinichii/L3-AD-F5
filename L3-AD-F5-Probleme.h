@@ -3,16 +3,16 @@
 #ifndef L3_AD_F5_PROBLEME_H
 #define L3_AD_F5_PROBLEME_H
 
-#include "include.h"
-#include "Variable.h"
-#include "Contrainte.h"
+#include "L3-AD-F5-include.h"
+#include "L3-AD-F5-Variable.h"
+#include "L3-AD-F5-Contrainte.h"
 
 
 class Probleme {
 
 public:
     //   list<Variable> Variable;
-    //   list<Contrainte> Contrainte;
+    //   list<L3-AD-F5-Contrainte> L3-AD-F5-Contrainte;
 
 
     Probleme(){}
