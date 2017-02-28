@@ -1,6 +1,5 @@
 /*
 	@Auteur : Aurelien DENIS
-	@Matiere : Aide a la decision
 	@Groupe : F5
 */
 

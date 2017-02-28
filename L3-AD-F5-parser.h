@@ -1,3 +1,8 @@
+/*
+	@Auteur : Aurélien DENIS
+	@Groupe : F5
+*/
+
 #include <iostream>
 #include <fstream>
 #include <vector>

@@ -1,3 +1,8 @@
+/*
+	@Auteur : Aurelien DENIS
+	@Groupe : F5
+*/
+
 #include "L3-AD-F5-parser.h"
 /*
 	Fonction : openFile
