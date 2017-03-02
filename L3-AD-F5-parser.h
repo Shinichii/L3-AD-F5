@@ -9,8 +9,7 @@
 #include <climits>
 #include <algorithm>
 #include <string>
-#include "L3-AD-F5-debug.h"	
+#include "L3-AD-F5-debug.h"
 
-
-bool openFile(const std::string chemin);
-bool closeFile(const std::string chemin, std::ifstream F);
+bool openFile(const std::string chemin, std::ifstream &F);
+bool closeFile(const std::string chemin, std::ifstream &F);

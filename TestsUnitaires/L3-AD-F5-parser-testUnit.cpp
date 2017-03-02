@@ -1,9 +1,6 @@
-#include "L3-AD-F5-parser.h"
+#include "L3-AD-F5-parser-testUnit.h"
 
-#define IS_SUCCESSFUL ==1
-#define HAS_FAILED ==0
-
-bool testUnit()
+bool testUnitParser()
 {
 	if(test_Normal_Opening() IS_SUCCESSFUL)
 	{
@@ -28,11 +25,12 @@ bool testUnit()
 }
 bool test_Normal_Opening()
 {
-	/*@TODO : Finir la fonction*/
-	return true;
+	std::fstream F;
+	return openFile("./L3-AD-F5-parser.h", F);
 }
 bool test_File_Not_Found()
 {
 	/*@TODO : Finir la fonction*/
-	return false;
+	std::fstream F;
+	return openFile("./azpoeiz.txt", F);
 }
