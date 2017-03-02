@@ -10,10 +10,10 @@
 	Description : Cette fonction tente d'ouvrir le fichier passé en argument
 	Elle renvoie ensuite une valeur booleenne pour indiquer si le fichier est bien ouvert
 */
-bool openFile(const std::string chemin, std::ifstream &F)
+bool openFile(const std::string chemin, std::fstream &F)
 {
 	DEBUG_MSG("[DEBUG] Ouverture du fichier " << chemin);
-	std::ifstream F(chemin);
+	F.open(chemin);
 	if(F.is_open())
 	{
 		DEBUG_MSG("[DEBUG] Succes !");
@@ -25,7 +25,7 @@ bool openFile(const std::string chemin, std::ifstream &F)
 		return false;
 	}
 }
-bool closeFile(const std::string chemin, std::ifstream F)
+bool closeFile(const std::string chemin, std::fstream &F)
 {
 	DEBUG_MSG("[DEBUG]Fermeture du fichier " << chemin);
 	F.close();
