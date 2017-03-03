@@ -7,7 +7,7 @@
 
 #include "L3-AD-F5-include.h"
 
-class L3 {
+class Contrainte {
 
 private:
     char Type;
@@ -18,7 +18,12 @@ private:
     list<int> Tableau;
 
 public:
-        L3();
+    Contrainte();
+
+
+    Contrainte(const Contrainte& entrer);
+
+    void affichage();
 
 };
 

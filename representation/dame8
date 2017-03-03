@@ -1,0 +1,9 @@
+8 dames
+8
+# X { L , C }
+L [ 1 , 9 ]
+C [ 1 , 9 ]
+Unique X
+L  i != j => L i != L j
+C  i != j => C i != C j
+i != j => { { L i , C i } , { L j , C j } , 1 <= a <= ( 8 - L j ) } => { L i , J i } != { L j - a , C j - a }

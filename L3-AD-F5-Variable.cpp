@@ -3,3 +3,19 @@
 //
 
 #include "L3-AD-F5-Variable.h"
+
+
+
+
+void Variable::affichage()
+{
+    cout<<nom<<" :";
+
+    for(int valeur:domaine)
+    {
+        cout<<valeur<<" ";
+    }
+    cout<<endl;
+
+
+}
