@@ -1,7 +1,12 @@
-
 #include "L3-AD-F5-Probleme.h"
-#include "L3-AD-F5-Utilitaire.h"
 
+#include <iostream>
+
+
+using namespace std;
+
+#include <vector>
+#include <cstdlib>
 
 //----------------------------------------------------------------------------------------------------------------------
 //------------------------------------------  Constructeur    ----------------------------------------------------------
@@ -20,18 +25,14 @@ Probleme::Probleme()
 
 
 //---------------------------------------------- affectation des variables et de leur domaine ---------------------------
-    for(int i=2;i<longueur_declaration_variable+2;i++)
-        {  cout<<entrer[i]<<endl;
-            entrer_variable.emplace_back(entrer[i].c_str());
-        }
+    for(int i=2;i<longueur_declaration_variable+2;i++)        {  entrer_variable.emplace_back(entrer[i].c_str()); }
+
+    Variables=Variable(entrer_variable,nb_variable);
 
 // ----------------------------------------------affectation des contraintes --------------------------------------------
 
 
-    for(int i=longueur_declaration_variable+2;i<entrer.size();i++)
-        {cout<<entrer[i]<<endl;
-            entrer_contrainte.emplace_back(entrer[i].c_str());
-        }
+    for(int i=longueur_declaration_variable+2;i<entrer.size();i++)        {entrer_contrainte.emplace_back(entrer[i].c_str()); }
 
 cout<<" fin probleme"<<endl;
 }
@@ -61,8 +62,7 @@ vector<string> Probleme::getFichier_brut() // temporaire pour les test en attend
 Probleme::Probleme(string Nom_Probleme)//fonction de test
 {
     nom_Probleme=Nom_Probleme;
-    Variables.emplace_back(new Variable());
-    Variables.emplace_back(new Variable());
+
 
     Contraintes.emplace_back(new Contrainte());
     Contraintes.emplace_back(new Contrainte());
@@ -80,9 +80,9 @@ Probleme::Probleme(string Nom_Probleme)//fonction de test
 void Probleme::afficher()
 {
     cout<<"Le probleme : "+nom_Probleme<<endl;
-    cout<<"Il y a "<<Variables.size()<<" variables :"<<endl;
+    cout<<"Il y a "<<nb_variable<<" variables :"<<endl;
 
-    for(Variable* variable:Variables) { variable->affichage();}
+
     for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
 
 

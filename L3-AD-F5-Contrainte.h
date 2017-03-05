@@ -5,7 +5,12 @@
 #ifndef L3_AD_F5_CONTRAINTE_H
 #define L3_AD_F5_CONTRAINTE_H
 
-#include "L3-AD-F5-include.h"
+#include <iostream>
+
+
+using namespace std;
+
+#include <vector>
 
 class Contrainte {
 

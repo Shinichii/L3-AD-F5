@@ -4,30 +4,50 @@
 
 #ifndef L3_AD_F5_VARIABLE_H
 #define L3_AD_F5_VARIABLE_H
+#include <iostream>
+
+
+using namespace std;
 
 #include <vector>
-#include "L3-AD-F5-include.h"
 
 class Variable {
+
+
+    class Domaine
+    {
+    public:
+        string nom;
+        vector<string> ensemble_possible;
+
+        Domaine(){}
+    };
+
+
+
+
+
+
+
+
 public :
-   string nom;
+
+
+
+    string nom;
+
     vector<int> domaine;
 
 public:
 
+
+
+
+
+
+    Variable();
+    Variable(vector<string> entrer_variable,int nb_variable);
     Variable(vector<string> entrer_variable);
-
-
-
-
-
-
-    Variable()
-    {nom="vide";
-    domaine.emplace_back(1);
-    domaine.emplace_back(2);
-    domaine.emplace_back(3);
-    }
 
    void affichage();
 

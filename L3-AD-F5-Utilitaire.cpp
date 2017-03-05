@@ -26,5 +26,7 @@
 void Utilitaire::affichageln( vector<string> entrer){ for(string ligne:entrer){cout<<ligne<<endl;}}
 void Utilitaire::affichage( vector<string> entrer){ for(string ligne:entrer){cout<<ligne<<" ";}}
 
-
+string Utilitaire::toString( vector<string> entrer){ string retour="";
+    for(string ligne:entrer){retour+=ligne;
+        return retour;}}
 
