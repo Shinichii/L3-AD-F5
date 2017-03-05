@@ -15,7 +15,7 @@ private:
     char Cible;
     int Valeur;
     char N;
-    list<int> Tableau;
+    vector<int> Tableau;
 
 public:
     Contrainte();

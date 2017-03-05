@@ -15,6 +15,13 @@ public :
 
 public:
 
+    Variable(vector<string> entrer_variable);
+
+
+
+
+
+
     Variable()
     {nom="vide";
     domaine.emplace_back(1);

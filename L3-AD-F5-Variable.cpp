@@ -3,9 +3,38 @@
 //
 
 #include "L3-AD-F5-Variable.h"
+#include "L3-AD-F5-Utilitaire.h"
+
+
+Variable::Variable(vector<string> entrer_variable)
+{
+Utilitaire::affichage(entrer_variable);
 
 
 
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+//-----------------------------------
 
 void Variable::affichage()
 {
