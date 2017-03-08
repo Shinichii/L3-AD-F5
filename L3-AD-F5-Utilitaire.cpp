@@ -30,3 +30,17 @@ string Utilitaire::toString( vector<string> entrer){ string retour="";
     for(string ligne:entrer){retour+=ligne;
         return retour;}}
 
+ vector<string> Utilitaire::parse(vector<string> vecteur,int debut,int fin)
+ {vector<string> retour;
+
+     if(debut<0 ||fin<0 || debut>fin || vecteur.size()<fin)
+     {return retour;}
+
+     for(int i=debut;i<fin;i++)
+     {
+         retour.push_back(vecteur[i]);
+
+     }
+     return retour;
+
+ }

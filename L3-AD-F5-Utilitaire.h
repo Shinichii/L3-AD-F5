@@ -21,6 +21,8 @@ public:
     static void affichage(vector<string> entrer);
     static string toString(vector<string> entrer);
     static bool is_number(const std::string& s);
+    static vector<string> parse(vector<string> vecteur,int debut,int fin);
+
 };
 
 

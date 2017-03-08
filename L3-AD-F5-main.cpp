@@ -13,7 +13,7 @@ using namespace std;
 class test{
 public:
     string nom;
-    vector<string> domaine;
+    vector<vector<string>> domaine;
 
     test(){nom="vide";}
     test(string Nom) { nom=Nom;}
@@ -21,9 +21,13 @@ public:
     void affichage()
     {
         cout<<nom<<" :";
-        for (string a:domaine) {cout<<" "<<a;
-
+        for(vector<string> aze:domaine)
+        {
+          for (string a:aze) {cout<<" "<<a;}
+            cout<<"   ";
         }
+
+
 
         cout<<endl;
     }
@@ -31,14 +35,17 @@ public:
 
 
 vector<test> decomposer(string entrer_variable);
+int separation(vector<string> entrer,string ouvrante,string fermente,int curseur);
 
 int main() {
-
 
 
     string tester="A { Z , G } B { { A , c } , c }";
 
     vector<test> Liste=decomposer(tester);
+
+
+
 
     for(test az:Liste)
     {
@@ -72,29 +79,18 @@ vector<test> decomposer(string entrer_variable)
     while(i<entrer.size())
     {
         if(entrer[i]=="{")
-        {tmp="{";cmp=0;
-            while(i++<entrer.size() && cmp>=0 )
-            {tmp+=entrer[i]+" ";
-            if(entrer[i]=="{"){cmp++;}
-            else if (entrer[i]=="}"){cmp--;}
-
-
-            }
-
-
-            retourned.back().domaine.push_back(tmp);
-            cout<<" push :"<<tmp<<endl;
+        {
+            int suivant=separation(entrer,"{","}",i);
+            retourned.back().domaine.push_back(Utilitaire::parse(entrer,i,suivant));
+            i=suivant;
         }
         else if(entrer[i]=="[")
         {
-            tmp="[";
-            while(i++<entrer.size() && entrer[i]!="]")
-            {tmp+=entrer[i]+" ";}
 
-            if(entrer[i]=="]"){tmp+="]";i++;}else{cerr<<" [ non refermer";}
+            int suivant=separation(entrer,"[","]",i);
+            retourned.back().domaine.push_back(Utilitaire::parse(entrer,i,suivant));
+            i=suivant;
 
-            retourned.back().domaine.push_back(tmp);
-                    cout<<" push :"<<tmp<<endl;
         }
         else
         {
@@ -111,23 +107,20 @@ vector<test> decomposer(string entrer_variable)
 }
 
 
-string crochet(vector<string> entrer,int * curseur)
+int separation(vector<string> entrer,string ouvrante,string fermente,int curseur)
 {
-    string retour="{";
     int cmp=0;
 
-
-    while(curseur++ &&<entrer.size() && cmp>=0 )
-    {tmp+=entrer[i]+" ";
-        if(entrer[i]=="{"){cmp++;}
-        else if (entrer[i]=="}"){cmp--;}
-
-
+    while(curseur+1<entrer.size() && cmp>=0 )
+    {
+         if(entrer[curseur]==ouvrante){cmp++;}
+        else if (entrer[curseur]==fermente){cmp--;}
+        cout<<endl;
+        curseur++;
     }
 
+    if(curseur-1>0 &&  entrer[curseur-1]!=fermente)
+        { cerr<<"Finaux :"<<entrer[curseur]<<": crochet non refermer dans le fichier"<<endl;}
 
-    retourned.back().domaine.push_back(tmp);
-    cout<<" push :"<<tmp<<endl;
-    return retour;
-
+    return curseur;
 }
