@@ -20,7 +20,7 @@ public:
     static void affichageln( vector<string> entrer);
     static void affichage(vector<string> entrer);
     static string toString(vector<string> entrer);
-
+    static bool is_number(const std::string& s);
 };
 
 

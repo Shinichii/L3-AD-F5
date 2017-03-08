@@ -91,8 +91,47 @@ else //aucun rassemblement entre les differentes variables (mal dit)
 }
 
 
+vector<string> Variable::decomposer(string entrer_variable)
+{
+    vector<string> entrer=Utilitaire::parse(entrer_variable);
+    vector<string> retour;
+    int i =0;
+    string tmp="";
+    if(entrer[i]=="#"){cout<<" # detecter"<<endl;i++;}
+
+    while(i<entrer_variable.size())
+    {
+        if(entrer[i]=="{")
+            {tmp="{";
+                while(i<entrer_variable.size() && entrer[i]!="}")
+                {tmp+=entrer[i]+" ";
+                i++;
+                }
+
+                if(entrer[i]!="}"){tmp+="}";}
+                retour.push_back(tmp);
+            }
+        else if(entrer[i]=="[")
+            {
+                tmp="[";
+                while(i<entrer_variable.size() && entrer[i]!="]")
+                {tmp+=entrer[i]+" ";
+                    i++;
+                }
+
+                if(entrer[i]!="]"){tmp+="]";}else{cerr<<" [ non refermer";}
+                retour.push_back(tmp);
+            }
+        else
+            {
+              cout<<" : "<<  entrer[i]<<endl;i++;
+            }
 
 
+    }
+
+
+}
 
 
 

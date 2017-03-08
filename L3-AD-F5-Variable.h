@@ -48,7 +48,7 @@ public:
     Variable();
     Variable(vector<string> entrer_variable,int nb_variable);
     Variable(vector<string> entrer_variable);
-
+    static vector<string>  decomposer(string entrer_variable);
    void affichage();
 
 };
