@@ -4,152 +4,147 @@
 
 #include "L3-AD-F5-Variable.h"
 #include "L3-AD-F5-Utilitaire.h"
-Variable::Variable()
-{nom="vide";
-    domaine.emplace_back(1);
-    domaine.emplace_back(2);
-    domaine.emplace_back(3);
-}
-
-
-Variable::Variable(vector<string> entrer_variable)
-{
-    cout<<"fail"<<endl;
-}
-
-Variable::Variable(vector<string> entrer_variable,int nb_variable)
-{
-Utilitaire::affichageln(entrer_variable);
-
-    cout<<endl<<"------------------------------------------------------------------------"<<endl;
-   // Domaine domaines;
-    string ensemble_possible_test="";
-
-    int Ligne=0;
-
-    cout<<"ligne_en_cour :"<<Utilitaire::toString(entrer_variable)<<endl;
-    vector<string> ligne_courante=Utilitaire::parse(entrer_variable[0]);
 
 
 //----------------------------------------------------------------------------------------------------------------------
-if(ligne_courante[0]=="#")//si la premiere ligne sapplique a toutes les variables
+//-------------------------------------   Constructeur     -------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------   Surchage operateur  ----------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------   test             -------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+
+bool Variable::unicite(vector<Variable> Liste)
+{
+/*
+    for (Variable current:Liste)
     {
-        if(ligne_courante[2]=="{")
+        for (Variable autre:Liste)
         {
-            int i=2;
-            while (ligne_courante[i]!="}" && i<ligne_courante.size())
+            if(current != autre && current.nom==autre.nom)
             {
-
-                ensemble_possible_test+=" "+ligne_courante[i];
-                i++;
-
-                cout<<"add : "<<ensemble_possible_test<<endl;
+                return false;
             }
-
-
-            cout<<endl<<"arret ="<<ligne_courante[i]<<endl;
-
-
-
-
-            if(i==ligne_courante.size()){cout<<"erreur Variable(); le crochet n'est pas fermer"<<endl;}
-            else if(ligne_courante[i]=="}"){ensemble_possible_test+="}";}
-            else {cout<<"erreur variable42";}
-
-
-           cout<<"add"<<ensemble_possible_test<<endl;
-
         }
-        else if (ligne_courante[1]=="[")
-        {
-            // a faire apres
-            cout <<"a faire apres 1"<<endl;
-        }
-        else
-        {
-            cout <<"erreur Variable AZ"<<endl;
-        }
-
-
-
-
     }
-//----------------------------------------------------------------------------------------------------------------------
-else //aucun rassemblement entre les differentes variables (mal dit)
-    {
-        cout <<"a faire apres 2"<<endl;
-
-        // a faire apres
-    }
+*/
+// A FINIR
 
 
-
-    cout<<(ligne_courante[2]=="{")<<" !"<<ligne_courante[2]<<"! "<<endl;
-
-    cout<<"----------------------------------"<<endl;
-
+    return true;
 }
 
-
-vector<string> Variable::decomposer(string entrer_variable)
+int Variable::exist(vector<Variable> Liste,string nom)
 {
+    int i=0;
+    for (Variable current:Liste)
+    {
+        if(current.nom==nom)
+        {return i;}
+        i++;
+    }
+    return -1;
+}
+//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------   fonction diverse -------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+
+vector<Variable> Variable::decomposer(string entrer_variable)
+{ vector<Variable> retourned;
+
+
     vector<string> entrer=Utilitaire::parse(entrer_variable);
+
+    cout<<endl<<"-----------------------------"<<endl;
     vector<string> retour;
-    int i =0;
+
+    int i=0;int cmp=0;
     string tmp="";
     if(entrer[i]=="#"){cout<<" # detecter"<<endl;i++;}
 
-    while(i<entrer_variable.size())
+    while(i<entrer.size())
     {
         if(entrer[i]=="{")
-            {tmp="{";
-                while(i<entrer_variable.size() && entrer[i]!="}")
-                {tmp+=entrer[i]+" ";
-                i++;
-                }
-
-                if(entrer[i]!="}"){tmp+="}";}
-                retour.push_back(tmp);
-            }
+        {
+            int suivant=separation(entrer,"{","}",i);
+            retourned.back().domaine.push_back(Utilitaire::parse(entrer,i,suivant));
+            i=suivant;
+        }
         else if(entrer[i]=="[")
-            {
-                tmp="[";
-                while(i<entrer_variable.size() && entrer[i]!="]")
-                {tmp+=entrer[i]+" ";
-                    i++;
-                }
-
-                if(entrer[i]!="]"){tmp+="]";}else{cerr<<" [ non refermer";}
-                retour.push_back(tmp);
-            }
+        {
+            int suivant=separation(entrer,"[","]",i);
+            retourned.back().domaine.push_back(Utilitaire::parse(entrer,i,suivant));
+            i=suivant;
+        }
         else
-            {
-              cout<<" : "<<  entrer[i]<<endl;i++;
-            }
-
-
+        { retourned.push_back(Variable(entrer[i]));
+            i++;
+        }
     }
-
+    return retourned;
 
 }
 
 
-
-
-
-
-
-//-----------------------------------
-
-void Variable::affichage()
+int Variable::separation(vector<string> entrer,string ouvrante,string fermente,int curseur)
 {
-    cout<<nom<<" :";
+    int debut=curseur;
+    int cmp=0;
 
-    for(int valeur:domaine)
-    {
-        cout<<valeur<<" ";
-    }
-    cout<<endl;
+    do{
+        if(entrer[curseur]==ouvrante){cmp++;}
+        else if (entrer[curseur]==fermente){cmp--;}
+
+        curseur++;
+    }while(curseur<entrer.size() && cmp>0 );
 
 
+    if(curseur-1>0 &&  entrer[curseur-1]!=fermente)
+    { cerr<<"Finaux :"<<entrer[curseur]<<": crochet non refermer dans le fichier"<<endl;}
+
+    return curseur;
 }
+
+vector<vector<Variable>> Variable::remplacement(vector<vector<Variable>> Liste)
+{
+    vector<vector<Variable>> retour;
+
+
+    for(vector<Variable> Ligne:Liste)
+    {for(Variable current:Ligne)
+        {
+
+        }
+
+
+    }
+
+
+// A FINIR
+
+
+
+    return retour;
+}
+
+
+
+
+vector<Variable> Variable::assembler(vector<vector<Variable>> Liste) {
+    vector<Variable> retour;
+    for (vector<Variable> aa:Liste) {
+        for (Variable current:aa) { retour.push_back(current); }
+    }
+    return retour;
+}
+
