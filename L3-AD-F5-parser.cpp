@@ -57,3 +57,23 @@ std::vector<std::string> importFile(std::fstream & F)
 	return std::vector<std::string>(imported);
 }
 
+bool saveToFile(std::vector<std::string> vect, std::string nomFichier)
+{
+	/*@ TO DO
+		Creer un cas au cas où le fichier ne peut se creer 
+	*/
+	std::fstream F;
+	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
+	if (!F.is_open())
+	{
+		std::cout << "BUG";
+	}
+	for (std::vector<std::string>::iterator it = vect.begin(); it != vect.end(); it++)
+	{
+		F << *it << std::endl;
+	}
+	closeFile(F);
+
+	return false;
+}
+

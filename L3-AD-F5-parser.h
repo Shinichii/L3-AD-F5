@@ -14,3 +14,4 @@
 bool openFile(const std::string chemin, std::fstream &F);
 bool closeFile(std::fstream &F);
 std::vector<std::string> importFile(std::fstream &F);
+bool saveToFile(std::vector<std::string> vect, std::string nomFichier);

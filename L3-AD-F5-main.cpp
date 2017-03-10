@@ -10,8 +10,13 @@ using namespace std;
 
 int main() {
 	string s;
+	std::vector<std::string> vc;
+	std::fstream F;
 	s = choisirElement(".txt");
-   
+	openFile(s, F);
+	vc = importFile(F);
+	saveToFile(vc, "test");
+	closeFile(F);
     return 0;
 
 }
