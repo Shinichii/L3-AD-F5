@@ -25,9 +25,9 @@ bool openFile(const std::string chemin, std::fstream &F)
 		return false;
 	}
 }
-bool closeFile(const std::string chemin, std::fstream &F)
+bool closeFile(std::fstream &F)
 {
-	DEBUG_MSG("[DEBUG]Fermeture du fichier " << chemin);
+	DEBUG_MSG("[DEBUG]Fermeture du fichier ");
 	F.close();
 	if(F.is_open())
 	{
@@ -40,3 +40,20 @@ bool closeFile(const std::string chemin, std::fstream &F)
 		return true;
 	}
 }
+
+std::vector<std::string> importFile(std::fstream & F)
+{
+	std::string d;
+	std::vector<std::string> imported;
+	while (F.peek() != EOF)
+	{
+		std::getline(F, d);
+		if (d.find_first_not_of(' ') != std::string::npos) // Si ce n'est pas une ligne vide
+		{
+			std::cout << d << std::endl;
+			imported.push_back(d);
+		}
+	}
+	return std::vector<std::string>(imported);
+}
+

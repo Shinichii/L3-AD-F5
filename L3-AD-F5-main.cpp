@@ -9,7 +9,6 @@ using namespace std;
 
 
 int main() {
-
    Probleme test= Probleme("test");
 
     test.afficher();
