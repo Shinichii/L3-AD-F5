@@ -7,7 +7,7 @@
 #include "L3-AD-F5-Variable.h"
 #include "L3-AD-F5-Contrainte.h"
 #include <vector>
-
+#include <string>
 class Probleme {
 
 public:

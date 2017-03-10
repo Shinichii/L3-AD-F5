@@ -49,8 +49,8 @@ Contraintes.emplace_back(new Contrainte());
 
 void Probleme::afficher()
 {
-    cout<<"Le probleme : "+nom_Probleme<<endl;
-    cout<<"Il y a "<<Variables.size()<<" variables :"<<endl;
+    std::cout << "Le probleme : " << this->nom_Probleme<<std::endl;
+    std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
 
     for(Variable* variable:Variables) { variable->affichage();}
     for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}

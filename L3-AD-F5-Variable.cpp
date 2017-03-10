@@ -9,13 +9,13 @@
 
 void Variable::affichage()
 {
-    cout<<nom<<" :";
+    std::cout << this->nom << " :";
 
     for(int valeur:domaine)
     {
-        cout<<valeur<<" ";
+        std::cout << valeur<<" ";
     }
-    cout<<endl;
+    std::cout << std::endl;
 
 
 }

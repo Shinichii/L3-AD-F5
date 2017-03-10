@@ -10,12 +10,8 @@ using namespace std;
 
 int main() {
 
-
-
-
    Probleme test= Probleme("test");
 
     test.afficher();
-
-    return 0;
+	return 0;
 }
