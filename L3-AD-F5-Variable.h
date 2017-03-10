@@ -33,11 +33,11 @@ public:
     }
 
 
-    bool operator==(Variable const& a, Variable const& b)
-    {if(a.nom!=b.nom){return false;}
+    bool operator==(Variable const& a)
+    {if(a.nom!=nom){return false;}
         for(vector<string> ListeA:a.domaine)
         {for(string currentA:ListeA)
-            { for(vector<string> ListeB:b.domaine)
+            { for(vector<string> ListeB:domaine)
                 {for(string currentB:ListeB)
                     {if(currentA!=currentB){ return false;}
                     }
@@ -46,11 +46,11 @@ public:
         }return true;
     }
 
-    bool operator!=(Variable const& a, Variable const& b)
-    {if(a.nom!=b.nom){return true;}
+    bool operator!=(Variable const& a)
+    {if(a.nom!=nom){return true;}
         for(vector<string> ListeA:a.domaine)
         {for(string currentA:ListeA)
-            { for(vector<string> ListeB:b.domaine)
+            { for(vector<string> ListeB:domaine)
                 {for(string currentB:ListeB)
                     {if(currentA!=currentB){ return true;}
                     }
@@ -64,7 +64,7 @@ public:
     static int separation(vector<string> entrer,string ouvrante,string fermente,int curseur);
     static vector<Variable> assembler(vector<vector<Variable>> Liste);
     static  int exist(vector<Variable> Liste,string nom);
-    static vector<vector<Variable>> remplacement(vector<vector<Variable>> Liste);
+    static vector<Variable> remplacement(vector<Variable> Liste);
     static bool unicite(vector<Variable> Liste);
 
 

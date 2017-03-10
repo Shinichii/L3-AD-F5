@@ -9,26 +9,25 @@ using namespace std;
 
 
 
-
 int main() {
 
     vector<string> tester;
-    tester.emplace_back((string)"# X { L , C } ");
+    tester.emplace_back((string)"# X { L , C }");
     tester.emplace_back((string)"L [ 1 , 9 ]");
     tester.emplace_back((string)"C [ 1 , 9 ]");
     Utilitaire::affichageln(tester);
 
-    vector<vector<Variable>> Variable;
+    vector<vector<Variable>> variable;
 
     for(string Liste:tester)
     {
-        Variable.push_back(Variable::decomposer(Liste));
+        variable.push_back(Variable::decomposer(Liste));
     }
 
-    vector<Variable> decomposer=Variable::assembler(Variable);
+    vector<Variable> decomposer=Variable::assembler(variable);
+    vector<Variable> mischemin=Variable::remplacement( decomposer);
 
-
-    for(Variable  az:decomposer)    { az.affichage(); }
+    for(Variable  az:mischemin)    { az.affichage(); }
 
 
 
@@ -36,7 +35,6 @@ int main() {
 
 
     //Utilitaire::affichageln(decomposer(tester));
-
 
 
 

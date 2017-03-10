@@ -2,6 +2,7 @@
 // Created by mathieu on 26/02/2017.
 //
 
+#include <stdlib.h>
 #include "L3-AD-F5-Variable.h"
 #include "L3-AD-F5-Utilitaire.h"
 
@@ -115,25 +116,67 @@ int Variable::separation(vector<string> entrer,string ouvrante,string fermente,i
     return curseur;
 }
 
-vector<vector<Variable>> Variable::remplacement(vector<vector<Variable>> Liste)
+vector<Variable> Variable::remplacement(vector<Variable> Liste)
 {
-    vector<vector<Variable>> retour;
+    vector<Variable> retour;
+
+    cout<<endl<<"Debut remplacement"<<endl;
+    for(Variable current:Liste){ current.affichage();}
+
+    cout<<endl<<"------------------------------------------------------"<<endl;
+   for(Variable current:Liste)
+        {Variable tmp;
+            tmp.nom=current.nom;
+
+            vector<vector<string>> tmpdomaine;
+            for(vector<string> copyVecteur:current.domaine)
+            { vector<string> aa;
+                for(int i=0;i<copyVecteur.size();i++)
+                {
 
 
-    for(vector<Variable> Ligne:Liste)
-    {for(Variable current:Ligne)
-        {
+                    if(copyVecteur[i]=="[")
+                    {
+                    aa.push_back("{{");
+                        cout<<endl;
+                        //transformer 1 , 9 en 1, 2 ,3 ,4 ,5 etc
 
+                        for(int k=atoi(copyVecteur[i+1].c_str());k<atoi(copyVecteur[i+3].c_str());k++)
+                        {
+                            aa.push_back(std::to_string(k));
+                        }
+
+                    aa.push_back(copyVecteur[i+2]);
+                    aa.push_back(copyVecteur[i+3]);
+
+
+
+                    //aa.push_back(copyVecteur[i+4]);cout<<copyVecteur[i+4]<<" ";
+                        cout<<endl;
+                    aa.push_back("}}");
+                      i=i+4;
+                    }
+                    else
+                    {
+                        aa.push_back(copyVecteur[i]);
+                    }
+
+                }
+                tmpdomaine.push_back(aa);
+            }
+          tmp.domaine=tmpdomaine;
+         retour.push_back(tmp);
         }
 
+    cout<<endl<<"------------------------------------------------------"<<endl;
+    cout<<endl<<"Fin remplacement"<<endl;
 
-    }
+    for(Variable current:retour)        {current.affichage();}
 
+
+    cout<<endl<<"------------------------------------------------------"<<endl;
 
 // A FINIR
-
-
-
     return retour;
 }
 

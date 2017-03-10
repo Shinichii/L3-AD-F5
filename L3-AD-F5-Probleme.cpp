@@ -27,7 +27,7 @@ Probleme::Probleme()
 //---------------------------------------------- affectation des variables et de leur domaine ---------------------------
     for(int i=2;i<longueur_declaration_variable+2;i++)        {  entrer_variable.emplace_back(entrer[i].c_str()); }
 
-    Variables=Variable(entrer_variable,nb_variable);
+    //Variables=Variable(entrer_variable,nb_variable);
 
 // ----------------------------------------------affectation des contraintes --------------------------------------------
 
