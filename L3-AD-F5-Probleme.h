@@ -6,16 +6,27 @@
 #include "L3-AD-F5-include.h"
 #include "L3-AD-F5-Variable.h"
 #include "L3-AD-F5-Contrainte.h"
-
+#include <vector>
 
 class Probleme {
 
 public:
-    //   list<Variable> Variable;
-    //   list<L3-AD-F5-Contrainte> L3-AD-F5-Contrainte;
+
+      string nom_Probleme;
+      vector<Variable*> Variables;
+      vector<Contrainte*> Contraintes;
 
 
-    Probleme(){}
+
+    //constructeur
+    Probleme();
+    Probleme(string Nom_Probleme);
+
+    //affichage
+    void afficher();
+
+
+    //autre
 
 
 };

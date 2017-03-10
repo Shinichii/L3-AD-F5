@@ -1,3 +1,4 @@
+carre magique
 9 8 2
 3 3
 
