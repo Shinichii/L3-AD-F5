@@ -6,16 +6,19 @@
 #define L3_AD_F5_VARIABLE_H
 #define VALEUR_NON_DEFINIE -2147483648 
 
+#include <iostream>
+
+
+
 #include <vector>
+
 #include <string>
-#include "L3-AD-F5-include.h"
 
 class Variable {
 public :
    string nom;
    vector<int> domaine;
    int valeur;
-public:
 
 	Variable();
 	string getNom();

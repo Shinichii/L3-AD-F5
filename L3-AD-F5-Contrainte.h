@@ -25,7 +25,6 @@ public:
 	bool retirerVariable(string nom);
 	bool retirerVariable(Variable var);
 
-};
 
 
 #endif //L3_AD_F5_CONTRAINTE_H

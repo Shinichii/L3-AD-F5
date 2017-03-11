@@ -12,7 +12,7 @@ Contrainte::Contrainte()
 Fonction : ajouterVariable
 Parametres : La variable a ajouter var
 Renvoie : true si elle est parvenue a ajouter la variable, false sinon
-Explication: La fonction verifie si la variable a deja ete ajoutee à la liste de variables de la contrainte
+Explication: La fonction verifie si la variable a deja ete ajoutee ï¿½ la liste de variables de la contrainte
 Si ce n'est pas encore le cas, elle l'ajoute donc.
 */
 bool Contrainte::ajouterVariable(Variable var)
@@ -31,9 +31,9 @@ bool Contrainte::ajouterVariable(Variable var)
 }
 /*
 Fonction : retirerVariable
-Parametres : Le nom de la variable ou la variable à retirer
-Renvoie : true si elle est parvenue à retirer la variable, false sinon.
-Explication: La fonction cherche la variable à retirer. Si elle la trouve
+Parametres : Le nom de la variable ou la variable ï¿½ retirer
+Renvoie : true si elle est parvenue ï¿½ retirer la variable, false sinon.
+Explication: La fonction cherche la variable ï¿½ retirer. Si elle la trouve
 */
 bool Contrainte::retirerVariable(string nom)
 {
