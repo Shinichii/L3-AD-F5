@@ -12,7 +12,7 @@
 #include <algorithm>
 class Contrainte {
 
-private:
+protected:
 	list<Variable> variables;
     /*
 		Variables a mettre ici 

@@ -1,10 +1,8 @@
-#include "L3-AD-F5-ContrainteEgalite.h"
-
-ContrainteEgalite::ContrainteEgalite()
+#pragma once
+#include "L3-AD-F5-Contrainte.h"
+class ContrainteEgalite : public Contrainte
 {
-}
-
-bool ContrainteEgalite::contrainteRespectee()
-{
-	return false;
-}
+public:
+	ContrainteEgalite();
+	bool contrainteRespectee();
+};

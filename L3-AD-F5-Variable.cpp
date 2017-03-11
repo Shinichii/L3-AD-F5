@@ -5,6 +5,12 @@
 #include "L3-AD-F5-Variable.h"
 
 
+Variable::Variable()
+{
+	nom = "Non nommee";
+	valeur = VALEUR_NON_DEFINIE;
+}
+
 string Variable::getNom()
 {
 	return string(this->nom);
@@ -39,5 +45,13 @@ void Variable::affichage()
 }
 bool operator==(Variable &v1, Variable &v2)
 {
-	return v1.getNom() == v2.getNom();
+	return v1.getValeur() == v2.getValeur();
+}
+bool operator!=(Variable &v1, Variable &v2)
+{
+	return !(v1.getValeur() == v2.getValeur());
+}
+bool operator==(Variable &v1, int n)
+{
+	return v1.getValeur() == n;
 }

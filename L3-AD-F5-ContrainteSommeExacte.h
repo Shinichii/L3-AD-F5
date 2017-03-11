@@ -1,9 +1,12 @@
 #pragma once
-#include "L3-AD-F5-Contrainte.h"
-class ContrainteSommeExacte : public Contrainte
+#pragma once
+#include "L3-AD-F5-ContrainteSomme.h"
+class ContrainteSommeExacte : public ContrainteSomme
 {
+
 public:
 	ContrainteSommeExacte();
 	bool contrainteRespectee();
+
 };
 
