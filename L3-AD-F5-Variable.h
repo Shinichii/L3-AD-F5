@@ -12,17 +12,16 @@
 class Variable {
 public :
    string nom;
-    vector<int> domaine;
-
+   vector<int> domaine;
+   int valeur;
 public:
 
     Variable()
-    {nom="vide";
-    domaine.emplace_back(1);
-    domaine.emplace_back(2);
-    domaine.emplace_back(3);
-    }
-
+    {nom="vide";}
+	string getNom();
+	void setNom(string nom);
+	int getValeur();
+	void setValeur(int valeur);
    void affichage();
 
 };
