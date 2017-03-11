@@ -63,11 +63,6 @@ Probleme::Probleme(string Nom_Probleme)//fonction de test
 {
     nom_Probleme=Nom_Probleme;
 
-
-    Contraintes.emplace_back(new Contrainte());
-    Contraintes.emplace_back(new Contrainte());
-
-
 }
 
 
@@ -85,7 +80,8 @@ void Probleme::afficher()
     std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
 
 
-    for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
+    for(Variable* variable:Variables) { variable->affichage();}
+   // for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
 
 
 }

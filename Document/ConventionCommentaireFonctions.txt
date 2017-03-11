@@ -1,0 +1,7 @@
+Avant chaque fonction "complexe" inscrire une doc suivante pour expliquer la fonction
+/*
+Fonction : 
+Parametres : 
+Renvoie : 
+Explication: 
+*/
