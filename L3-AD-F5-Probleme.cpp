@@ -37,8 +37,8 @@ nom_Probleme=Nom_Probleme;
 Variables.emplace_back(new Variable());
     Variables.emplace_back(new Variable());
 
-    Contraintes.emplace_back(new Contrainte());
-Contraintes.emplace_back(new Contrainte());
+//Contraintes.emplace_back(new Contrainte());
+//Contraintes.emplace_back(new Contrainte());
 
 
 }
@@ -53,7 +53,7 @@ void Probleme::afficher()
     std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
 
     for(Variable* variable:Variables) { variable->affichage();}
-    for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
+   // for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
 
 
 }

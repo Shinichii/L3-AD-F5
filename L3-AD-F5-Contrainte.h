@@ -1,6 +1,6 @@
 //
 // Created by mathieu on 26/02/2017.
-//
+// Revised by Aurelien on 11/03/2017
 
 #ifndef L3_AD_F5_CONTRAINTE_H
 #define L3_AD_F5_CONTRAINTE_H
@@ -10,22 +10,14 @@
 class Contrainte {
 
 private:
-    char Type;
-
-    char Cible;
-    int Valeur;
-    char N;
-    list<int> Tableau;
-
+    /*
+		Variables a mettre ici 
+	*/
 public:
     Contrainte();
-
-
-    Contrainte(const Contrainte& entrer);
-
-    void affichage();
-
+	virtual bool contrainteRespectee() = 0;
 };
+
 
 
 #endif //L3_AD_F5_CONTRAINTE_H
