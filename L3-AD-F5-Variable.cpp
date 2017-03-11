@@ -143,7 +143,7 @@ vector<Variable> Variable::remplacement(vector<Variable> Liste)
 
                         for(int k=atoi(copyVecteur[i+1].c_str());k<atoi(copyVecteur[i+3].c_str());k++)
                         {
-                            aa.push_back(std::to_string(k));
+                           // aa.push_back(std::to_string(k));
                         }
 
                     aa.push_back(copyVecteur[i+2]);
