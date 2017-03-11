@@ -24,6 +24,7 @@ public:
 	void setValeur(int valeur);
    void affichage();
    friend bool operator==(Variable &v1, Variable &v2);
+   friend bool operator==(Variable &v1, int n);
    friend bool operator!=(Variable &v1, Variable &v2);
 
 };

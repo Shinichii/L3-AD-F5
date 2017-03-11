@@ -13,10 +13,10 @@ int main() {
 	std::vector<std::string> vc;
 	std::fstream F;
 	s = choisirElement(".txt");
-	openFile(s, F);
-	vc = importFile(F);
-	saveToFile(vc, "test");
-	closeFile(F);
+	ouvrirFichier(s, F);
+	vc = importerFichier(F);
+	sauvegarderDansFichier(vc, "test");
+	fermerFichier(F);
     return 0;
 
 }

@@ -7,12 +7,12 @@
 
 */
 /*
-	Fonction : fetchElements
+	Fonction : recupererElements
 	Parametres : Un vecteur de type string qui va contenir le chemin de chaque fichier correspondant a
  	l'extension contenu dans le dossier
 	Un string qui va correspondre a l'extension du fichier recherche
 */
-void fetchElements(vector <string>& listeFichiers, string extension)
+void recupererElements(vector <string>& listeFichiers, string extension)
 {
 	std::string path = "D:\\AideDecision\\representation";
 
@@ -36,7 +36,7 @@ string choisirElement(string extension)
 {
 	std::vector<string> listeFichiers;
 	unsigned int choix;
-	fetchElements(listeFichiers, extension);
+	recupererElements(listeFichiers, extension);
 	if(listeFichiers.size() == 0)
 	{
 		cout << "[WARNING] Aucun element du type : " << extension << " n'a ete trouve" << endl;
