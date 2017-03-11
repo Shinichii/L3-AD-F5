@@ -7,7 +7,6 @@
 #include <string>
 #include <experimental/filesystem>
 #include <vector>
-
 using namespace std;
 
 namespace fs = std::experimental::filesystem;

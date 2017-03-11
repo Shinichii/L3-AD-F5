@@ -10,10 +10,10 @@
 	Description : Cette fonction tente d'ouvrir le fichier passé en argument
 	Elle renvoie ensuite une valeur booleenne pour indiquer si le fichier est bien ouvert
 */
-bool openFile(const std::string chemin)
+bool openFile(const std::string chemin, std::fstream &F)
 {
 	DEBUG_MSG("[DEBUG] Ouverture du fichier " << chemin);
-	std::ifstream F(chemin);
+	F.open(chemin);
 	if(F.is_open())
 	{
 		DEBUG_MSG("[DEBUG] Succes !");
@@ -25,9 +25,9 @@ bool openFile(const std::string chemin)
 		return false;
 	}
 }
-bool closeFile(const std::string chemin, std::ifstream F)
+bool closeFile(std::fstream &F)
 {
-	DEBUG_MSG("[DEBUG]Fermeture du fichier " << chemin);
+	DEBUG_MSG("[DEBUG]Fermeture du fichier ");
 	F.close();
 	if(F.is_open())
 	{
@@ -40,3 +40,40 @@ bool closeFile(const std::string chemin, std::ifstream F)
 		return true;
 	}
 }
+
+std::vector<std::string> importFile(std::fstream & F)
+{
+	std::string d;
+	std::vector<std::string> imported;
+	while (F.peek() != EOF)
+	{
+		std::getline(F, d);
+		if (d.find_first_not_of(' ') != std::string::npos) // Si ce n'est pas une ligne vide
+		{
+			std::cout << d << std::endl;
+			imported.push_back(d);
+		}
+	}
+	return std::vector<std::string>(imported);
+}
+
+bool saveToFile(std::vector<std::string> vect, std::string nomFichier)
+{
+	/*@ TO DO
+		Creer un cas au cas où le fichier ne peut se creer 
+	*/
+	std::fstream F;
+	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
+	if (!F.is_open())
+	{
+		std::cout << "BUG";
+	}
+	for (std::vector<std::string>::iterator it = vect.begin(); it != vect.end(); it++)
+	{
+		F << *it << std::endl;
+	}
+	closeFile(F);
+
+	return false;
+}
+

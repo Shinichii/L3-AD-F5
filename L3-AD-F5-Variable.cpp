@@ -47,6 +47,7 @@ bool Variable::unicite(vector<Variable> Liste)
 
 int Variable::exist(vector<Variable> Liste,string nom)
 {
+
     int i=0;
     for (Variable current:Liste)
     {
@@ -72,6 +73,7 @@ vector<Variable> Variable::decomposer(string entrer_variable)
     int i=0;int cmp=0;
     string tmp="";
     if(entrer[i]=="#"){cout<<" # detecter"<<endl;i++;}
+
 
     while(i<entrer.size())
     {
@@ -108,6 +110,7 @@ int Variable::separation(vector<string> entrer,string ouvrante,string fermente,i
 
         curseur++;
     }while(curseur<entrer.size() && cmp>0 );
+
 
 
     if(curseur-1>0 &&  entrer[curseur-1]!=fermente)

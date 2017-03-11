@@ -79,8 +79,10 @@ Probleme::Probleme(string Nom_Probleme)//fonction de test
 
 void Probleme::afficher()
 {
-    cout<<"Le probleme : "+nom_Probleme<<endl;
-    cout<<"Il y a "<<nb_variable<<" variables :"<<endl;
+
+
+    std::cout << "Le probleme : " << this->nom_Probleme<<std::endl;
+    std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
 
 
     for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}

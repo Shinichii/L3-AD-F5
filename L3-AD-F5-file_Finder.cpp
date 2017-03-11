@@ -14,11 +14,11 @@
 */
 void fetchElements(vector <string>& listeFichiers, string extension)
 {
-	std::string path = "../";
-	
+	std::string path = "D:\\AideDecision\\representation";
+
 	for(auto &p : fs::directory_iterator(path))
 	{
-		if(extensionValide(p.path().string(), extension))
+		if(extensionValide(p.path().extension().string(), extension))
 		{
 			listeFichiers.push_back(p.path().string());
 		}
@@ -32,7 +32,7 @@ void fetchElements(vector <string>& listeFichiers, string extension)
 	et retourne le chemin du fichier choisi par l'utilisateur
 	Si aucun fichier n'est présent dans le dossier, la fonction retourne NULL
 */
-string choixElement(string extension)
+string choisirElement(string extension)
 {
 	std::vector<string> listeFichiers;
 	unsigned int choix;
@@ -50,6 +50,8 @@ string choixElement(string extension)
 	{
 		cout << endl << "Votre choix : ";
 		cin >> choix;
+		cin.clear();
+		cin.ignore();
 	}while(choix < 1 || choix > listeFichiers.size());
 
 	cout << endl;
@@ -67,15 +69,5 @@ string choixElement(string extension)
 
 bool extensionValide(string s, string extension)
 {
-	int offset = extension.length();
-	if(s.length() < extension.length()) return false;
-
-	for(int i = 0; i < offset; i++)
-	{
-		if(extension[i] != s[s.length() - offset - i])
-		{
-			return false;
-		}
-	}
-	return true;
+	return s == extension;
 }
