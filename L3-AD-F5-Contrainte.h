@@ -14,21 +14,7 @@ using namespace std;
 
 class Contrainte {
 
-private:
-    char Type;
 
-    char Cible;
-    int Valeur;
-    char N;
-    vector<int> Tableau;
-
-public:
-    Contrainte();
-
-
-    Contrainte(const Contrainte& entrer);
-
-    void affichage();
 
 };
 
