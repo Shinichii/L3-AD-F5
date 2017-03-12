@@ -8,7 +8,6 @@
 
 
 
-
 string const& Variable::getNom() const
 {
 	return string(this->nom);
@@ -45,12 +44,7 @@ Variable::Variable()
 //----------------------------------------------------------------------------------------------------------------------
 
 
-<<<<<<< HEAD
-}
-bool operator==(const Variable &v1, const Variable &v2)
-=======
 bool operator==(Variable &v1, Variable &v2)
->>>>>>> c05333bbf3ac3086f0f633b3e9f15a9a9a2eca8b
 {
 	return v1.getValeur() == v2.getValeur();
 }
