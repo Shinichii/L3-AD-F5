@@ -12,7 +12,7 @@ Si cela n'est pas le cas la fonction renverra false
 */
 bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 {
-	int somme;
+	int somme = 0;
 	for (std::list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if (*it == VALEUR_NON_DEFINIE)
@@ -21,6 +21,7 @@ bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 		}
 		else
 		{
+			somme += it->getValeur();
 			DEBUG_MSG("[INFO] : Ajout de la valeur " << it->getValeur() << "a la somme");
 		}
 	}
