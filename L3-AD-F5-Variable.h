@@ -21,12 +21,13 @@ public :
    int valeur;
 
 	Variable();
-	string getNom();
-	void setNom(string nom);
-	int getValeur();
-	void setValeur(int valeur);
+	string const& getNom() const;
+	void Variable::setNom(string const& nom);
+	int const& getValeur() const;
+	void setValeur(int const& valeur);
    void affichage();
-   friend bool operator==(Variable &v1, Variable &v2);
+   friend bool operator==(const Variable &v1, const Variable &v2);
+   friend bool operator==(Variable &v1, int n);
    friend bool operator!=(Variable &v1, Variable &v2);
 
 };

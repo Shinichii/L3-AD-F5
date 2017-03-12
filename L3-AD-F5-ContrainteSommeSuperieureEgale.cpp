@@ -24,7 +24,7 @@ bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 			DEBUG_MSG("[INFO] : Ajout de la valeur " << it->getValeur() << "a la somme");
 		}
 	}
-	if (somme >= valeurAttendue)
+	if (somme >= seuil)
 	{
 		DEBUG_MSG("[INFO] Somme des variables superieure ou egale a la valeur attendue. Contrainte respectee");
 		return true;

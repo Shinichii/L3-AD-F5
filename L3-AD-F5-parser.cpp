@@ -5,12 +5,12 @@
 
 #include "L3-AD-F5-parser.h"
 /*
-	Fonction : openFile
+	Fonction : ouvrirFichier
 	Parametre: chemin
 	Description : Cette fonction tente d'ouvrir le fichier passé en argument
 	Elle renvoie ensuite une valeur booleenne pour indiquer si le fichier est bien ouvert
 */
-bool openFile(const std::string chemin, std::fstream &F)
+bool ouvrirFichier(const std::string chemin, std::fstream &F)
 {
 	DEBUG_MSG("[DEBUG] Ouverture du fichier " << chemin);
 	F.open(chemin);
@@ -25,7 +25,7 @@ bool openFile(const std::string chemin, std::fstream &F)
 		return false;
 	}
 }
-bool closeFile(std::fstream &F)
+bool fermerFichier(std::fstream &F)
 {
 	DEBUG_MSG("[DEBUG]Fermeture du fichier ");
 	F.close();
@@ -41,7 +41,7 @@ bool closeFile(std::fstream &F)
 	}
 }
 
-std::vector<std::string> importFile(std::fstream & F)
+std::vector<std::string> importerFichier(std::fstream & F)
 {
 	std::string d;
 	std::vector<std::string> imported;
@@ -57,7 +57,7 @@ std::vector<std::string> importFile(std::fstream & F)
 	return std::vector<std::string>(imported);
 }
 
-bool saveToFile(std::vector<std::string> vect, std::string nomFichier)
+bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier)
 {
 	/*@ TO DO
 		Creer un cas au cas où le fichier ne peut se creer 
@@ -72,7 +72,7 @@ bool saveToFile(std::vector<std::string> vect, std::string nomFichier)
 	{
 		F << *it << std::endl;
 	}
-	closeFile(F);
+	fermerFichier(F);
 
 	return false;
 }

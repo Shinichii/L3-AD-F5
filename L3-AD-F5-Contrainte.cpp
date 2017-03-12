@@ -52,6 +52,6 @@ bool Contrainte::retirerVariable(string nom)
 
 bool Contrainte::retirerVariable(Variable var)
 {
-	retirerVariable(var.getNom());
+	return retirerVariable(var.getNom());
 }
 

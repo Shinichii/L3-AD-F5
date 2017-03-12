@@ -2,11 +2,11 @@
 class ContrainteSomme : public Contrainte
 {
 protected:
-	int valeurAttendue;
+	int seuil;
 public:
 	ContrainteSomme();
 	virtual bool contrainteRespectee()=0;
 
-	int getValeurAttendue();
-	void setValeurAttendue(int valeur);
+	int getSeuil();
+	void setSeuil(int valeur);
 };

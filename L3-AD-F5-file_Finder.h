@@ -13,7 +13,7 @@ namespace fs = std::experimental::filesystem;
 
 bool extensionValide(string s, string extension);
 
-void fetchElements(vector<string>& listeFichiers, string extension);
+void recupererElements(vector<string>& listeFichiers, string extension);
 
 string choisirElement(string extension);
 

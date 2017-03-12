@@ -8,23 +8,22 @@
 
 
 
-
-string Variable::getNom()
+string const& Variable::getNom() const
 {
 	return string(this->nom);
 }
 
-void Variable::setNom(string nom)
+void Variable::setNom(string const& nom)
 {
 	this->nom = nom;
 }
 
-int Variable::getValeur()
+int const& Variable::getValeur() const
 {
 	return valeur;
 }
 
-void Variable::setValeur(int valeur)
+void Variable::setValeur(int const& valeur)
 {
 	this->valeur = valeur;
 }
