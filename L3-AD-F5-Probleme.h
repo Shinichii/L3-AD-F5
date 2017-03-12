@@ -14,19 +14,19 @@ class Probleme {
 
 public:
 
-      string nom_Probleme;
+     std::string nom_Probleme;
      int nb_variable;
       Variable Variables;
-      vector<Contrainte*> Contraintes;
+      std::vector<Contrainte*> Contraintes;
 
 
-    vector<string> getFichier_brut();// temporaire pour les test en attendant
+    std::vector<std::string> getFichier_brut();// temporaire pour les test en attendant
 
     //constructeur
     Probleme();
 
 
-    Probleme(string Nom_Probleme);
+    Probleme(std::string Nom_Probleme);
 
     //affichage
     void afficher();

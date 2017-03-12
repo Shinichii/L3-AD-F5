@@ -1,7 +1,7 @@
 #pragma once
-#include "L3-AD-F5-ContrainteSomme.h"
+#include "L3-AD-F5-ContrainteSeuil.h"
 
-class ContrainteSuperieure : public ContrainteSomme
+class ContrainteSuperieure : public ContrainteSeuil
 {
 
 public:

@@ -19,20 +19,20 @@ Probleme::Probleme()
 
 
     nom_Probleme=entrer[0];
-    nb_variable= atoi(Utilitaire::parse(entrer[1])[0].c_str());
+   // nb_variable= atoi(Utilitaire::parse(entrer[1])[0].c_str());
 
-  int longueur_declaration_variable=atoi(Utilitaire::parse(entrer[1])[1].c_str());//peut etre different de nb_variable
+//  int longueur_declaration_variable=atoi(Utilitaire::parse(entrer[1])[1].c_str());//peut etre different de nb_variable
 
 
 //---------------------------------------------- affectation des variables et de leur domaine ---------------------------
-    for(int i=2;i<longueur_declaration_variable+2;i++)        {  entrer_variable.emplace_back(entrer[i].c_str()); }
+//    for(int i=2;i<longueur_declaration_variable+2;i++)        {  entrer_variable.emplace_back(entrer[i].c_str()); }
 
     //Variables=Variable(entrer_variable,nb_variable);
 
 // ----------------------------------------------affectation des contraintes --------------------------------------------
 
 
-    for(int i=longueur_declaration_variable+2;i<entrer.size();i++)        {entrer_contrainte.emplace_back(entrer[i].c_str()); }
+//    for(int i=longueur_declaration_variable+2;i<entrer.size();i++)        {entrer_contrainte.emplace_back(entrer[i].c_str()); }
 
 cout<<" fin probleme"<<endl;
 }
@@ -77,10 +77,10 @@ void Probleme::afficher()
 
 
     std::cout << "Le probleme : " << this->nom_Probleme<<std::endl;
-    std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
+//    std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
 
 
-    for(Variable* variable:Variables) { variable->affichage();}
+//    for(Variable* variable:Variables) { variable->affichage();}
    // for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
 
 

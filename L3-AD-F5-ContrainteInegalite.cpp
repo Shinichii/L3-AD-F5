@@ -13,18 +13,25 @@ Si cela n'est pas le cas la fonction renverra false
 bool ContrainteInegalite::contrainteRespectee()
 {
 	Variable reference = variables.front();
-	for (list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
+	for (std::list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
-		for (list<Variable>::iterator it2 = it++; it2 != variables.end(); it2++)
+		if (*it == VALEUR_NON_DEFINIE)
 		{
-			if (*it == VALEUR_NON_DEFINIE)
+			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
+		}
+		else
+		{
+			for (std::list<Variable>::iterator it2 = it++; it2 != variables.end(); it2++)
 			{
-				DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
-			}
-			else if (*it == *it2)
-			{
-				DEBUG_MSG("[INFO] : Valeurs identiques, Contrainte non respectee.");
-				return false;
+				if (*it2 == VALEUR_NON_DEFINIE)
+				{
+					DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
+				}
+				else if (*it == *it2)
+				{
+					DEBUG_MSG("[INFO] : Valeurs identiques, Contrainte non respectee.");
+					return false;
+				}
 			}
 		}
 	}

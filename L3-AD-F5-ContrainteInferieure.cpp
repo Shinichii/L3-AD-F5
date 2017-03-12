@@ -12,7 +12,7 @@ Si cela n'est pas le cas où qu'une valeur est non definie alors elle renverra fa
 */
 bool ContrainteInferieure::contrainteRespectee()
 {
-	for (list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
+	for (std::list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if (*it == VALEUR_NON_DEFINIE)
 		{

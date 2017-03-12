@@ -35,7 +35,7 @@ Parametres : Le nom de la variable ou la variable � retirer
 Renvoie : true si elle est parvenue � retirer la variable, false sinon.
 Explication: La fonction cherche la variable � retirer. Si elle la trouve
 */
-bool Contrainte::retirerVariable(string nom)
+bool Contrainte::retirerVariable(std::string nom)
 {
 	for (std::list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
 	{

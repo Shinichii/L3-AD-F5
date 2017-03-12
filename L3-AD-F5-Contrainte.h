@@ -10,21 +10,23 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <list>
+#include <iostream>
 class Contrainte {
 
 protected:
-	list<Variable> variables;
-    /*
-		Variables a mettre ici 
+	std::list<Variable> variables;
+	/*
+		Variables a mettre ici
 	*/
-	
+
 public:
-    Contrainte();
+	Contrainte();
 	virtual bool contrainteRespectee() = 0;
 	bool ajouterVariable(Variable var);
-	bool retirerVariable(string nom);
+	bool retirerVariable(std::string nom);
 	bool retirerVariable(Variable var);
 
-
+};
 
 #endif //L3_AD_F5_CONTRAINTE_H

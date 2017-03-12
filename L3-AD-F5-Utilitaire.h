@@ -15,7 +15,7 @@ using namespace std;
 class Utilitaire {
 
 public:
-
+	/*
     static vector<string> parse(string entrer);
     static void affichageln( vector<string> entrer);
     static void affichage(vector<string> entrer);
@@ -23,6 +23,7 @@ public:
     static bool is_number(const std::string& s);
 
     static  vector<string> parse(vector<string> vecteur, int debut, int fin);
+	*/
 };
 
 

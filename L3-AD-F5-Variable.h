@@ -16,13 +16,13 @@
 
 class Variable {
 public :
-   string nom;
-   vector<int> domaine;
+   std::string nom;
+   std::vector<int> domaine;
    int valeur;
 
 	Variable();
-	string const& getNom() const;
-	void Variable::setNom(string const& nom);
+	std::string const& getNom() const;
+	void Variable::setNom(std::string const& nom);
 	int const& getValeur() const;
 	void setValeur(int const& valeur);
    void affichage();
