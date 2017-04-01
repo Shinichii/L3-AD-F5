@@ -147,7 +147,7 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 		if (nouvelleContrainte != NULL)
 		{
 			ContrainteSeuil* casted = (ContrainteSeuil*)nouvelleContrainte;
-			if (code > 3)
+			if (code > 3 && code < 7)
 			{
 				std::string tmp;
 				while (ligne[i] == ' ' && i < ligne.length())
@@ -160,6 +160,54 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 					i++;
 				}
 				casted->setSeuil(std::stoi(tmp));
+			}
+			if (code == 7)
+			{
+				ContrainteSommePonderee* casted = (ContrainteSommePonderee*)nouvelleContrainte;
+				while (i < ligne.length())
+				{
+					bool ponderation = true;
+					bool resultat = false;
+					std::string tmp;
+					c = ligne[i];
+					while (c != ' ' && c != '\n' && c != '\0' && c != '-' && i < ligne.length())
+					{
+						tmp += c;
+						i++;
+						c = ligne[i];
+					}
+					if (tmp != "" && resultat == false)
+					{
+						if (ponderation)
+						{
+							casted->ajouterPonderationVariable(std::stoi(tmp));
+							ponderation = false;
+						}
+						else
+						{
+							casted->ajouterVariable(p.chercherVariable(std::stoi(tmp)));
+							ponderation = true;
+						}
+						if (c == '=')
+						{
+							resultat = true;
+						}
+					}
+					else
+					{
+						if (ponderation)
+						{
+							casted->ajouterPonderationResultat(std::stoi(tmp));
+							ponderation = false;
+						}
+						else
+						{
+							casted->ajouterResultat(p.chercherVariable(std::stoi(tmp)));
+							ponderation = true;
+						}
+					}
+					i++;
+				}
 			}
 			while (i < ligne.length())
 			{

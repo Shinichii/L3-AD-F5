@@ -71,7 +71,7 @@ void Probleme::afficher()
 {
 	for (Variable* variable : variables)
 	{
-		std::cout << variable;
+		std::cout << *variable;
 	}
 
 }
@@ -129,4 +129,77 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 		std::cout << "[INFO] Code Contrainte non reconnue" << std::endl;
 	}
 	return c;
+}
+
+Etat Probleme::constructionEtatInitial()
+{
+	Etat e;
+	for (Variable* variable : variables)
+	{
+		if (variable->getValeur() != VALEUR_NON_DEFINIE)
+		{
+			e.variablesAssignees.push_back(variable);
+		}
+	}
+	e.etat = indetermine;
+	return Etat(e);
+}
+
+Etat Probleme::resolutionProbleme(Etat e)
+{
+	if (e.variablesAssignees == this->variables)
+	{
+		e.etat = succes;
+		return e;
+	}
+	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
+	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
+	Variable *variable = nonAssignees.at(0);
+	std::vector<int> domaine = variable->getDomaine();
+		for (int i = 0; i < domaine.size(); i++)
+		{
+			std::cout << "[ " << variable->getNom() << " ]" << " = " << "[ "<< domaine.at(i) << " ]" << std::endl;
+			int valeur = domaine.at(i);
+			variable->setValeur(valeur);
+			if (this->estConsistant())
+			{
+				Etat e2 = e;
+				e2.etat = indetermine;
+				e2.variablesAssignees.push_back(variable);
+				e2 = resolutionProbleme(e2);
+				if (e2.etat == succes)
+				{
+					return e2;
+				}
+			}
+		}
+		variable->remettreValeursInitiales();
+		e.etat = echec;
+		return e;
+}
+
+bool Probleme::estConsistant()
+{
+	for (Contrainte* contrainte : this->contraintes)
+	{
+		if (!contrainte->contrainteRespectee())
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure)
+{
+	std::vector<Variable*> fusionne;
+	for (std::vector<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
+	{
+		//Si je trouve it dans aExclure je l'ajoute pas.
+		if (std::find(aExclure.begin(), aExclure.end(), *it) == aExclure.end())
+		{
+			fusionne.push_back(*it);
+		}
+	}
+	return std::vector<Variable*>(fusionne);
 }

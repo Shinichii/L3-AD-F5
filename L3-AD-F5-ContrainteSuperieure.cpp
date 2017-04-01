@@ -17,6 +17,7 @@ bool ContrainteSuperieure::contrainteRespectee()
 		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
+			return true;
 		}
 		else if ((*it)->getValeur() < seuil)
 		{

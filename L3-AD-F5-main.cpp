@@ -16,12 +16,21 @@ int main() {
 	s = choisirElement(".txt");
 
 	ouvrirFichier(s, F);
-	//vc = importerFichier(F);
 	Probleme p;
 	lectureFichier(F, p);
 	p.afficher();
-	//sauvegarderDansFichier(vc, "test");
+	Etat e = p.resolutionProbleme(p.constructionEtatInitial());
+	if (e.etat == echec)
+	{
+		std::cout << "oh oh ";
+	}
+	if (e.etat == succes)
+	{
+		std::cout << "CONGRATULATIONS" << std::endl;
+		p.afficher();
+	}
 	fermerFichier(F);
+	
 
     return 0;
 

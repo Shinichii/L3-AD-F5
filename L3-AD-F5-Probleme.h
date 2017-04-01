@@ -1,5 +1,3 @@
-
-
 #ifndef L3_AD_F5_PROBLEME_H
 #define L3_AD_F5_PROBLEME_H
 
@@ -12,17 +10,31 @@
 #include "L3-AD-F5-ContrainteSommeSuperieureEgale.h"
 #include "L3-AD-F5-ContrainteInferieure.h"
 #include "L3-AD-F5-ContrainteSuperieure.h"
+#include "L3-AD-F5-ContrainteSommePonderee.h"
 
 #include <vector>
-
 #include <string>
+#include <iterator>
+
+enum realisation
+{
+	indetermine = 0x0,
+	non_initialise = 0x1,
+	succes = 0x2,
+	echec = 0x3
+};
+
+typedef struct
+{
+	std::vector<Variable*> variablesAssignees;
+	realisation etat = indetermine;
+}Etat;
 
 class Probleme {
 
 public:
 
      std::string nom_Probleme;
-     int nb_variable;
      std::vector<Variable*> variables;
 	 std::vector<Contrainte*> contraintes;
 
@@ -41,13 +53,14 @@ public:
 	Variable* chercherVariable(int nom);
 	Contrainte* ajouterContrainte(int typeContrainte);
 
+	//Resolution du probleme
+	Etat constructionEtatInitial();
+	Etat resolutionProbleme(Etat e);
 
-
-
-    //autre
-
-
+	//Avec les contraintes
+	bool estConsistant();
 };
+std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure);
 
 
 #endif //L3_AD_F5_PROBLEME_H

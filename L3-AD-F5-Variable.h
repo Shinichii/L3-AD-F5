@@ -4,7 +4,7 @@
 
 #ifndef L3_AD_F5_VARIABLE_H
 #define L3_AD_F5_VARIABLE_H
-#define VALEUR_NON_DEFINIE -2147483648 
+#define VALEUR_NON_DEFINIE 325687
 
 #include <iostream>
 
@@ -18,7 +18,9 @@ class Variable {
 public :
    int nom;
    std::vector<int> domaine;
+   std::vector<int> domaineInitial;
    int valeur;
+   int valeurInitiale;
 
 	Variable();
 	Variable(int nom, std::vector<int> domaine);
@@ -27,13 +29,17 @@ public :
 	void Variable::setNom(int const& nom);
 	int const& getValeur() const;
 	void setValeur(int const& valeur);
-	
+
+	void remettreValeursInitiales();
+	void remettreDomaineInitial();
+	void remettreEtatInitial();
+
 	std::vector<int> getDomaine();
 
 	bool valeurDansLeDomaine(int valeur);
 	void reduireDomaine(int valeur);
-	void reduireDomaine(int valeurs[]);
 	void reduireDomaine(std::vector<int> valeurs);
+	void reduireDomaineAUneValeur(int valeur);
 
 	void agrandirDomaine(int valeur);
 	void agrandirDomaine(int valeurs[]);

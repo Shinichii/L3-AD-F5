@@ -19,9 +19,10 @@ bool ContrainteEgalite::contrainteRespectee()
 		{
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
 		}
-		else if ((*it)->getValeur() != reference->getValeur())
+		else if ((*it)->getValeur() != reference->getValeur() && *it != reference)
 		{
 			DEBUG_MSG("[INFO] : Valeurs non identiques, Contrainte non respectee.");
+			DEBUG_MSG("[INFO] : Valeurs en question : x" << (*it)->getNom() << "et x" << reference->getNom());
 			return false;
 		}
 	}
