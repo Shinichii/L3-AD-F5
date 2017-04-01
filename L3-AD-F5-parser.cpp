@@ -107,11 +107,18 @@ std::vector<std::string>::iterator traitementVariables(std::vector<std::string>:
 		nomVariable = c - '0';
 		do
 		{
+			std::string buffer;
 			k++;
 			c = domaineVariable[k];
 			if (c != ' ' && c != '\n')
 			{
-				domaineVariableTraduit.push_back(c - '0');
+				do
+				{
+					buffer += c;
+					k++;
+					c = domaineVariable[k];
+				} while (c != ' ' && k < domaineVariable.length());
+				domaineVariableTraduit.push_back(std::stoi(buffer));
 			}
 		} while (k < domaineVariable.length());
 		p.ajouterVariable(nomVariable, domaineVariableTraduit);
