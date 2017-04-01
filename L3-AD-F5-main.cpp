@@ -30,8 +30,10 @@ int main() {
 		p.afficher();
 	}
 	fermerFichier(F);
-	
+	p.sauvegardeALaCon();
+	std::cout << "Sauvegarde terminee";
 
+	std::cout << "test";
     return 0;
 
 }

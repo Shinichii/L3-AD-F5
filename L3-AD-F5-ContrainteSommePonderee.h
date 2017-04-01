@@ -10,6 +10,7 @@ private:
 public:
 	ContrainteSommePonderee();
 	
+	void ajouterResultat(Variable* resultat);
 	void ajouterPonderationVariable(int ponderation);
 	void ajouterPonderationResultat(int ponderation);
 	bool contrainteRespectee();

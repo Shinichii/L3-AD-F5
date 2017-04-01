@@ -15,6 +15,8 @@
 #include <vector>
 #include <string>
 #include <iterator>
+#include <iostream>
+#include <fstream>
 
 enum realisation
 {
@@ -59,6 +61,8 @@ public:
 
 	//Avec les contraintes
 	bool estConsistant();
+	bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier);
+	void sauvegardeALaCon();
 };
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure);
 

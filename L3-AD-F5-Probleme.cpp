@@ -153,6 +153,11 @@ Etat Probleme::resolutionProbleme(Etat e)
 		return e;
 	}
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
+	if (nonAssignees.size() == 0)
+	{
+		e.etat = succes;
+		return e;
+	}
 	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
 	Variable *variable = nonAssignees.at(0);
 	std::vector<int> domaine = variable->getDomaine();
@@ -188,6 +193,37 @@ bool Probleme::estConsistant()
 		}
 	}
 	return true;
+}
+
+bool Probleme::sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier)
+{
+	std::fstream F;
+	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
+	if (!F.is_open())
+	{
+		std::cout << "[ERREUR] Le fichier ne peut etre cree" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	for (std::vector<std::string>::iterator it = vect.begin(); it != vect.end(); it++)
+	{
+		F << *it << std::endl;
+	}
+	F.close();
+
+	return false;
+}
+
+void Probleme::sauvegardeALaCon()
+{
+	std::vector<std::string> lol;
+	for (Variable* variable : variables)
+	{
+		std::string mdr;
+		mdr += variable->getNom();
+		mdr += variable->getValeur();
+		lol.push_back(mdr);
+	}
+	sauvegarderDansFichier(lol, "resultatSudoku.txt");
 }
 
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure)

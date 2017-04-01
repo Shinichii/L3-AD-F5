@@ -20,7 +20,7 @@ bool ouvrirFichier(const std::string chemin, std::fstream &F)
 		return true;
 	}
 	else
-	{
+	{	
 		DEBUG_MSG("[ERROR] Le fichier ne s'est pas ouvert !");
 		return false;
 	}
