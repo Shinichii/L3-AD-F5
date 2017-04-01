@@ -13,13 +13,7 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------
 
 Probleme::Probleme()
-{
-    vector<string> entrer=getFichier_brut();
-    vector<string> entrer_variable,entrer_contrainte;
-
-
-    nom_Probleme=entrer[0];
-   // nb_variable= atoi(Utilitaire::parse(entrer[1])[0].c_str());
+{  // nb_variable= atoi(Utilitaire::parse(entrer[1])[0].c_str());
 
 //  int longueur_declaration_variable=atoi(Utilitaire::parse(entrer[1])[1].c_str());//peut etre different de nb_variable
 
@@ -41,7 +35,8 @@ cout<<" fin probleme"<<endl;
 
 //--------------------------------------------------------------------------------------------------------------
 vector<string> Probleme::getFichier_brut() // temporaire pour les test en attendant
-{vector<string> retour;
+{
+vector<string> retour;
     retour.emplace_back("8 dames");
     retour.emplace_back("8 3");
     retour.emplace_back("# X { L , C }");
@@ -74,14 +69,64 @@ Probleme::Probleme(string Nom_Probleme)//fonction de test
 
 void Probleme::afficher()
 {
+	for (Variable* variable : variables)
+	{
+		std::cout << variable;
+	}
 
+}
 
-    std::cout << "Le probleme : " << this->nom_Probleme<<std::endl;
-//    std::cout << "Il y a " <<Variables.size()<<" variables :"<<std::endl;
+void Probleme::ajouterVariable(int identificateur, std::vector<int> domaine)
+{
+	variables.push_back(new Variable(identificateur, domaine));
+}
 
+Variable * Probleme::chercherVariable(int nom)
+{
+	for (std::vector<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
+	{
+		if ((*it)->getNom() == nom)
+		{
+			return (*it);
+		}
+	}
+	return nullptr;
+}
 
-//    for(Variable* variable:Variables) { variable->affichage();}
-   // for(Contrainte* contrainte:Contraintes) { contrainte->affichage();}
-
-
+Contrainte* Probleme::ajouterContrainte(int typeContrainte)
+{
+	Contrainte* c = NULL;
+	switch (typeContrainte) {
+	case CONTRAINTE_EGALITE:
+		c = new ContrainteEgalite();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_DIFFERENTE:
+		c = new ContrainteInegalite();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_INFERIEURE_EGALE:
+		c = new ContrainteInferieure();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_SUPERIEURE_EGALE:
+		c = new ContrainteSuperieure();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_SOMME_EXACTE:
+		c = new ContrainteSommeExacte();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_SOMME_INFERIEURE:
+		c = new ContrainteSommeInferieureEgale();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_SOMME_SUPERIEURE:
+		c = new ContrainteSommeSuperieureEgale();
+		contraintes.push_back(c);
+		break;
+	default:
+		std::cout << "[INFO] Code Contrainte non reconnue" << std::endl;
+	}
+	return c;
 }

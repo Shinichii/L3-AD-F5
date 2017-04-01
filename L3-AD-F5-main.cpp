@@ -16,8 +16,11 @@ int main() {
 	s = choisirElement(".txt");
 
 	ouvrirFichier(s, F);
-	vc = importerFichier(F);
-	sauvegarderDansFichier(vc, "test");
+	//vc = importerFichier(F);
+	Probleme p;
+	lectureFichier(F, p);
+	p.afficher();
+	//sauvegarderDansFichier(vc, "test");
 	fermerFichier(F);
 
     return 0;

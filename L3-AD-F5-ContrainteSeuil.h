@@ -1,3 +1,4 @@
+#pragma once
 #include "L3-AD-F5-Contrainte.h"
 class ContrainteSeuil : public Contrainte
 {

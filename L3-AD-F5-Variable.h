@@ -11,24 +11,38 @@
 
 
 #include <vector>
-
+#include <algorithm>
 #include <string>
 
 class Variable {
 public :
-   std::string nom;
+   int nom;
    std::vector<int> domaine;
    int valeur;
 
 	Variable();
-	std::string const& getNom() const;
-	void Variable::setNom(std::string const& nom);
+	Variable(int nom, std::vector<int> domaine);
+
+	int const& getNom() const;
+	void Variable::setNom(int const& nom);
 	int const& getValeur() const;
 	void setValeur(int const& valeur);
-   void affichage();
-   friend bool operator==(const Variable &v1, const Variable &v2);
-   friend bool operator==(Variable &v1, int n);
-   friend bool operator!=(Variable &v1, Variable &v2);
+	
+	std::vector<int> getDomaine();
+
+	bool valeurDansLeDomaine(int valeur);
+	void reduireDomaine(int valeur);
+	void reduireDomaine(int valeurs[]);
+	void reduireDomaine(std::vector<int> valeurs);
+
+	void agrandirDomaine(int valeur);
+	void agrandirDomaine(int valeurs[]);
+	void agrandirDomaine(std::vector<int> valeurs);
+
+	friend std::ostream& operator<<(std::ostream& os, Variable& v1);
+	friend bool operator==(const Variable &v1, const Variable &v2);
+	friend bool operator==(Variable &v1, int n);
+	friend bool operator!=(Variable &v1, Variable &v2);
 
 };
 

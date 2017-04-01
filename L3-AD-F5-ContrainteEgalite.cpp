@@ -12,14 +12,14 @@ Si cela n'est pas le cas où qu'une valeur est non definie alors elle renverra fa
 */
 bool ContrainteEgalite::contrainteRespectee()
 {
-	Variable reference = variables.front();
-	for (std::list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
+	Variable* reference = variables.front();
+	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
-		if (*it == VALEUR_NON_DEFINIE)
+		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
 		}
-		else if (*it != reference)
+		else if ((*it)->getValeur() != reference->getValeur())
 		{
 			DEBUG_MSG("[INFO] : Valeurs non identiques, Contrainte non respectee.");
 			return false;

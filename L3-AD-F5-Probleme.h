@@ -5,7 +5,14 @@
 
 
 #include "L3-AD-F5-Variable.h"
-#include "L3-AD-F5-Contrainte.h"
+#include "L3-AD-F5-ContrainteEgalite.h"
+#include "L3-AD-F5-ContrainteInegalite.h"
+#include "L3-AD-F5-ContrainteSommeExacte.h"
+#include "L3-AD-F5-ContrainteSommeInferieureEgale.h"
+#include "L3-AD-F5-ContrainteSommeSuperieureEgale.h"
+#include "L3-AD-F5-ContrainteInferieure.h"
+#include "L3-AD-F5-ContrainteSuperieure.h"
+
 #include <vector>
 
 #include <string>
@@ -16,8 +23,8 @@ public:
 
      std::string nom_Probleme;
      int nb_variable;
-      Variable Variables;
-      std::vector<Contrainte*> Contraintes;
+     std::vector<Variable*> variables;
+	 std::vector<Contrainte*> contraintes;
 
 
     std::vector<std::string> getFichier_brut();// temporaire pour les test en attendant
@@ -30,7 +37,9 @@ public:
 
     //affichage
     void afficher();
-
+	void ajouterVariable(int identificateur, std::vector<int> domaine);
+	Variable* chercherVariable(int nom);
+	Contrainte* ajouterContrainte(int typeContrainte);
 
 
 

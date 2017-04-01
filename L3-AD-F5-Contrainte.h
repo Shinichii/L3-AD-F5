@@ -12,10 +12,19 @@
 #include <algorithm>
 #include <list>
 #include <iostream>
+
+#define CONTRAINTE_EGALITE 0
+#define CONTRAINTE_DIFFERENTE 1
+#define	CONTRAINTE_INFERIEURE_EGALE 2
+#define CONTRAINTE_SUPERIEURE_EGALE 3
+#define CONTRAINTE_SOMME_EXACTE 4
+#define CONTRAINTE_SOMME_INFERIEURE 5
+#define CONTRAINTE_SOMME_SUPERIEURE 6
+
 class Contrainte {
 
 protected:
-	std::list<Variable> variables;
+	std::list<Variable*> variables;
 	/*
 		Variables a mettre ici
 	*/
@@ -23,9 +32,9 @@ protected:
 public:
 	Contrainte();
 	virtual bool contrainteRespectee() = 0;
-	bool ajouterVariable(Variable var);
-	bool retirerVariable(std::string nom);
-	bool retirerVariable(Variable var);
+	bool ajouterVariable(Variable* var);
+	bool retirerVariable(int nom);
+	bool retirerVariable(Variable* var);
 
 };
 

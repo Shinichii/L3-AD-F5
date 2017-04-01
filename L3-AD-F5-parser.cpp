@@ -66,7 +66,8 @@ bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichie
 	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
 	if (!F.is_open())
 	{
-		std::cout << "BUG";
+		std::cout << "[ERREUR] Le fichier ne peut etre cree" << std::endl;
+		exit(EXIT_FAILURE);
 	}
 	for (std::vector<std::string>::iterator it = vect.begin(); it != vect.end(); it++)
 	{
@@ -75,5 +76,90 @@ bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichie
 	fermerFichier(F);
 
 	return false;
+}
+
+//Lecture du fichier selon le modele du prof.
+void lectureFichier(std::fstream & F, Probleme &p)
+{
+	if (!F.is_open())
+	{
+		return;
+	}
+	std::vector<std::string> lignes = importerFichier(F);
+	std::vector<std::string>::iterator it = lignes.begin(); //Les lignes sont stockees de maniere contigues;
+	
+	it = traitementVariables(it, p);
+	traitementContraintes(it, p);
+}
+
+std::vector<std::string>::iterator traitementVariables(std::vector<std::string>::iterator it, Probleme & p)
+{
+	int nbVariables = std::stoi(*it);
+	for (int i = 0; i < nbVariables; i++)
+	{
+		it++;
+		std::string domaineVariable = *it;
+		char c = ' ';
+		int nomVariable = 0;
+		std::vector<int> domaineVariableTraduit;
+		c = domaineVariable[0];
+		int k = 0;
+		nomVariable = c - '0';
+		do
+		{
+			k++;
+			c = domaineVariable[k];
+			if (c != ' ' && c != '\n')
+			{
+				domaineVariableTraduit.push_back(c - '0');
+			}
+		} while (k < domaineVariable.length());
+		p.ajouterVariable(nomVariable, domaineVariableTraduit);
+	}
+	return ++it;
+}
+
+void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
+{
+	while (*it != "-1")
+	{
+		std::string ligne = *it;
+		char c = ligne[0];
+		int code = c - '0';
+		int i = 1;
+		Contrainte *nouvelleContrainte = p.ajouterContrainte(code);
+		if (nouvelleContrainte != NULL)
+		{
+			ContrainteSeuil* casted = (ContrainteSeuil*)nouvelleContrainte;
+			if (code > 3)
+			{
+				std::string tmp;
+				while (ligne[i] == ' ' && i < ligne.length())
+				{
+					i++;
+				}
+				while (ligne[i] != ' ' && i < ligne.length())
+				{
+					tmp += ligne[i];
+					i++;
+				}
+				casted->setSeuil(std::stoi(tmp));
+			}
+			while (i < ligne.length())
+			{
+				c = ligne[i];
+				if (c != ' ' && c != '\n' && c != '\0' && c != '-')
+				{
+					nouvelleContrainte->ajouterVariable(p.chercherVariable(c - '0'));
+				}
+				if (c == '-')
+				{
+					i = ligne.length();
+				}
+				i++;
+			}
+		}
+		it++;
+	}
 }
 
