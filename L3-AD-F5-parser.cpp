@@ -102,15 +102,20 @@ std::vector<std::string>::iterator traitementVariables(std::vector<std::string>:
 		char c = ' ';
 		int nomVariable = 0;
 		std::vector<int> domaineVariableTraduit;
-		c = domaineVariable[0];
-		int k = 0;
-		nomVariable = c - '0';
+		std::string bufferNomVariable;
+		bufferNomVariable += domaineVariable[0];
+		int k = 1;
+		while(domaineVariable[k] != ' '){
+			bufferNomVariable += domaineVariable[k];
+			k++;
+		}
+		nomVariable = std::stoi(bufferNomVariable);
 		do
 		{
 			std::string buffer;
 			k++;
 			c = domaineVariable[k];
-			if (c != ' ' && c != '\n')
+			if (c != ' ' && c != '\n' && k < domaineVariable.length())
 			{
 				do
 				{
@@ -119,6 +124,10 @@ std::vector<std::string>::iterator traitementVariables(std::vector<std::string>:
 					c = domaineVariable[k];
 				} while (c != ' ' && k < domaineVariable.length());
 				domaineVariableTraduit.push_back(std::stoi(buffer));
+			}
+			else
+			{
+				domaineVariableTraduit.push_back(c - '0');
 			}
 		} while (k < domaineVariable.length());
 		p.ajouterVariable(nomVariable, domaineVariableTraduit);
@@ -154,10 +163,17 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 			}
 			while (i < ligne.length())
 			{
+				std::string tmp;
 				c = ligne[i];
-				if (c != ' ' && c != '\n' && c != '\0' && c != '-')
+				while (c != ' ' && c != '\n' && c != '\0' && c != '-' && i < ligne.length())
 				{
-					nouvelleContrainte->ajouterVariable(p.chercherVariable(c - '0'));
+					tmp += c;
+					i++;
+					c = ligne[i];
+				}
+				if (tmp != "")
+				{
+					nouvelleContrainte->ajouterVariable(p.chercherVariable(std::stoi(tmp)));
 				}
 				if (c == '-')
 				{
