@@ -26,3 +26,14 @@ bool ContrainteInferieure::contrainteRespectee()
 	}
 	return true;
 }
+
+bool ContrainteInferieure::reduireDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+	return false;
+}
+
+void ContrainteInferieure::remettreDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+}

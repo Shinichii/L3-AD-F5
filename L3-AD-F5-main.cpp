@@ -19,7 +19,7 @@ int main() {
 	Probleme p;
 	lectureFichier(F, p);
 	p.afficher();
-	Etat e = p.resolutionProbleme(p.constructionEtatInitial());
+	Etat e = p.resolutionProblemeReductionValeur(p.constructionEtatInitialReductionDomaineValeurs());
 	if (e.etat == echec)
 	{
 		std::cout << "oh oh ";
@@ -30,7 +30,6 @@ int main() {
 		p.afficher();
 	}
 	fermerFichier(F);
-	p.sauvegardeALaCon();
 	std::cout << "Sauvegarde terminee";
 
 	std::cout << "test";
