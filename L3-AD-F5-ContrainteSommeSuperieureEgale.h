@@ -7,7 +7,6 @@ class ContrainteSommeSuperieureEgale : public ContrainteSeuil
 public:
 	ContrainteSommeSuperieureEgale();
 	bool contrainteRespectee();
-	bool reduireDomaines(Variable* var);
-	void remettreDomaines(Variable* var);
+
 };
 

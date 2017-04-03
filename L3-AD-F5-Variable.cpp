@@ -72,24 +72,6 @@ void Variable::reduireDomaineAUneValeur(int valeur)
 	this->domaine = std::vector<int>(1, valeur);
 }
 
-void Variable::agrandirDomaine(int valeur)
-{
-	if (!domaineContient(valeur))
-	{
-		this->domaine.push_back(valeur);
-	}
-}
-
-bool Variable::domaineInitialContient(int valeur)
-{
-	return std::find(this->domaineInitial.begin(), this->domaineInitial.end(), valeur) != this->domaineInitial.end();
-}
-
-bool Variable::domaineContient(int valeur)
-{
-	return std::find(this->domaine.begin(), this->domaine.end(), valeur) != this->domaine.end();
-}
-
 
 
 
@@ -142,10 +124,10 @@ bool operator==(Variable &v1, int n)
 }
 std::ostream& operator<<(std::ostream& os, Variable& v1)
 {
-	os << "Variable x" << v1.getNom() << std::endl;
+	std::cout << "Variable x" << v1.getNom() << std::endl;
 	if (v1.getValeur() == VALEUR_NON_DEFINIE)
 	{
-		os << "Domaine = ";
+		std::cout << "Domaine = ";
 		std::vector<int> domaine = v1.getDomaine();
 		for (std::vector<int>::iterator it = domaine.begin(); it != domaine.end(); it++)
 		{
@@ -154,8 +136,8 @@ std::ostream& operator<<(std::ostream& os, Variable& v1)
 	}
 	else
 	{
-		os << "Valeur = " << v1.getValeur();
+		std::cout << "Valeur = " << v1.getValeur();
 	}
-	os << std::endl;
+	
 	return os;
 }

@@ -28,14 +28,3 @@ bool ContrainteEgalite::contrainteRespectee()
 	}
 	return true;
 }
-
-bool ContrainteEgalite::reduireDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-	return false;
-}
-
-void ContrainteEgalite::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}

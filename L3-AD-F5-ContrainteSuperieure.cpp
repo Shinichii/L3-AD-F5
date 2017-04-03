@@ -27,14 +27,3 @@ bool ContrainteSuperieure::contrainteRespectee()
 	}
 	return true;
 }
-
-bool ContrainteSuperieure::reduireDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-	return false;
-}
-
-void ContrainteSuperieure::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}

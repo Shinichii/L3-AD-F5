@@ -42,10 +42,8 @@ public :
 	void reduireDomaineAUneValeur(int valeur);
 
 	void agrandirDomaine(int valeur);
+	void agrandirDomaine(int valeurs[]);
 	void agrandirDomaine(std::vector<int> valeurs);
-
-	bool domaineInitialContient(int valeur);
-	bool domaineContient(int valeur);
 
 	friend std::ostream& operator<<(std::ostream& os, Variable& v1);
 	friend bool operator==(const Variable &v1, const Variable &v2);

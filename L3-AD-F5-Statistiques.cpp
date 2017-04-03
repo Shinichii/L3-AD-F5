@@ -39,11 +39,6 @@ void Statistiques::incrementerProfondeur_Max_Elagages()
 	this->profondeur_max_elagage++;
 }
 
-double const& Statistiques::getTemps() const
-{
-	return (double)std::chrono::duration_cast<std::chrono::nanoseconds> (finTimer - debutTimer).count();
-}
-
 void Statistiques::remiseAZero()
 {
 	this->nb_Elagages = 0;
@@ -51,19 +46,13 @@ void Statistiques::remiseAZero()
 	this->profondeur_max_elagage = 0;
 }
 
-void Statistiques::demarrerTimer()
+ostream& operator<<(ostream& os, const Statistiques& stats)
 {
-	this->debutTimer = Clock::now();
-}
-
-std::ostream& operator<<(std::ostream& os, const Statistiques& stats)
-{
-	os << "[STATISTIQUES POUR LA RESOLUTION]" << std::endl;
-	os << "=================================" << std::endl;
-	os << "Nombre de noeuds crees : " << stats.getNb_Noeuds() << std::endl;
-	os << "Nombre d'elagages effectues : " << stats.getNb_Elagages() << std::endl;
-	os << "Profondeur max d'elagage : " << stats.getProfondeur_Max_Elagage() << std::endl;
-	os << "Temps effectue : " << stats.getTemps() << std::endl;
-	os << "=================================" << std::endl;
+	os << "[STATISTIQUES POUR LA RESOLUTION]" << endl;
+	os << "=================================" << endl;
+	os << "Nombre de noeuds crees : " << stats.getNb_Noeuds() << endl;
+	os << "Nombre d'elagages effectues : " << stats.getNb_Elagages() << endl;
+	os << "Profondeur max d'elagage : " << stats.getProfondeur_Max_Elagage() << endl;
+	os << "=================================" << endl;
 	return os;
 }

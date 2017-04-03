@@ -38,29 +38,3 @@ bool ContrainteInegalite::contrainteRespectee()
 	DEBUG_MSG("[INFO] : Contrainte respectee");
 	return true;
 }
-void ContrainteInegalite::remettreDomaines(Variable* var)
-{
-	for (Variable* variable : this->variables)
-	{
-		if (variable->domaineInitialContient(var->getValeur()))
-		{
-			variable->agrandirDomaine(var->getValeur());
-		}
-	}
-}
-bool ContrainteInegalite::reduireDomaines(Variable * var)
-{
-	for (Variable* v : variables)
-	{
-		if (v != var)
-		{
-			v->reduireDomaine(var->getValeur());
-			if (v->getDomaine().size() == 0)
-			{
-				DEBUG_MSG("[INFO] : Domaine vide, solution non viable");
-				return false;
-			}
-		}
-	}
-	return true;
-}

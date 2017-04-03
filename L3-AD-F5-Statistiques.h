@@ -1,17 +1,13 @@
 #include <iostream>
-#include <chrono>
 //Crée par Aurélien DENIS le 18/03/2017
 
 /*
 Cette classe a pour but de récupérer des données statistiques lors de la résolution d'un problème.
 */
-typedef std::chrono::high_resolution_clock Clock;
+using namespace std;
 class Statistiques
 {
 private:
-	std::string nomMethode;
-	std::chrono::high_resolution_clock::time_point debutTimer;
-	std::chrono::high_resolution_clock::time_point finTimer;
 	int nb_Noeuds;
 	int nb_Elagages;
 	int profondeur_max_elagage;
@@ -21,15 +17,13 @@ public:
 	int const& getNb_Noeuds() const;
 	int const& getNb_Elagages() const;
 	int const& getProfondeur_Max_Elagage() const;
-	double const& getTemps() const;
 
 	void incrementerNb_Noeuds();
 	void incrementerNb_Elagages();
 	void incrementerProfondeur_Max_Elagages();
 
 	void remiseAZero();
-	void demarrerTimer();
-	void terminerTimer();
-	friend std::ostream& operator<<(std::ostream& os,const Statistiques& stats);
+
+	friend ostream& operator<<(ostream& os,const Statistiques& stats);
 
 };

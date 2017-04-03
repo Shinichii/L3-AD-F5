@@ -5,6 +5,4 @@ class ContrainteEgalite : public Contrainte
 public:
 	ContrainteEgalite();
 	bool contrainteRespectee();
-	bool reduireDomaines(Variable* var);
-	void remettreDomaines(Variable* var);
 };

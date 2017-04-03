@@ -5,6 +5,4 @@ class ContrainteInegalite : public Contrainte
 public:
 	ContrainteInegalite();
 	bool contrainteRespectee();
-	bool reduireDomaines(Variable* var);
-	void remettreDomaines(Variable* var);
 };

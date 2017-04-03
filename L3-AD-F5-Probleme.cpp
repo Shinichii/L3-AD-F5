@@ -145,18 +145,13 @@ Etat Probleme::constructionEtatInitial()
 	return Etat(e);
 }
 
-Etat Probleme::constructionEtatInitialReductionDomaineValeurs()
+Etat Probleme::resolutionProbleme(Etat e)
 {
-	Etat e = this->constructionEtatInitial();
-	for (Variable* var : e.variablesAssignees)
+	if (e.variablesAssignees == this->variables)
 	{
-		this->reductionDomaineValeurs(var);
+		e.etat = succes;
+		return e;
 	}
-	return Etat(e);
-}
-
-Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
-{
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
 	if (nonAssignees.size() == 0)
 	{
@@ -176,7 +171,7 @@ Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 				Etat e2 = e;
 				e2.etat = indetermine;
 				e2.variablesAssignees.push_back(variable);
-				e2 = resolutionProblemeRechercheProfondeurDAbord(e2);
+				e2 = resolutionProbleme(e2);
 				if (e2.etat == succes)
 				{
 					return e2;
@@ -186,64 +181,6 @@ Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 		variable->remettreValeursInitiales();
 		e.etat = echec;
 		return e;
-}
-
-bool Probleme::reductionDomaineValeurs(Variable * v)
-{
-	for (Contrainte* c : this->contraintes)
-	{
-		if (c->contient(v))
-		{
-			if(c->reduireDomaines(v) == false)
-				return false;
-		}
-	}
-	return true;
-}
-
-void Probleme::remettreDomaineValeurs(Variable * v)
-{
-	for (Contrainte* c : this->contraintes)
-	{
-		c->remettreDomaines(v);
-	}
-}
-
-Etat Probleme::resolutionProblemeReductionValeur(Etat e)
-{
-	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
-	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
-	if (nonAssignees.size() == 0)
-	{
-		e.etat = succes;
-		return e;
-	}
-	Variable* variable = nonAssignees.at(0);
-		for (int valeur : variable->getDomaine())
-		{
-			variable->setValeur(valeur);
-			if (this->estConsistant())
-			{
-				Etat e2 = e;
-				e2.variablesAssignees.push_back(variable);
-				bool resultatReduction = this->reductionDomaineValeurs(variable);
-				if (resultatReduction == false)
-				{
-					this->remettreDomaineValeurs(variable);
-				}
-				else
-				{
-					e2 = this->resolutionProblemeReductionValeur(e2);
-					if (e2.etat == succes)
-					{
-						return e2;
-					}
-				}
-			}
-		}
-		variable->remettreValeursInitiales();
-	e.etat = echec;
-	return Etat(e);
 }
 
 bool Probleme::estConsistant()
@@ -256,6 +193,37 @@ bool Probleme::estConsistant()
 		}
 	}
 	return true;
+}
+
+bool Probleme::sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier)
+{
+	std::fstream F;
+	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
+	if (!F.is_open())
+	{
+		std::cout << "[ERREUR] Le fichier ne peut etre cree" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	for (std::vector<std::string>::iterator it = vect.begin(); it != vect.end(); it++)
+	{
+		F << *it << std::endl;
+	}
+	F.close();
+
+	return false;
+}
+
+void Probleme::sauvegardeALaCon()
+{
+	std::vector<std::string> lol;
+	for (Variable* variable : variables)
+	{
+		std::string mdr;
+		mdr += variable->getNom();
+		mdr += variable->getValeur();
+		lol.push_back(mdr);
+	}
+	sauvegarderDansFichier(lol, "resultatSudoku.txt");
 }
 
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure)

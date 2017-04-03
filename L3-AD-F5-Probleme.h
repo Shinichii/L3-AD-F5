@@ -11,7 +11,6 @@
 #include "L3-AD-F5-ContrainteInferieure.h"
 #include "L3-AD-F5-ContrainteSuperieure.h"
 #include "L3-AD-F5-ContrainteSommePonderee.h"
-#include "L3-AD-F5-Statistiques.h"
 
 #include <vector>
 #include <string>
@@ -58,14 +57,12 @@ public:
 
 	//Resolution du probleme
 	Etat constructionEtatInitial();
-	Etat constructionEtatInitialReductionDomaineValeurs();
-	Etat resolutionProblemeRechercheProfondeurDAbord(Etat e);
-	bool reductionDomaineValeurs(Variable *v);
-	void remettreDomaineValeurs(Variable *v);
-	Etat resolutionProblemeReductionValeur(Etat e);
+	Etat resolutionProbleme(Etat e);
 
 	//Avec les contraintes
 	bool estConsistant();
+	bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier);
+	void sauvegardeALaCon();
 };
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure);
 

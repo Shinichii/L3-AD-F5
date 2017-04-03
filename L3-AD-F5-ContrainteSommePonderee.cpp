@@ -1,16 +1,5 @@
 #include "L3-AD-F5-ContrainteSommePonderee.h"
 
-bool ContrainteSommePonderee::reduireDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-	return false;
-}
-
-void ContrainteSommePonderee::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}
-
 void ContrainteSommePonderee::ajouterResultat(Variable * resultat)
 {
 	this->resultat.push_back(resultat);

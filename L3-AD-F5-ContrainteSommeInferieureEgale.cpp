@@ -36,14 +36,3 @@ bool ContrainteSommeInferieureEgale::contrainteRespectee()
 		return false;
 	}
 }
-
-bool ContrainteSommeInferieureEgale::reduireDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-	return false;
-}
-
-void ContrainteSommeInferieureEgale::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}
