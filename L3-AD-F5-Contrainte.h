@@ -36,7 +36,9 @@ public:
 	bool ajouterVariable(Variable* var);
 	bool retirerVariable(int nom);
 	bool retirerVariable(Variable* var);
-
+	bool contient(Variable* var);
+	virtual bool reduireDomaines(Variable* var) = 0;
+	virtual void remettreDomaines(Variable* var) = 0;
 };
 
 #endif //L3_AD_F5_CONTRAINTE_H

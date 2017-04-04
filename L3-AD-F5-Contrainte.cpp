@@ -55,3 +55,11 @@ bool Contrainte::retirerVariable(Variable* var)
 	return retirerVariable(var->getNom());
 }
 
+bool Contrainte::contient(Variable * var)
+{
+	return (std::find(variables.begin(), variables.end(), var) != variables.end());
+}
+
+
+
+

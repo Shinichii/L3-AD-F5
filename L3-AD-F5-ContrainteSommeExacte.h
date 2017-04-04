@@ -6,6 +6,7 @@ class ContrainteSommeExacte : public ContrainteSeuil
 public:
 	ContrainteSommeExacte();
 	bool contrainteRespectee();
-
+	bool reduireDomaines(Variable* var);
+	void remettreDomaines(Variable* var);
 };
 

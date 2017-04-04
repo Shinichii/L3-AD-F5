@@ -37,3 +37,14 @@ bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 		return false;
 	}
 }
+
+bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+	return false;
+}
+
+void ContrainteSommeSuperieureEgale::remettreDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+}

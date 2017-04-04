@@ -41,3 +41,14 @@ bool ContrainteSommeExacte::contrainteRespectee()
 
 }
 
+bool ContrainteSommeExacte::reduireDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+	return false;
+}
+
+void ContrainteSommeExacte::remettreDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+}
+
