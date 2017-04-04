@@ -157,6 +157,7 @@ Etat Probleme::constructionEtatInitialReductionDomaineValeurs()
 	{
 		if (var->getDomaine().size() == 1)
 		{
+			var->setValeur(var->getDomaine().at(0));
 			e.variablesAssignees.push_back(var);
 		}
 	}
@@ -198,13 +199,13 @@ Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 
 bool Probleme::reductionDomaineValeurs(Variable * v)
 {
-	bool change = false;
+	bool change = true;
 	for (Contrainte* c : this->contraintes)
 	{
 		if (c->contient(v))
 		{
-			if (c->reduireDomaines(v) == true)
-				change = true;
+			if (c->reduireDomaines(v) == false)
+				change = false;
 		}
 	}
 	return change;
@@ -270,7 +271,7 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 					{
 						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
 					}
-					domaines.clear();
+					variable->remettreValeursInitiales();
 					e.etat = echec;
 					return e;
 				}

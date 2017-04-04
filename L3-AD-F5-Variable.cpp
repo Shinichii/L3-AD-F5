@@ -56,7 +56,10 @@ bool Variable::valeurDansLeDomaine(int valeur)
 
 void Variable::reduireDomaine(int valeur)
 {
-	this->domaine.erase(std::remove(this->domaine.begin(), this->domaine.end(), valeur), this->domaine.end());
+	if (domaineContient(valeur))
+	{
+		this->domaine.erase(std::remove(this->domaine.begin(), this->domaine.end(), valeur), this->domaine.end());
+	}
 }
 
 void Variable::reduireDomaine(std::vector<int> valeurs)

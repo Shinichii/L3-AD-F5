@@ -55,7 +55,8 @@ bool ContrainteInegalite::reduireDomaines(Variable * var)
 		if (v != var)
 		{
 			v->reduireDomaine(var->getValeur());
-			if (v->getDomaine().size() == 0)
+			int s = v->getDomaine().size();
+			if (s == 0)
 			{
 				DEBUG_MSG("[INFO] : Domaine vide, solution non viable");
 				return false;

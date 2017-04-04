@@ -19,8 +19,8 @@ int main() {
 	Probleme p;
 	lectureFichier(F, p);
 	p.afficher();
-	//Etat e = p.resolutionProblemeReductionValeur(p.constructionEtatInitialReductionDomaineValeurs());
-	Etat e = p.resolutionProblemeRechercheProfondeurDAbord(p.constructionEtatInitial());
+	Etat e = p.resolutionProblemeReductionValeur(p.constructionEtatInitialReductionDomaineValeurs());
+	//Etat e = p.resolutionProblemeRechercheProfondeurDAbord(p.constructionEtatInitial());
 	if (e.etat == echec)
 	{
 		std::cout << "oh oh ";
@@ -31,8 +31,8 @@ int main() {
 		p.afficher();
 	}
 	fermerFichier(F);
-	std::cout << "Sauvegarde terminee";
 
+	std::cout << "Sauvegarde terminee";
 	std::cout << "test";
     return 0;
 
