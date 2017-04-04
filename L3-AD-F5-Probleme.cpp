@@ -152,6 +152,14 @@ Etat Probleme::constructionEtatInitialReductionDomaineValeurs()
 	{
 		this->reductionDomaineValeurs(var);
 	}
+	e.variablesAssignees.clear();
+	for (Variable* var : this->variables)
+	{
+		if (var->getDomaine().size() == 1)
+		{
+			e.variablesAssignees.push_back(var);
+		}
+	}
 	return Etat(e);
 }
 
@@ -253,6 +261,7 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 						{
 							nonAssignees.at(i)->remettreDomaine(domaines.at(i));
 						}
+						domaines.clear();
 					}
 				}
 				else
@@ -261,6 +270,7 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 					{
 						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
 					}
+					domaines.clear();
 					e.etat = echec;
 					return e;
 				}
