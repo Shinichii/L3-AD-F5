@@ -90,6 +90,15 @@ bool Variable::domaineContient(int valeur)
 	return std::find(this->domaine.begin(), this->domaine.end(), valeur) != this->domaine.end();
 }
 
+void Variable::remettreDomaine(std::vector<int> valeurs)
+{
+	this->domaine.clear();
+	for (int i : valeurs)
+	{
+		this->domaine.push_back(i);
+	}
+}
+
 
 
 

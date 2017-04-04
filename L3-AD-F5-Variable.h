@@ -47,6 +47,8 @@ public :
 	bool domaineInitialContient(int valeur);
 	bool domaineContient(int valeur);
 
+	void remettreDomaine(std::vector<int> valeurs);
+
 	friend std::ostream& operator<<(std::ostream& os, Variable& v1);
 	friend bool operator==(const Variable &v1, const Variable &v2);
 	friend bool operator==(Variable &v1, int n);

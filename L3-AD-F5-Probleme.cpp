@@ -190,15 +190,16 @@ Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 
 bool Probleme::reductionDomaineValeurs(Variable * v)
 {
+	bool change = false;
 	for (Contrainte* c : this->contraintes)
 	{
 		if (c->contient(v))
 		{
-			if(c->reduireDomaines(v) == false)
-				return false;
+			if (c->reduireDomaines(v) == true)
+				change = true;
 		}
 	}
-	return true;
+	return change;
 }
 
 void Probleme::remettreDomaineValeurs(Variable * v)
@@ -219,29 +220,53 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 		return e;
 	}
 	Variable* variable = nonAssignees.at(0);
-		for (int valeur : variable->getDomaine())
+	std::vector<int> domaineTemporaire = variable->getDomaine();
+		for (int valeur : domaineTemporaire)
 		{
+			std::cout << "[ " << variable->getNom() << " ]" << " = " << "[ " << valeur << " ]" << std::endl;
 			variable->setValeur(valeur);
 			if (this->estConsistant())
 			{
 				Etat e2 = e;
+				std::vector < std::vector<int>> domaines;
 				e2.variablesAssignees.push_back(variable);
-				bool resultatReduction = this->reductionDomaineValeurs(variable);
-				if (resultatReduction == false)
+				for (Variable* var : nonAssignees)
 				{
-					this->remettreDomaineValeurs(variable);
+					domaines.push_back(var->getDomaine());
 				}
-				else
+				bool resultatReduction = this->reductionDomaineValeurs(variable);
+				if (resultatReduction == true)
 				{
+					domaines.clear();
+					for (Variable* var : nonAssignees)
+					{
+						domaines.push_back(var->getDomaine());
+					}
 					e2 = this->resolutionProblemeReductionValeur(e2);
 					if (e2.etat == succes)
 					{
 						return e2;
 					}
+					else
+					{
+						for (int i = 0; i < nonAssignees.size(); i++)
+						{
+							nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+						}
+					}
+				}
+				else
+				{
+					for (int i = 0; i < domaines.size(); i++)
+					{
+						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+					}
+					e.etat = echec;
+					return e;
 				}
 			}
 		}
-		variable->remettreValeursInitiales();
+	variable->remettreValeursInitiales();
 	e.etat = echec;
 	return Etat(e);
 }
