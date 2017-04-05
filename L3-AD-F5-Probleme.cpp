@@ -261,6 +261,81 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 	return Etat(e);
 }
 
+Etat Probleme::resolutionProblemeVariablePlusContrainte(Etat e)
+{
+	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
+	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
+	if (nonAssignees.size() == 0)
+	{
+		e.etat = succes;
+		return e;
+	}
+	Variable* variable = this->chercherVariableLaPlusContrainte(nonAssignees);
+	std::vector<int> domaineTemporaire = variable->getDomaine();
+	for (int valeur : domaineTemporaire)
+	{
+		std::cout << "[ " << variable->getNom() << " ]" << " = " << "[ " << valeur << " ]" << std::endl;
+		variable->setValeur(valeur);
+		if (this->estConsistant())
+		{
+			Etat e2 = e;
+			std::vector < std::vector<int>> domaines;
+			e2.variablesAssignees.push_back(variable);
+			for (Variable* var : nonAssignees)
+			{
+				domaines.push_back(var->getDomaine());
+			}
+			variable->reduireDomaineAUneValeur(variable->getValeur());
+			bool resultatReduction = this->reductionDomaineValeurs(variable);
+			if (resultatReduction == true)
+			{
+				e2 = this->resolutionProblemeReductionValeur(e2);
+				if (e2.etat == succes)
+				{
+					return e2;
+				}
+				else
+				{
+					for (int i = 0; i < nonAssignees.size(); i++)
+					{
+						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+					}
+					domaines.clear();
+				}
+			}
+			else
+			{
+				for (int i = 0; i < nonAssignees.size(); i++)
+				{
+					nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+				}
+				variable->remettreValeursInitiales();
+			}
+		}
+	}
+	variable->remettreValeursInitiales();
+	e.etat = echec;
+	return Etat(e);
+}
+
+Variable * Probleme::chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees)
+{
+	if (nonAssignees.size() <= 0)
+	{
+		DEBUG_MSG("[ERREUR] : Vecteur nonAssignees n'a pas d'element");
+		return NULL;
+	}
+	Variable* variableLaPlusContrainte = nonAssignees.at(0);
+	for (int i = 1; i < nonAssignees.size(); i++)
+	{
+		if (variableLaPlusContrainte->getDomaine().size() > nonAssignees.at(i)->getDomaine().size())
+		{
+			variableLaPlusContrainte = nonAssignees.at(i);
+		}
+	}
+	return variableLaPlusContrainte;
+}
+
 bool Probleme::estConsistant()
 {
 	for (Contrainte* contrainte : this->contraintes)

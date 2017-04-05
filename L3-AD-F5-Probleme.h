@@ -63,6 +63,8 @@ public:
 	void remettreDomaineValeurs(Variable *v);
 	Etat resolutionProblemeReductionValeur(Etat e);
 
+	Etat resolutionProblemeVariablePlusContrainte(Etat e);
+	Variable* chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees);
 	//Avec les contraintes
 	bool estConsistant();
 };

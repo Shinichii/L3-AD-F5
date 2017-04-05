@@ -20,7 +20,8 @@ int main() {
 	lectureFichier(F, p);
 	p.afficher();
 	//p.getStatistiques().demarrerTimer();
-	Etat e = p.resolutionProblemeReductionValeur(p.constructionEtatInitialReductionDomaineValeurs());
+	//Etat e = p.resolutionProblemeReductionValeur(p.constructionEtatInitialReductionDomaineValeurs());
+	Etat e = p.resolutionProblemeVariablePlusContrainte(p.constructionEtatInitialReductionDomaineValeurs());
 	//p.getStatistiques().terminerTimer();
 	//Etat e = p.resolutionProblemeRechercheProfondeurDAbord(p.constructionEtatInitial());
 	if (e.etat == echec)
