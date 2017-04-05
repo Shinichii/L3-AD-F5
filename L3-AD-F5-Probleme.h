@@ -35,19 +35,18 @@ typedef struct
 
 class Probleme {
 
-public:
 
+private:
      std::string nom_Probleme;
      std::vector<Variable*> variables;
 	 std::vector<Contrainte*> contraintes;
+	 Statistiques stats;
 
-
-    std::vector<std::string> getFichier_brut();// temporaire pour les test en attendant
-
+public:
     //constructeur
     Probleme();
 
-
+	Statistiques getStatistiques();
     Probleme(std::string Nom_Probleme);
 
     //affichage

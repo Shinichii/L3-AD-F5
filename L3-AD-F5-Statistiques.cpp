@@ -41,9 +41,13 @@ void Statistiques::incrementerProfondeur_Max_Elagages()
 
 double const& Statistiques::getTemps() const
 {
-	return (double)std::chrono::duration_cast<std::chrono::nanoseconds> (finTimer - debutTimer).count();
+	return (double)std::chrono::duration_cast<std::chrono::milliseconds> (finTimer - debutTimer).count();
 }
 
+void Statistiques::afficherTemps()
+{
+	std::cout << "Resolution effectuee en " << this->getTemps() << "unites de tps";
+}
 void Statistiques::remiseAZero()
 {
 	this->nb_Elagages = 0;
@@ -54,6 +58,11 @@ void Statistiques::remiseAZero()
 void Statistiques::demarrerTimer()
 {
 	this->debutTimer = Clock::now();
+}
+
+void Statistiques::terminerTimer()
+{
+	this->finTimer = Clock::now();
 }
 
 std::ostream& operator<<(std::ostream& os, const Statistiques& stats)

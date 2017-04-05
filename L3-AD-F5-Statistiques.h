@@ -30,6 +30,8 @@ public:
 	void remiseAZero();
 	void demarrerTimer();
 	void terminerTimer();
+
+	void afficherTemps();
 	friend std::ostream& operator<<(std::ostream& os,const Statistiques& stats);
 
 };

@@ -33,25 +33,10 @@ cout<<" fin probleme"<<endl;
 
 
 
-//--------------------------------------------------------------------------------------------------------------
-vector<string> Probleme::getFichier_brut() // temporaire pour les test en attendant
+
+Statistiques Probleme::getStatistiques() 
 {
-vector<string> retour;
-    retour.emplace_back("8 dames");
-    retour.emplace_back("8 3");
-    retour.emplace_back("# X { L , C }");
-    retour.emplace_back("L [ 1 , 9 ]");
-    retour.emplace_back("C [ 1 , 9 ]");
-
-    retour.emplace_back("Unique X");
-    retour.emplace_back("L  i != j => L i != L j");
-    retour.emplace_back("C  i != j => C i != C j");
-    retour.emplace_back("i != j => { { L i , C i } , { L j , C j } , a [ 1 , 8 ] } => X { L i , J i } != X { L j - a , C j - a }");
-    retour.emplace_back("i != j => { { L i , C i } , { L j , C j } , a [ 1 , 8 ] } => X { L i , J i } != X { L j - a , C j + a }");
-    retour.emplace_back("i != j => { { L i , C i } , { L j , C j } , a [ 1 , 8 ] } => X { L i , J i } != X { L j + a , C j + a }");
-    retour.emplace_back("i != j => { { L i , C i } , { L j , C j } , a [ 1 , 8 ] } => X { L i , J i } != X { L j + a , C j - a }");
-
-    return retour;
+	return this->stats;
 }
 
 Probleme::Probleme(string Nom_Probleme)//fonction de test
@@ -243,14 +228,10 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 				{
 					domaines.push_back(var->getDomaine());
 				}
+				variable->reduireDomaineAUneValeur(variable->getValeur());
 				bool resultatReduction = this->reductionDomaineValeurs(variable);
 				if (resultatReduction == true)
 				{
-					domaines.clear();
-					for (Variable* var : nonAssignees)
-					{
-						domaines.push_back(var->getDomaine());
-					}
 					e2 = this->resolutionProblemeReductionValeur(e2);
 					if (e2.etat == succes)
 					{
@@ -267,13 +248,11 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 				}
 				else
 				{
-					for (int i = 0; i < domaines.size(); i++)
+					for (int i = 0; i < nonAssignees.size(); i++)
 					{
 						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
 					}
 					variable->remettreValeursInitiales();
-					e.etat = echec;
-					return e;
 				}
 			}
 		}
