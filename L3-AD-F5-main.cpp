@@ -21,18 +21,10 @@ int main() {
 	p.afficher();
 	//p.getStatistiques().demarrerTimer();
 	//Etat e = p.resolutionProblemeReductionValeur(p.constructionEtatInitialReductionDomaineValeurs());
-	Etat e = p.resolutionProblemeVariablePlusContrainte(p.constructionEtatInitialReductionDomaineValeurs());
+	p.resoudreProbleme();
 	//p.getStatistiques().terminerTimer();
 	//Etat e = p.resolutionProblemeRechercheProfondeurDAbord(p.constructionEtatInitial());
-	if (e.etat == echec)
-	{
-		std::cout << "oh oh ";
-	}
-	if (e.etat == succes)
-	{
-		std::cout << "CONGRATULATIONS" << std::endl;
-		p.afficher();
-	}
+
 	fermerFichier(F);
 	std::cout << "Sauvegarde terminee";
 	std::cout << "test";

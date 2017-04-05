@@ -72,7 +72,10 @@ void Variable::reduireDomaine(std::vector<int> valeurs)
 
 void Variable::reduireDomaineAUneValeur(int valeur)
 {
-	this->domaine = std::vector<int>(1, valeur);
+	if (valeurDansLeDomaine(valeur))
+	{
+		this->domaine = std::vector<int>(1, valeur);
+	}
 }
 
 void Variable::agrandirDomaine(int valeur)

@@ -116,6 +116,23 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 	return c;
 }
 
+void Probleme::resoudreProbleme()
+{
+	stats.demarrerTimer();
+	Etat e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
+	if (e.etat == echec)
+	{
+		std::cout << "oh oh ";
+	}
+	if (e.etat == succes)
+	{
+		std::cout << "CONGRATULATIONS" << std::endl;
+		afficher();
+	}
+	stats.terminerTimer();
+	std::cout << stats;
+}
+
 Etat Probleme::constructionEtatInitial()
 {
 	Etat e;
@@ -170,6 +187,7 @@ Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 				Etat e2 = e;
 				e2.etat = indetermine;
 				e2.variablesAssignees.push_back(variable);
+				stats.incrementerNb_Noeuds();
 				e2 = resolutionProblemeRechercheProfondeurDAbord(e2);
 				if (e2.etat == succes)
 				{
@@ -221,6 +239,7 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 			variable->setValeur(valeur);
 			if (this->estConsistant())
 			{
+				stats.incrementerNb_Noeuds();
 				Etat e2 = e;
 				std::vector < std::vector<int>> domaines;
 				e2.variablesAssignees.push_back(variable);
@@ -289,6 +308,7 @@ Etat Probleme::resolutionProblemeVariablePlusContrainte(Etat e)
 			bool resultatReduction = this->reductionDomaineValeurs(variable);
 			if (resultatReduction == true)
 			{
+				stats.incrementerNb_Noeuds();
 				e2 = this->resolutionProblemeReductionValeur(e2);
 				if (e2.etat == succes)
 				{

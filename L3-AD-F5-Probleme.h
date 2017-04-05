@@ -56,6 +56,7 @@ public:
 	Contrainte* ajouterContrainte(int typeContrainte);
 
 	//Resolution du probleme
+	void resoudreProbleme();
 	Etat constructionEtatInitial();
 	Etat constructionEtatInitialReductionDomaineValeurs();
 	Etat resolutionProblemeRechercheProfondeurDAbord(Etat e);
@@ -65,6 +66,7 @@ public:
 
 	Etat resolutionProblemeVariablePlusContrainte(Etat e);
 	Variable* chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees);
+
 	//Avec les contraintes
 	bool estConsistant();
 };

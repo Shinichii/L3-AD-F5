@@ -31,8 +31,20 @@ bool ContrainteEgalite::contrainteRespectee()
 
 bool ContrainteEgalite::reduireDomaines(Variable * var)
 {
-	//TODO : Rediger la fonction
-	return false;
+	for (Variable* v : variables)
+	{
+		if (v != var)
+		{
+			v->reduireDomaineAUneValeur(var->getValeur());
+			int s = v->getDomaine().size();
+			if (s != 1)
+			{
+				DEBUG_MSG("[INFO] : Domaine non valable, solution non viable");
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 void ContrainteEgalite::remettreDomaines(Variable * var)
