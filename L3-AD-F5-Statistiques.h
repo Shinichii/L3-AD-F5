@@ -25,7 +25,7 @@ public:
 
 	void incrementerNb_Noeuds();
 	void incrementerNb_Elagages();
-	void incrementerProfondeur_Max_Elagages();
+	void mettreAJourValeurProfondeurMaxElagage(int profondeur);
 
 	void remiseAZero();
 	void demarrerTimer();

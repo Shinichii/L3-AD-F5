@@ -118,26 +118,95 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 
 void Probleme::resoudreProbleme()
 {
-	stats.demarrerTimer(); 
-	//Etat e = resolutionProblemeRechercheProfondeurDAbord(constructionEtatInitial());
-	//Etat e = resolutionProblemeReductionValeur(constructionEtatInitialReductionDomaineValeurs());
-	Etat e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
-	//Etat e = resolutionProblemeVariableLaPlusContraignante(constructionEtatInitialReductionDomaineValeurs());
-	stats.terminerTimer();
-	if (e.etat == echec)
+	int choixUtilisateur;
+	std::cout << "Choisissez votre methode de resolution : " << std::endl;
+	std::cout << "[1] : Resolution par recherche en profondeur (methode naive)"<<std::endl;
+	std::cout << "[2] : Resolution avec reduction des domaines de valeurs (RDV)" << std::endl;
+	std::cout << "[3] : Resolution avec RDV en choississant la variable la plus contrainte" << std::endl;
+	std::cout << "[4] : Resolution avec RDV en choississant la variable la plus contraignante" << std::endl;
+	std::cout << "[5] : Resolution avec RDV en choississant la variable la moins contraignante" << std::endl;
+	while (!(cin >> choixUtilisateur) || choixUtilisateur < 1 || choixUtilisateur > 5)
 	{
-		sauverResultat(false);
-		std::cout << "oh oh ";
+		if (cin.fail())
+		{
+			std::cout << "Erreur de saisie, veuillez recommencer" << std::endl;
+		}
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
-	if (e.etat == succes)
+	Etat e;
+	switch (choixUtilisateur)
 	{
-		sauverResultat(true);
-		std::cout << "CONGRATULATIONS" << std::endl;
-		afficher();
+	case 1:
+		stats.demarrerTimer();
+		e = resolutionProblemeRechercheProfondeurDAbord(constructionEtatInitial());
+		stats.terminerTimer();
+		if (e.etat == echec)
+		{
+			sauverResultat(false, "Recherche en Profondeur d'abord");
+		}
+		if (e.etat == succes)
+		{
+			sauverResultat(true, "Recherche en Profondeur d'abord");
+		}
+		break;
+	case 2:
+		stats.demarrerTimer();
+		e = resolutionProblemeReductionValeur(constructionEtatInitialReductionDomaineValeurs());
+		stats.terminerTimer();
+		if (e.etat == echec)
+		{
+			sauverResultat(false, "Reduction des domaines de valeurs");
+		}
+		if (e.etat == succes)
+		{
+			sauverResultat(true, "Reduction des domaines de valeurs");
+		}
+		break;
+	case 3:
+		stats.demarrerTimer();
+		e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
+		stats.terminerTimer();
+		if (e.etat == echec)
+		{
+			sauverResultat(false, "Reduction des domaines de valeurs en choisisant la variable la plus contrainte");
+		}
+		if (e.etat == succes)
+		{
+			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contrainte");
+		}
+		break;
+	case 4:
+		stats.demarrerTimer();
+		e = resolutionProblemeVariableLaPlusContraignante(constructionEtatInitialReductionDomaineValeurs());
+		stats.terminerTimer();
+		if (e.etat == echec)
+		{
+			sauverResultat(false, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
+		}
+		if (e.etat == succes)
+		{
+			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
+		}
+		break;
+	case 5:
+		stats.demarrerTimer();
+		e = resolutionProblemeVariableLaMoinsContraignante(constructionEtatInitialReductionDomaineValeurs());
+		stats.terminerTimer();
+		if (e.etat == echec)
+		{
+			sauverResultat(false, "Reduction des domaines de valeurs en choisissant la variable la moins contraignante");
+		}
+		if (e.etat == succes)
+		{
+			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la moins contraignante");
+		}
+		break;
+	default:
+		std::cout << "Erreur dans la saisie";
+			return;
 	}
-
-	std::cout << stats;
-	
+	return;
 }
 
 Etat Probleme::constructionEtatInitial()
@@ -274,6 +343,8 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 				}
 				else
 				{
+					stats.incrementerNb_Elagages();
+					stats.mettreAJourValeurProfondeurMaxElagage(nonAssignees.size());
 					for (int i = 0; i < nonAssignees.size(); i++)
 					{
 						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
@@ -332,6 +403,8 @@ Etat Probleme::resolutionProblemeVariablePlusContrainte(Etat e)
 			}
 			else
 			{
+				stats.incrementerNb_Elagages();
+				stats.mettreAJourValeurProfondeurMaxElagage(nonAssignees.size());
 				for (int i = 0; i < nonAssignees.size(); i++)
 				{
 					nonAssignees.at(i)->remettreDomaine(domaines.at(i));
@@ -408,6 +481,8 @@ Etat Probleme::resolutionProblemeVariableLaPlusContraignante(Etat e)
 			}
 			else
 			{
+				stats.incrementerNb_Elagages();
+				stats.mettreAJourValeurProfondeurMaxElagage(nonAssignees.size());
 				for (int i = 0; i < nonAssignees.size(); i++)
 				{
 					nonAssignees.at(i)->remettreDomaine(domaines.at(i));
@@ -441,15 +516,97 @@ Variable * Probleme::chercherVariableLaPlusContraignante(std::vector<Variable*> 
 		std::max_element(coeffContraignante.begin(), coeffContraignante.end())));
 }
 
-void Probleme::sauverResultat(bool solutionTrouvee)
+Etat Probleme::resolutionProblemeVariableLaMoinsContraignante(Etat e)
+{
+
+	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
+	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
+	if (nonAssignees.size() == 0)
+	{
+		e.etat = succes;
+		return e;
+	}
+	Variable* variable = this->chercherVariableLaMoinsContraignante(nonAssignees);
+	std::vector<int> domaineTemporaire = variable->getDomaine();
+	for (int valeur : domaineTemporaire)
+	{
+		std::cout << "[ " << variable->getNom() << " ]" << " = " << "[ " << valeur << " ]" << std::endl;
+		variable->setValeur(valeur);
+		if (this->estConsistant())
+		{
+			Etat e2 = e;
+			std::vector < std::vector<int>> domaines;
+			e2.variablesAssignees.push_back(variable);
+			for (Variable* var : nonAssignees)
+			{
+				domaines.push_back(var->getDomaine());
+			}
+			variable->reduireDomaineAUneValeur(variable->getValeur());
+			bool resultatReduction = this->reductionDomaineValeurs(variable);
+			if (resultatReduction == true)
+			{
+				stats.incrementerNb_Noeuds();
+				e2 = this->resolutionProblemeReductionValeur(e2);
+				if (e2.etat == succes)
+				{
+					return e2;
+				}
+				else
+				{
+					for (int i = 0; i < nonAssignees.size(); i++)
+					{
+						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+					}
+					domaines.clear();
+				}
+			}
+			else
+			{
+				stats.incrementerNb_Elagages();
+				stats.mettreAJourValeurProfondeurMaxElagage(nonAssignees.size());
+				for (int i = 0; i < nonAssignees.size(); i++)
+				{
+					nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+				}
+				variable->remettreValeursInitiales();
+			}
+		}
+	}
+	variable->remettreValeursInitiales();
+	e.etat = echec;
+	return Etat(e);
+}
+
+Variable * Probleme::chercherVariableLaMoinsContraignante(std::vector<Variable*> nonAssignees)
+{
+	std::vector<int> coeffContraignante;
+	for (int i = 0; i < nonAssignees.size(); i++)
+	{
+		Variable* var = nonAssignees.at(i);
+		int compteurContraignante = 0;
+		for (Contrainte* c : this->contraintes)
+		{
+			if (c->contient(var) && c->getNbVariablesNonAssignees() > 0)
+			{
+				compteurContraignante++;
+			}
+		}
+		coeffContraignante.push_back(compteurContraignante);
+	}
+	return nonAssignees.at(std::distance(coeffContraignante.begin(),
+		std::min_element(coeffContraignante.begin(), coeffContraignante.end())));
+}
+
+void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 {
 	std::string path;
 	std::cout << "Entrer le nom du fichier pour sauvegarder" << std::endl;
 	std::cin >> path;
 	std::ofstream F;
 	ouvrirNouveauFichier("./"+path+".txt", F);
+	F << "[METHODE UTILISEE POUR LA RESOLUTION] : " << methodeUtilisee << std::endl;
 	//Sauver domaines initiaux
-	F << "===========[VARIABLES ETAT INITIAL]========" << std::endl;
+	F << "===========[VARIABLES ETAT INITIAL]===========" << std::endl;
 	for (Variable *var : variables)
 	{
 		F << "Variable n " << var->getNom() << std::endl << "Valeurs possibles : " << std::endl;
@@ -460,7 +617,7 @@ void Probleme::sauverResultat(bool solutionTrouvee)
 		F << std::endl;
 	}
 	//Sauver contraintes
-	F << "===========[CONTRAINTES]========" << std::endl;
+	F << "===========[CONTRAINTES]===========" << std::endl;
 	for (int i = 0; i < contraintes.size(); i++)
 	{
 		F << "Contrainte n° " << i << std::endl;
@@ -469,10 +626,10 @@ void Probleme::sauverResultat(bool solutionTrouvee)
 	//SI SOLUTION : Indiquer solutions
 	if (solutionTrouvee == true)
 	{
-		F << "=====[SOLUTION TROUVEE] ====" << std::endl;
+		F << "===========[SOLUTION TROUVEE]===========" << std::endl;
 		for (Variable *var : variables)
 		{
-			F << "Variable n° : " << var->getNom() <<  " = " << var->getValeur() << std::endl;
+			F << "Variable n°" << var->getNom() <<  " = " << var->getValeur() << std::endl;
 		}
 	}
 	//Sinon dire pas de solution trouvee

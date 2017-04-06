@@ -71,8 +71,10 @@ public:
 	Etat resolutionProblemeVariableLaPlusContraignante(Etat e);
 	Variable* chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees);
 
+	Etat resolutionProblemeVariableLaMoinsContraignante(Etat e);
+	Variable* chercherVariableLaMoinsContraignante(std::vector<Variable*> nonAssignees);
 	//Sauver le resultat dans un fichier càd Contraintes/Variables et valeurs + stats
-	void sauverResultat(bool solutionTrouvee);
+	void sauverResultat(bool solutionTrouvee, std::string methodeUtilisee);
 	//Avec les contraintes
 	bool estConsistant();
 	//Fonction pour découvrir la variable impliquée dans le moins de contraintes portant sur des variables non assignees

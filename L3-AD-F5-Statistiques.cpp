@@ -34,10 +34,15 @@ void Statistiques::incrementerNb_Elagages()
 	this->nb_Elagages++;
 }
 
-void Statistiques::incrementerProfondeur_Max_Elagages()
+void Statistiques::mettreAJourValeurProfondeurMaxElagage(int profondeur)
 {
-	this->profondeur_max_elagage++;
+	if (this->profondeur_max_elagage < profondeur)
+	{
+		profondeur_max_elagage = profondeur;
+	}
+	return;
 }
+
 
 double const& Statistiques::getTemps() const
 {
