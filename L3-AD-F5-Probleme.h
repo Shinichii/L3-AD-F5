@@ -67,8 +67,13 @@ public:
 	Etat resolutionProblemeVariablePlusContrainte(Etat e);
 	Variable* chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees);
 
+	Etat resolutionProblemeVariableLaPlusContraignante(Etat e);
+	Variable* chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees);
+
+	//Sauver le resultat dans un fichier càd Variables et valeurs + stats
 	//Avec les contraintes
 	bool estConsistant();
+	//Fonction pour découvrir la variable impliquée dans le plus de contraintes portant sur des variables non assignees
 };
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure);
 

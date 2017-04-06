@@ -26,6 +26,7 @@ class Contrainte {
 
 protected:
 	std::list<Variable*> variables;
+	int nbVariablesNonAssignees;
 	/*
 		Variables a mettre ici
 	*/
@@ -39,6 +40,10 @@ public:
 	bool contient(Variable* var);
 	virtual bool reduireDomaines(Variable* var) = 0;
 	virtual void remettreDomaines(Variable* var) = 0;
+
+	void incrementerNbVariablesNonAssignees();
+	void remettreAZeroVariablesNonAssignees();
+	int const& getNbVariablesNonAssignees() const;
 };
 
 #endif //L3_AD_F5_CONTRAINTE_H

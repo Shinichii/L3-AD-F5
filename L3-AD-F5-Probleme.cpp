@@ -118,8 +118,11 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 
 void Probleme::resoudreProbleme()
 {
-	stats.demarrerTimer();
-	Etat e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
+	stats.demarrerTimer(); 
+	//Etat e = resolutionProblemeRechercheProfondeurDAbord(constructionEtatInitial());
+	Etat e = resolutionProblemeReductionValeur(constructionEtatInitialReductionDomaineValeurs());
+	//Etat e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
+	//Etat e = resolutionProblemeVariableLaPlusContraignante(constructionEtatInitialReductionDomaineValeurs());
 	if (e.etat == echec)
 	{
 		std::cout << "oh oh ";
@@ -354,6 +357,84 @@ Variable * Probleme::chercherVariableLaPlusContrainte(std::vector<Variable*> non
 		}
 	}
 	return variableLaPlusContrainte;
+}
+
+Etat Probleme::resolutionProblemeVariableLaPlusContraignante(Etat e)
+{
+	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
+	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
+	if (nonAssignees.size() == 0)
+	{
+		e.etat = succes;
+		return e;
+	}
+	Variable* variable = this->chercherVariableLaPlusContraignante(nonAssignees);
+	std::vector<int> domaineTemporaire = variable->getDomaine();
+	for (int valeur : domaineTemporaire)
+	{
+		std::cout << "[ " << variable->getNom() << " ]" << " = " << "[ " << valeur << " ]" << std::endl;
+		variable->setValeur(valeur);
+		if (this->estConsistant())
+		{
+			Etat e2 = e;
+			std::vector < std::vector<int>> domaines;
+			e2.variablesAssignees.push_back(variable);
+			for (Variable* var : nonAssignees)
+			{
+				domaines.push_back(var->getDomaine());
+			}
+			variable->reduireDomaineAUneValeur(variable->getValeur());
+			bool resultatReduction = this->reductionDomaineValeurs(variable);
+			if (resultatReduction == true)
+			{
+				stats.incrementerNb_Noeuds();
+				e2 = this->resolutionProblemeReductionValeur(e2);
+				if (e2.etat == succes)
+				{
+					return e2;
+				}
+				else
+				{
+					for (int i = 0; i < nonAssignees.size(); i++)
+					{
+						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+					}
+					domaines.clear();
+				}
+			}
+			else
+			{
+				for (int i = 0; i < nonAssignees.size(); i++)
+				{
+					nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+				}
+				variable->remettreValeursInitiales();
+			}
+		}
+	}
+	variable->remettreValeursInitiales();
+	e.etat = echec;
+	return Etat(e);
+}
+
+Variable * Probleme::chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees)
+{
+	std::vector<int> coeffContraignante;
+	for (int i = 0; i < nonAssignees.size(); i++)
+	{
+		Variable* var = nonAssignees.at(i);
+		int compteurContraignante = 0;
+		for (Contrainte* c : this->contraintes)
+		{
+			if (c->contient(var) && c->getNbVariablesNonAssignees() > 0)
+			{
+				compteurContraignante++;
+			}
+		}
+		coeffContraignante.push_back(compteurContraignante);
+	}
+	return nonAssignees.at(std::distance(coeffContraignante.begin(),
+		std::max_element(coeffContraignante.begin(), coeffContraignante.end())));
 }
 
 bool Probleme::estConsistant()

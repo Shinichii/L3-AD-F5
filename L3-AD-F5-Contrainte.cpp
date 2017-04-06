@@ -60,6 +60,21 @@ bool Contrainte::contient(Variable * var)
 	return (std::find(variables.begin(), variables.end(), var) != variables.end());
 }
 
+void Contrainte::incrementerNbVariablesNonAssignees()
+{
+	nbVariablesNonAssignees++;
+}
+
+void Contrainte::remettreAZeroVariablesNonAssignees()
+{
+	nbVariablesNonAssignees = 0;
+}
+
+int const & Contrainte::getNbVariablesNonAssignees() const
+{
+	return nbVariablesNonAssignees;
+}
+
 
 
 

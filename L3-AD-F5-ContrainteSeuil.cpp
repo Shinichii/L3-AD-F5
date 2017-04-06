@@ -21,3 +21,18 @@ void ContrainteSeuil::setSeuil(int valeur)
 	this->seuil = valeur;
 }
 
+int ContrainteSeuil::getSomme()
+{
+	return this->somme;
+}
+
+void ContrainteSeuil::resetSomme()
+{
+	somme = 0;
+}
+
+void ContrainteSeuil::ajouterALaSomme(int valeur)
+{
+	this->somme += valeur;
+}
+

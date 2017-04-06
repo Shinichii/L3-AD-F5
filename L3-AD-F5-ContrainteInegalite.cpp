@@ -12,11 +12,13 @@ Si cela n'est pas le cas la fonction renverra false
 */
 bool ContrainteInegalite::contrainteRespectee()
 {
+	this->remettreAZeroVariablesNonAssignees();
 	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
+			this->incrementerNbVariablesNonAssignees();
 		}
 		else
 		{

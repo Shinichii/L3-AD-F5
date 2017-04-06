@@ -4,6 +4,7 @@ class ContrainteSeuil : public Contrainte
 {
 protected:
 	int seuil;
+	int somme;
 public:
 	ContrainteSeuil();
 	virtual bool contrainteRespectee()=0;
@@ -12,4 +13,7 @@ public:
 
 	int getSeuil();
 	void setSeuil(int valeur);
+	int getSomme();
+	void resetSomme();
+	void ajouterALaSomme(int valeur);
 };

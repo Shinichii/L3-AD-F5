@@ -41,7 +41,7 @@ void Statistiques::incrementerProfondeur_Max_Elagages()
 
 double const& Statistiques::getTemps() const
 {
-	return (double)std::chrono::duration_cast<std::chrono::milliseconds> (finTimer - debutTimer).count();
+	return (double)std::chrono::duration_cast<std::chrono::seconds> (finTimer - debutTimer).count();
 }
 
 void Statistiques::afficherTemps()
@@ -72,7 +72,7 @@ std::ostream& operator<<(std::ostream& os, const Statistiques& stats)
 	os << "Nombre de noeuds crees : " << stats.getNb_Noeuds() << std::endl;
 	os << "Nombre d'elagages effectues : " << stats.getNb_Elagages() << std::endl;
 	os << "Profondeur max d'elagage : " << stats.getProfondeur_Max_Elagage() << std::endl;
-	os << "Temps effectue : " << stats.getTemps() << std::endl;
+	os << "Temps effectue : " << stats.getTemps() << "secondes" << std::endl;
 	os << "=================================" << std::endl;
 	return os;
 }

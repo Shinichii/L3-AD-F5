@@ -14,21 +14,22 @@ Si cela n'est pas le cas la fonction renverra false
 */
 bool ContrainteSommeExacte::contrainteRespectee()
 {
-	int somme = 0;
+	this->resetSomme();
+	this->remettreAZeroVariablesNonAssignees();
 	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
-			return true;
+			this->incrementerNbVariablesNonAssignees();
 		}
 		else 
 		{
 			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme" );
-			somme += (*it)->getValeur();
+			this->ajouterALaSomme((*it)->getValeur());
 		}
 	}
-	if (somme == seuil)
+	if ((this->somme == this->seuil && nbVariablesNonAssignees == 0) || (nbVariablesNonAssignees > 0 && this->somme < this->seuil))
 	{
 		DEBUG_MSG("[INFO] Somme des variables egale a la valeur attendue. Contrainte respectee");
 		return true;
@@ -44,7 +45,29 @@ bool ContrainteSommeExacte::contrainteRespectee()
 bool ContrainteSommeExacte::reduireDomaines(Variable * var)
 {
 	//TODO : Rediger la fonction
-	return false;
+	for (Variable* v : variables)
+	{
+		if (v->getValeur() == VALEUR_NON_DEFINIE)
+		{
+			//Reduction du domaine
+			//Regarder si chaque valeur du domaine + somme dépasse le seuil, si c'est le cas on supprime
+			//On supprime egalement les valeurs qui donnent la somme egale s'il y a plus d'une valeur non assignee
+			for (int valeur : v->getDomaine())
+			{
+				if ((valeur + this->somme > seuil && this->nbVariablesNonAssignees == 0) ||  (valeur + somme > seuil))
+				{
+					v->reduireDomaine(valeur);
+				}
+			}
+			int s = v->getDomaine().size();
+			if (s == 0)
+			{
+				DEBUG_MSG("[INFO] : Domaine vide, solution non viable");
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 void ContrainteSommeExacte::remettreDomaines(Variable * var)
