@@ -40,19 +40,9 @@ bool ContrainteInegalite::contrainteRespectee()
 	DEBUG_MSG("[INFO] : Contrainte respectee");
 	return true;
 }
-void ContrainteInegalite::remettreDomaines(Variable* var)
-{
-	for (Variable* variable : this->variables)
-	{
-		if (variable->domaineInitialContient(var->getValeur()))
-		{
-			variable->agrandirDomaine(var->getValeur());
-		}
-	}
-}
+
 std::ostream & ContrainteInegalite::afficherCaracteristiques(std::ostream & os)const
 {
-
 	os << "Contrainte Inegalite" << std::endl;
 	for (Variable* var : variables)
 	{

@@ -10,7 +10,7 @@ private:
 public:
 	ContrainteSommePonderee();
 	bool reduireDomaines(Variable* var);
-	void remettreDomaines(Variable* var);
+
 	void ajouterResultat(Variable* resultat);
 	void ajouterPonderationVariable(int ponderation);
 	void ajouterPonderationResultat(int ponderation);

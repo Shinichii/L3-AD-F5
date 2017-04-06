@@ -35,9 +35,15 @@ bool ContrainteEgalite::reduireDomaines(Variable * var)
 	{
 		if (v != var)
 		{
-			v->reduireDomaineAUneValeur(var->getValeur());
+			for (int valeur : v->getDomaine())
+			{
+				if (valeur != var->getValeur())
+				{
+					v->reduireDomaine(valeur);
+				}
+			}
 			int s = v->getDomaine().size();
-			if (s != 1)
+			if (s == 0)
 			{
 				DEBUG_MSG("[INFO] : Domaine non valable, solution non viable");
 				return false;
@@ -47,14 +53,17 @@ bool ContrainteEgalite::reduireDomaines(Variable * var)
 	return true;
 }
 
-void ContrainteEgalite::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}
-
 std::ostream & ContrainteEgalite::afficherCaracteristiques(std::ostream & os)const
 {
-	// TODO: insérer une instruction return ici + rediger la 
-	os << "Pas implemente";
+	os << "Contrainte Inegalite" << std::endl;
+	for (Variable* var : variables)
+	{
+		os << "x" << var->getNom();
+		if (var != variables.back())
+		{
+			os << " != ";
+		}
+	}
+	os << std::endl;
 	return os;
 }

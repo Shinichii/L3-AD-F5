@@ -70,14 +70,8 @@ bool ContrainteSommeExacte::reduireDomaines(Variable * var)
 	return true;
 }
 
-void ContrainteSommeExacte::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}
-
 std::ostream & ContrainteSommeExacte::afficherCaracteristiques(std::ostream & os)const
 {
-	
 	os << "Contrainte Somme Exacte" << std::endl;
 	for (Variable* var : variables)
 	{
@@ -94,5 +88,4 @@ std::ostream & ContrainteSommeExacte::afficherCaracteristiques(std::ostream & os
 	os << this->seuil;
 	os << std::endl;
 	return os;
-
 }

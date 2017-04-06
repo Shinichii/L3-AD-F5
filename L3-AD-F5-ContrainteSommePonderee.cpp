@@ -6,11 +6,6 @@ bool ContrainteSommePonderee::reduireDomaines(Variable * var)
 	return false;
 }
 
-void ContrainteSommePonderee::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}
-
 void ContrainteSommePonderee::ajouterResultat(Variable * resultat)
 {
 	this->resultat.push_back(resultat);

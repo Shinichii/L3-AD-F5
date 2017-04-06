@@ -13,26 +13,8 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------
 
 Probleme::Probleme()
-{  // nb_variable= atoi(Utilitaire::parse(entrer[1])[0].c_str());
-
-//  int longueur_declaration_variable=atoi(Utilitaire::parse(entrer[1])[1].c_str());//peut etre different de nb_variable
-
-
-//---------------------------------------------- affectation des variables et de leur domaine ---------------------------
-//    for(int i=2;i<longueur_declaration_variable+2;i++)        {  entrer_variable.emplace_back(entrer[i].c_str()); }
-
-    //Variables=Variable(entrer_variable,nb_variable);
-
-// ----------------------------------------------affectation des contraintes --------------------------------------------
-
-
-//    for(int i=longueur_declaration_variable+2;i<entrer.size();i++)        {entrer_contrainte.emplace_back(entrer[i].c_str()); }
-
-cout<<" fin probleme"<<endl;
+{  
 }
-
-
-
 
 Statistiques Probleme::getStatistiques() 
 {
@@ -44,8 +26,6 @@ Probleme::Probleme(string Nom_Probleme)//fonction de test
     nom_Probleme=Nom_Probleme;
 
 }
-
-
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -90,11 +70,11 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 		c = new ContrainteInegalite();
 		contraintes.push_back(c);
 		break;
-	case CONTRAINTE_INFERIEURE_EGALE:
+	case CONTRAINTE_INFERIEURE:
 		c = new ContrainteInferieure();
 		contraintes.push_back(c);
 		break;
-	case CONTRAINTE_SUPERIEURE_EGALE:
+	case CONTRAINTE_SUPERIEURE:
 		c = new ContrainteSuperieure();
 		contraintes.push_back(c);
 		break;
@@ -620,7 +600,7 @@ void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 	F << "===========[CONTRAINTES]===========" << std::endl;
 	for (int i = 0; i < contraintes.size(); i++)
 	{
-		F << "Contrainte n° " << i << std::endl;
+		F << "Contrainte n° " << i+1 << std::endl;
 		F << *(contraintes.at(i))<<std::endl;
 	}
 	//SI SOLUTION : Indiquer solutions

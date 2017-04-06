@@ -44,14 +44,23 @@ bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
 	return false;
 }
 
-void ContrainteSommeSuperieureEgale::remettreDomaines(Variable * var)
-{
-	//TODO : Rediger la fonction
-}
-
 std::ostream & ContrainteSommeSuperieureEgale::afficherCaracteristiques(std::ostream & os)const
 {
-	// TODO: insérer une instruction return ici+ rediger la fonction
-	os << "Pas implemente";
+	os << "Contrainte Somme Superieure ou Egale" << std::endl;
+	for (Variable* var : variables)
+	{
+		os << "x" << var->getNom();
+		if (var != variables.back())
+		{
+			os << " + ";
+		}
+		else
+		{
+			os << " >= ";
+		}
+	}
+	os << this->seuil;
+	os << std::endl;
 	return os;
+
 }

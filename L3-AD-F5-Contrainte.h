@@ -15,8 +15,8 @@
 
 #define CONTRAINTE_EGALITE 0
 #define CONTRAINTE_DIFFERENTE 1
-#define	CONTRAINTE_INFERIEURE_EGALE 2
-#define CONTRAINTE_SUPERIEURE_EGALE 3
+#define	CONTRAINTE_INFERIEURE 2
+#define CONTRAINTE_SUPERIEURE 3
 #define CONTRAINTE_SOMME_EXACTE 4
 #define CONTRAINTE_SOMME_INFERIEURE 5
 #define CONTRAINTE_SOMME_SUPERIEURE 6
@@ -39,7 +39,7 @@ public:
 	bool retirerVariable(Variable* var);
 	bool contient(Variable* var);
 	virtual bool reduireDomaines(Variable* var) = 0;
-	virtual void remettreDomaines(Variable* var) = 0;
+	void remettreDomaines(Variable* var);
 	virtual std::ostream& afficherCaracteristiques(std::ostream& os)const = 0;
 
 

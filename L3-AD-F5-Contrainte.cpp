@@ -60,6 +60,17 @@ bool Contrainte::contient(Variable * var)
 	return (std::find(variables.begin(), variables.end(), var) != variables.end());
 }
 
+void Contrainte::remettreDomaines(Variable * var)
+{
+	for (Variable* variable : this->variables)
+	{
+		if (variable->domaineInitialContient(var->getValeur()))
+		{
+			variable->agrandirDomaine(var->getValeur());
+		}
+	}
+}
+
 void Contrainte::incrementerNbVariablesNonAssignees()
 {
 	nbVariablesNonAssignees++;
