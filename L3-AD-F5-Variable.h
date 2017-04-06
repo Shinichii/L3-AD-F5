@@ -35,6 +35,7 @@ public :
 	void remettreEtatInitial();
 
 	std::vector<int> getDomaine();
+	std::vector<int> getDomaineInitial();
 
 	bool valeurDansLeDomaine(int valeur);
 	void reduireDomaine(int valeur);

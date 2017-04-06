@@ -40,7 +40,10 @@ public:
 	bool contient(Variable* var);
 	virtual bool reduireDomaines(Variable* var) = 0;
 	virtual void remettreDomaines(Variable* var) = 0;
+	virtual std::ostream& afficherCaracteristiques(std::ostream& os)const = 0;
 
+
+	friend std::ostream& operator<<(std::ostream& os, const Contrainte &c);
 	void incrementerNbVariablesNonAssignees();
 	void remettreAZeroVariablesNonAssignees();
 	int const& getNbVariablesNonAssignees() const;

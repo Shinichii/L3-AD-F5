@@ -51,3 +51,10 @@ void ContrainteEgalite::remettreDomaines(Variable * var)
 {
 	//TODO : Rediger la fonction
 }
+
+std::ostream & ContrainteEgalite::afficherCaracteristiques(std::ostream & os)const
+{
+	// TODO: insérer une instruction return ici + rediger la 
+	os << "Pas implemente";
+	return os;
+}

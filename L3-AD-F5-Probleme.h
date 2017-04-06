@@ -12,6 +12,7 @@
 #include "L3-AD-F5-ContrainteSuperieure.h"
 #include "L3-AD-F5-ContrainteSommePonderee.h"
 #include "L3-AD-F5-Statistiques.h"
+#include "L3-AD-F5-operationFichier.h"
 
 #include <vector>
 #include <string>
@@ -70,10 +71,11 @@ public:
 	Etat resolutionProblemeVariableLaPlusContraignante(Etat e);
 	Variable* chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees);
 
-	//Sauver le resultat dans un fichier càd Variables et valeurs + stats
+	//Sauver le resultat dans un fichier càd Contraintes/Variables et valeurs + stats
+	void sauverResultat(bool solutionTrouvee);
 	//Avec les contraintes
 	bool estConsistant();
-	//Fonction pour découvrir la variable impliquée dans le plus de contraintes portant sur des variables non assignees
+	//Fonction pour découvrir la variable impliquée dans le moins de contraintes portant sur des variables non assignees
 };
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure);
 

@@ -37,3 +37,10 @@ void ContrainteInferieure::remettreDomaines(Variable * var)
 {
 	//TODO : Rediger la fonction
 }
+
+std::ostream & ContrainteInferieure::afficherCaracteristiques(std::ostream & os)const
+{
+	// TODO: insérer une instruction return ici+ rediger la fonction
+	os << "Pas implemente";
+	return os;
+}

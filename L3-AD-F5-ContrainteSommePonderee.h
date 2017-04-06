@@ -16,5 +16,6 @@ public:
 	void ajouterPonderationResultat(int ponderation);
 	bool contrainteRespectee();
 
+	std::ostream& afficherCaracteristiques(std::ostream& os)const;
 };
 

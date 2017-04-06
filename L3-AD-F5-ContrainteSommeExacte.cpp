@@ -75,3 +75,25 @@ void ContrainteSommeExacte::remettreDomaines(Variable * var)
 	//TODO : Rediger la fonction
 }
 
+std::ostream & ContrainteSommeExacte::afficherCaracteristiques(std::ostream & os)const
+{
+	// TODO: insérer une instruction return ici+ rediger la fonction
+
+	os << "Contrainte Somme Exacte" << std::endl;
+	for (Variable* var : variables)
+	{
+		os << "x" << var->getNom();
+		if (var != variables.back())
+		{
+			os << " + ";
+		}
+		else
+		{
+			os << " = ";
+		}
+	}
+	os << this->seuil;
+	os << std::endl;
+	return os;
+
+}

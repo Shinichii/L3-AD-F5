@@ -9,5 +9,7 @@ public:
 	bool contrainteRespectee();
 	bool reduireDomaines(Variable* var);
 	void remettreDomaines(Variable* var);
+
+	std::ostream& afficherCaracteristiques(std::ostream& os)const;
 };
 

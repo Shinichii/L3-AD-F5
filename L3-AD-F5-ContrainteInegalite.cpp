@@ -50,6 +50,21 @@ void ContrainteInegalite::remettreDomaines(Variable* var)
 		}
 	}
 }
+std::ostream & ContrainteInegalite::afficherCaracteristiques(std::ostream & os)const
+{
+
+	os << "Contrainte Inegalite" << std::endl;
+	for (Variable* var : variables)
+	{
+		os << "x" << var->getNom();
+		if (var != variables.back())
+		{
+			os << " != ";
+		}
+	}
+	os << std::endl;
+	return os;
+}
 bool ContrainteInegalite::reduireDomaines(Variable * var)
 {
 	for (Variable* v : variables)

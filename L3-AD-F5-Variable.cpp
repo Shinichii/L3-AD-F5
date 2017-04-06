@@ -49,6 +49,11 @@ std::vector<int> Variable::getDomaine()
 	return std::vector<int>(this->domaine);
 }
 
+std::vector<int> Variable::getDomaineInitial()
+{
+	return std::vector<int>(domaineInitial);
+}
+
 bool Variable::valeurDansLeDomaine(int valeur)
 {
 	return std::find(domaine.begin(), domaine.end(), valeur) - domaine.begin() == domaine.size();

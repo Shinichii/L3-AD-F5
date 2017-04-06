@@ -25,3 +25,10 @@ void ContrainteSommePonderee::ajouterPonderationResultat(int ponderation)
 {
 	this->ponderationResultat.push_back(ponderation);
 }
+
+std::ostream & ContrainteSommePonderee::afficherCaracteristiques(std::ostream & os)const
+{
+	// TODO: insérer une instruction return ici+ rediger la fonction
+	os << "Pas implemente";
+	return os;
+}

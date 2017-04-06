@@ -75,6 +75,10 @@ int const & Contrainte::getNbVariablesNonAssignees() const
 	return nbVariablesNonAssignees;
 }
 
-
+std::ostream& operator<<(std::ostream& os, const Contrainte &c)
+{
+	c.afficherCaracteristiques(os);
+	return os;
+}
 
 

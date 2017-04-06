@@ -120,20 +120,24 @@ void Probleme::resoudreProbleme()
 {
 	stats.demarrerTimer(); 
 	//Etat e = resolutionProblemeRechercheProfondeurDAbord(constructionEtatInitial());
-	Etat e = resolutionProblemeReductionValeur(constructionEtatInitialReductionDomaineValeurs());
-	//Etat e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
+	//Etat e = resolutionProblemeReductionValeur(constructionEtatInitialReductionDomaineValeurs());
+	Etat e = resolutionProblemeVariablePlusContrainte(constructionEtatInitialReductionDomaineValeurs());
 	//Etat e = resolutionProblemeVariableLaPlusContraignante(constructionEtatInitialReductionDomaineValeurs());
+	stats.terminerTimer();
 	if (e.etat == echec)
 	{
+		sauverResultat(false);
 		std::cout << "oh oh ";
 	}
 	if (e.etat == succes)
 	{
+		sauverResultat(true);
 		std::cout << "CONGRATULATIONS" << std::endl;
 		afficher();
 	}
-	stats.terminerTimer();
+
 	std::cout << stats;
+	
 }
 
 Etat Probleme::constructionEtatInitial()
@@ -435,6 +439,50 @@ Variable * Probleme::chercherVariableLaPlusContraignante(std::vector<Variable*> 
 	}
 	return nonAssignees.at(std::distance(coeffContraignante.begin(),
 		std::max_element(coeffContraignante.begin(), coeffContraignante.end())));
+}
+
+void Probleme::sauverResultat(bool solutionTrouvee)
+{
+	std::string path;
+	std::cout << "Entrer le nom du fichier pour sauvegarder" << std::endl;
+	std::cin >> path;
+	std::ofstream F;
+	ouvrirNouveauFichier("./"+path+".txt", F);
+	//Sauver domaines initiaux
+	F << "===========[VARIABLES ETAT INITIAL]========" << std::endl;
+	for (Variable *var : variables)
+	{
+		F << "Variable n " << var->getNom() << std::endl << "Valeurs possibles : " << std::endl;
+		for (int val : var->getDomaineInitial())
+		{
+			F << val << " ";
+		}
+		F << std::endl;
+	}
+	//Sauver contraintes
+	F << "===========[CONTRAINTES]========" << std::endl;
+	for (int i = 0; i < contraintes.size(); i++)
+	{
+		F << "Contrainte n° " << i << std::endl;
+		F << *(contraintes.at(i))<<std::endl;
+	}
+	//SI SOLUTION : Indiquer solutions
+	if (solutionTrouvee == true)
+	{
+		F << "=====[SOLUTION TROUVEE] ====" << std::endl;
+		for (Variable *var : variables)
+		{
+			F << "Variable n° : " << var->getNom() <<  " = " << var->getValeur() << std::endl;
+		}
+	}
+	//Sinon dire pas de solution trouvee
+	else
+	{
+		F << "Pas de solution trouvee." << std::endl;
+	}
+	//Afficher les stats
+	F << stats;
+	fermerNouveauFichier(F);
 }
 
 bool Probleme::estConsistant()

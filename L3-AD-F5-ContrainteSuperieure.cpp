@@ -38,3 +38,10 @@ void ContrainteSuperieure::remettreDomaines(Variable * var)
 {
 	//TODO : Rediger la fonction
 }
+
+std::ostream & ContrainteSuperieure::afficherCaracteristiques(std::ostream & os)const
+{
+	// TODO: insérer une instruction return ici+ rediger la fonction
+	os << "Pas implemente";
+	return os;
+}

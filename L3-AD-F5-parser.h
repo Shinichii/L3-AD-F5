@@ -1,4 +1,5 @@
- /*
+#pragma once 
+/*
 	@Auteur : Aurélien DENIS
 	@Groupe : F5
 */
@@ -11,9 +12,8 @@
 #include <string>
 #include "L3-AD-F5-debug.h"
 #include "L3-AD-F5-Probleme.h"
+#include "L3-AD-F5-operationFichier.h"
 
-bool ouvrirFichier(const std::string chemin, std::fstream &F);
-bool fermerFichier(std::fstream &F);
 std::vector<std::string> importerFichier(std::fstream &F);
 bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier);
 

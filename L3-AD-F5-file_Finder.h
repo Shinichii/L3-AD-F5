@@ -1,3 +1,4 @@
+#pragma once
 /*
 	@Auteur : Aurelien DENIS
 	@Groupe : F5
