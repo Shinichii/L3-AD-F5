@@ -43,26 +43,53 @@ bool ContrainteSommeExacte::contrainteRespectee()
 
 bool ContrainteSommeExacte::reduireDomaines(Variable * var)
 {
-	//TODO : Rediger la fonction
+	int sommeIntermediaire = 0;
+	int coeffMin = 0;
+	int coeffMax = 0;
 	for (Variable* v : variables)
 	{
 		if (v->getValeur() == VALEUR_NON_DEFINIE)
 		{
-			//Reduction du domaine
-			//Regarder si chaque valeur du domaine + somme dépasse le seuil, si c'est le cas on supprime
-			//On supprime egalement les valeurs qui donnent la somme egale s'il y a plus d'une valeur non assignee
-			for (int valeur : v->getDomaine())
+			std::vector<int> domaineTemporaire = v->getDomaine();
+			if ((std::min_element(domaineTemporaire.begin(), domaineTemporaire.end())) != domaineTemporaire.end())
 			{
-				if ((valeur + this->somme > seuil) ||  (valeur + somme >= seuil && this->nbVariablesNonAssignees > 1))
-				{
-					v->reduireDomaine(valeur);
-				}
+				int tmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				coeffMin += tmp;
+				tmp = *(std::max_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				coeffMax += tmp;
 			}
-			int s = v->getDomaine().size();
-			if (s == 0)
+			else
 			{
-				DEBUG_MSG("[INFO] : Domaine vide, solution non viable");
 				return false;
+			}
+		}
+		else
+		{
+			sommeIntermediaire += v->getValeur();
+		}
+	}
+	for (Variable* v : variables)
+	{
+		if (v->getValeur() == VALEUR_NON_DEFINIE)
+		{
+			std::vector<int> domaineTemporaire = v->getDomaine();
+			for (int val : domaineTemporaire)
+			{
+				int mintmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				coeffMin -= mintmp;
+				int maxtmp = *(std::max_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				coeffMax -= maxtmp;
+				if (sommeIntermediaire + val + coeffMin > seuil || sommeIntermediaire + val + coeffMax < seuil)
+				{
+					v->reduireDomaine(val);
+					int s = v->getDomaine().size();
+					if (s == 0)
+					{
+						return false;
+					}
+				}
+				coeffMin += mintmp;
+				coeffMax += maxtmp;
 			}
 		}
 	}
