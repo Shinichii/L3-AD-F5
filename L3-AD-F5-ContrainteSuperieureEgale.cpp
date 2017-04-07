@@ -1,6 +1,6 @@
-#include "L3-AD-F5-ContrainteSuperieure.h"
+#include "L3-AD-F5-ContrainteSuperieureEgale.h"
 
-ContrainteSuperieure::ContrainteSuperieure()
+ContrainteSuperieureEgale::ContrainteSuperieureEgale()
 {
 }
 /*
@@ -10,7 +10,7 @@ Renvoie : Un booleen true ou false indiquant si la contrainte est bien respectee
 Explication: Cette fonction verifie que toutes les valeurs soient inferieures dans l'ordre croissant
 Si cela n'est pas le cas alors elle renverra false
 */
-bool ContrainteSuperieure::contrainteRespectee()
+bool ContrainteSuperieureEgale::contrainteRespectee()
 {
 	this->remettreAZeroVariablesNonAssignees();
 	std::list<Variable*>::iterator it = variables.begin();
@@ -25,7 +25,7 @@ bool ContrainteSuperieure::contrainteRespectee()
 				{
 					DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
 				}
-				else if ((*it)->getValeur() <= (*it2)->getValeur() && it != it2)
+				else if ((*it)->getValeur() < (*it2)->getValeur() && it != it2)
 				{
 					DEBUG_MSG("[INFO] : Valeurs superieure a la valeur suivante, Contrainte non respectee.");
 					return false;
@@ -42,7 +42,7 @@ bool ContrainteSuperieure::contrainteRespectee()
 	return true;
 }
 
-bool ContrainteSuperieure::reduireDomaines(Variable * var)
+bool ContrainteSuperieureEgale::reduireDomaines(Variable * var)
 {
 	bool reduire = false;
 	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
@@ -55,7 +55,7 @@ bool ContrainteSuperieure::reduireDomaines(Variable * var)
 		{
 			for (int valeur : (*it)->getDomaine())
 			{
-				if (valeur >= var->getValeur())
+				if (valeur > var->getValeur())
 				{
 					(*it)->reduireDomaine(valeur);
 					int s = (*it)->getDomaine().size();
@@ -71,7 +71,7 @@ bool ContrainteSuperieure::reduireDomaines(Variable * var)
 		{
 			for (int valeur : (*it)->getDomaine())
 			{
-				if (valeur <= var->getValeur())
+				if (valeur < var->getValeur())
 				{
 					(*it)->reduireDomaine(valeur);
 					int s = (*it)->getDomaine().size();
@@ -87,7 +87,7 @@ bool ContrainteSuperieure::reduireDomaines(Variable * var)
 	return true;
 }
 
-std::ostream & ContrainteSuperieure::afficherCaracteristiques(std::ostream & os)const
+std::ostream & ContrainteSuperieureEgale::afficherCaracteristiques(std::ostream & os)const
 {
 	os << "Contrainte Superieure" << std::endl;
 	for (Variable* var : variables)
@@ -95,7 +95,7 @@ std::ostream & ContrainteSuperieure::afficherCaracteristiques(std::ostream & os)
 		os << "x" << var->getNom();
 		if (var != variables.back())
 		{
-			os << " > ";
+			os << " >= ";
 		}
 	}
 	os << std::endl;

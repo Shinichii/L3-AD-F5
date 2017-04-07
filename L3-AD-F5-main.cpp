@@ -16,10 +16,15 @@ int main() {
 	s = choisirElement(".txt");
 
 	ouvrirFichier(s, F);
-	vc = importerFichier(F);
-	sauvegarderDansFichier(vc, "test");
-	fermerFichier(F);
+	Probleme p;
+	lectureFichier(F, p);
+	p.afficher();
+	
+	p.resoudreProbleme();
 
+	fermerFichier(F);
+	std::cout << "Sauvegarde terminee";
+	std::cout << "test";
     return 0;
 
 }

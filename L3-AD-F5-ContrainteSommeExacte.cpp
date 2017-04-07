@@ -14,20 +14,22 @@ Si cela n'est pas le cas la fonction renverra false
 */
 bool ContrainteSommeExacte::contrainteRespectee()
 {
-	int somme = 0;
-	for (std::list<Variable>::iterator it = variables.begin(); it != variables.end(); it++)
+	this->resetSomme();
+	this->remettreAZeroVariablesNonAssignees();
+	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
-		if (*it == VALEUR_NON_DEFINIE)
+		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
+			this->incrementerNbVariablesNonAssignees();
 		}
 		else 
 		{
-			DEBUG_MSG("[INFO] : Ajout de la valeur " << it->getValeur() << "a la somme" );
-			somme += it->getValeur();
+			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme" );
+			this->ajouterALaSomme((*it)->getValeur());
 		}
 	}
-	if (somme == seuil)
+	if ((this->somme == this->seuil && nbVariablesNonAssignees == 0) || (nbVariablesNonAssignees > 0 && this->somme < this->seuil))
 	{
 		DEBUG_MSG("[INFO] Somme des variables egale a la valeur attendue. Contrainte respectee");
 		return true;
@@ -37,6 +39,52 @@ bool ContrainteSommeExacte::contrainteRespectee()
 		DEBUG_MSG("[INFO] Somme des variables differente de la valeure attendue. Contrainte NON RESPECTEE");
 		return false;
 	}
-
 }
 
+bool ContrainteSommeExacte::reduireDomaines(Variable * var)
+{
+	//TODO : Rediger la fonction
+	for (Variable* v : variables)
+	{
+		if (v->getValeur() == VALEUR_NON_DEFINIE)
+		{
+			//Reduction du domaine
+			//Regarder si chaque valeur du domaine + somme dépasse le seuil, si c'est le cas on supprime
+			//On supprime egalement les valeurs qui donnent la somme egale s'il y a plus d'une valeur non assignee
+			for (int valeur : v->getDomaine())
+			{
+				if ((valeur + this->somme > seuil) ||  (valeur + somme >= seuil && this->nbVariablesNonAssignees > 1))
+				{
+					v->reduireDomaine(valeur);
+				}
+			}
+			int s = v->getDomaine().size();
+			if (s == 0)
+			{
+				DEBUG_MSG("[INFO] : Domaine vide, solution non viable");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+std::ostream & ContrainteSommeExacte::afficherCaracteristiques(std::ostream & os)const
+{
+	os << "Contrainte Somme Exacte" << std::endl;
+	for (Variable* var : variables)
+	{
+		os << "x" << var->getNom();
+		if (var != variables.back())
+		{
+			os << " + ";
+		}
+		else
+		{
+			os << " = ";
+		}
+	}
+	os << this->seuil;
+	os << std::endl;
+	return os;
+}

@@ -1,6 +1,6 @@
-#include "L3-AD-F5-ContrainteSommeSuperieureEgale.h"
+#include "L3-AD-F5-ContrainteSommeSuperieure.h"
 
-ContrainteSommeSuperieureEgale::ContrainteSommeSuperieureEgale()
+ContrainteSommeSuperieure::ContrainteSommeSuperieure()
 {
 }
 /*
@@ -10,7 +10,7 @@ Renvoie : Un booleen true ou false indiquant si la contrainte est bien respectee
 Explication: Cette fonction verifie que la somme des valeurs est superieure ou egale à un pack.
 Si cela n'est pas le cas la fonction renverra false
 */
-bool ContrainteSommeSuperieureEgale::contrainteRespectee()
+bool ContrainteSommeSuperieure::contrainteRespectee()
 {
 	this->resetSomme();
 	this->remettreAZeroVariablesNonAssignees();
@@ -40,17 +40,24 @@ bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 
 }
 
-bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
+bool ContrainteSommeSuperieure::reduireDomaines(Variable * var)
 {
+
+	//TODO : Rediger la fonction
+	//On va boucler deux fois
+	//On somme en attendant le reste des valeurs
+	//Si on a déjà un element et que la variable n'est pas assignee on ajoute le max
+	//A la fin on regarde pour chaque valeur du domaine de l'element si en l'ajoutant a la somme on depasse le seuil
+	//Si c'est pas le cas on le reduit.
 	int sommeIntermediaire = 0;
 	for (Variable* v : variables)
 	{
 		if (v->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			std::vector<int> domaineTemporaire = v->getDomaine();
-			if ((std::min_element(domaineTemporaire.begin(), domaineTemporaire.end())) != domaineTemporaire.end())
+			if ((std::max_element(domaineTemporaire.begin(), domaineTemporaire.end())) != domaineTemporaire.end())
 			{
-				int tmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				int tmp = *(std::max_element(domaineTemporaire.begin(), domaineTemporaire.end()));
 				sommeIntermediaire += tmp;
 			}
 			else
@@ -72,7 +79,7 @@ bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
 			sommeIntermediaire -= tmp;
 			for (int val : domaineTemporaire)
 			{
-				if (sommeIntermediaire + val < seuil)
+				if (sommeIntermediaire + val <= seuil)
 				{
 					v->reduireDomaine(val);
 					int s = v->getDomaine().size();
@@ -88,9 +95,9 @@ bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
 	return true;
 }
 
-std::ostream & ContrainteSommeSuperieureEgale::afficherCaracteristiques(std::ostream & os)const
+std::ostream & ContrainteSommeSuperieure::afficherCaracteristiques(std::ostream & os)const
 {
-	os << "Contrainte Somme Superieure ou Egale" << std::endl;
+	os << "Contrainte Somme Superieure" << std::endl;
 	for (Variable* var : variables)
 	{
 		os << "x" << var->getNom();
@@ -100,7 +107,7 @@ std::ostream & ContrainteSommeSuperieureEgale::afficherCaracteristiques(std::ost
 		}
 		else
 		{
-			os << " >= ";
+			os << " > ";
 		}
 	}
 	os << this->seuil;
