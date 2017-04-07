@@ -10,6 +10,8 @@
 #include "L3-AD-F5-ContrainteSommeSuperieureEgale.h"
 #include "L3-AD-F5-ContrainteInferieure.h"
 #include "L3-AD-F5-ContrainteSuperieure.h"
+#include "L3-AD-F5-ContrainteInferieureEgale.h"
+#include "L3-AD-F5-ContrainteSuperieureEgale.h"
 #include "L3-AD-F5-ContrainteSommePonderee.h"
 #include "L3-AD-F5-Statistiques.h"
 #include "L3-AD-F5-operationFichier.h"
@@ -19,6 +21,8 @@
 #include <iterator>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+
 
 enum realisation
 {

@@ -1,12 +1,6 @@
 #include "L3-AD-F5-Probleme.h"
 
-#include <iostream>
-
-
 using namespace std;
-
-#include <vector>
-#include <cstdlib>
 
 //----------------------------------------------------------------------------------------------------------------------
 //------------------------------------------  Constructeur    ----------------------------------------------------------
@@ -89,6 +83,12 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 	case CONTRAINTE_SOMME_SUPERIEURE:
 		c = new ContrainteSommeSuperieureEgale();
 		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_INFERIEURE_EGALE:
+		c = new ContrainteInferieureEgale();
+		break;
+	case CONTRAINTE_SUPERIEURE_EGALE:
+		c = new ContrainteSuperieureEgale();
 		break;
 	default:
 		std::cout << "[INFO] Code Contrainte non reconnue" << std::endl;
