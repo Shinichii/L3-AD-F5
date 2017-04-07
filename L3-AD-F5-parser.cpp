@@ -112,7 +112,7 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 		if (nouvelleContrainte != NULL)
 		{
 			ContrainteSeuil* casted = (ContrainteSeuil*)nouvelleContrainte;
-			if (code > 3 && code < 7)
+			if (code >= CONTRAINTE_SOMME_EXACTE && code <= CONTRAINTE_SOMME_SUPERIEURE_EGALE)
 			{
 				std::string tmp;
 				while (ligne[i] == ' ' && i < ligne.length())

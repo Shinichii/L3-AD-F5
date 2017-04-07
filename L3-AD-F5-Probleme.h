@@ -5,14 +5,18 @@
 #include "L3-AD-F5-Variable.h"
 #include "L3-AD-F5-ContrainteEgalite.h"
 #include "L3-AD-F5-ContrainteInegalite.h"
-#include "L3-AD-F5-ContrainteSommeExacte.h"
-#include "L3-AD-F5-ContrainteSommeInferieureEgale.h"
-#include "L3-AD-F5-ContrainteSommeSuperieureEgale.h"
 #include "L3-AD-F5-ContrainteInferieure.h"
 #include "L3-AD-F5-ContrainteSuperieure.h"
 #include "L3-AD-F5-ContrainteInferieureEgale.h"
 #include "L3-AD-F5-ContrainteSuperieureEgale.h"
+
+#include "L3-AD-F5-ContrainteSommeExacte.h"
+#include "L3-AD-F5-ContrainteSommeInferieureEgale.h"
+#include "L3-AD-F5-ContrainteSommeSuperieureEgale.h"
+#include "L3-AD-F5-ContrainteSommeInferieure.h"
+#include "L3-AD-F5-ContrainteSommeSuperieure.h"
 #include "L3-AD-F5-ContrainteSommePonderee.h"
+
 #include "L3-AD-F5-Statistiques.h"
 #include "L3-AD-F5-operationFichier.h"
 

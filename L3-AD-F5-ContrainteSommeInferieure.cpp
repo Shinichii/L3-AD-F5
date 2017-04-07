@@ -1,18 +1,16 @@
-#include "L3-AD-F5-ContrainteSommeExacte.h"
+#include "L3-AD-F5-ContrainteSommeInferieure.h"
 
-
-
-ContrainteSommeExacte::ContrainteSommeExacte()
+ContrainteSommeInferieure::ContrainteSommeInferieure()
 {
 }
 /*
 Fonction : contrainteRespectee (heritee de la classe Contrainte)
 Parametres : Aucun
 Renvoie : Un booleen true ou false indiquant si la contrainte est bien respectee
-Explication: Cette fonction verifie que la somme des valeurs est egale exactement a un seuil
+Explication: Cette fonction verifie que la somme est inférieure ou egale a un seuil
 Si cela n'est pas le cas la fonction renverra false
 */
-bool ContrainteSommeExacte::contrainteRespectee()
+bool ContrainteSommeInferieure::contrainteRespectee()
 {
 	this->resetSomme();
 	this->remettreAZeroVariablesNonAssignees();
@@ -23,13 +21,13 @@ bool ContrainteSommeExacte::contrainteRespectee()
 			DEBUG_MSG("[INFO] : Valeur non definie, Ignoree pour la suite de la contrainte.");
 			this->incrementerNbVariablesNonAssignees();
 		}
-		else 
+		else
 		{
-			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme" );
+			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme");
 			this->ajouterALaSomme((*it)->getValeur());
 		}
 	}
-	if ((this->somme == this->seuil && nbVariablesNonAssignees == 0) || (nbVariablesNonAssignees > 0 && this->somme < this->seuil))
+	if ((this->somme < this->seuil ))
 	{
 		DEBUG_MSG("[INFO] Somme des variables egale a la valeur attendue. Contrainte respectee");
 		return true;
@@ -41,19 +39,18 @@ bool ContrainteSommeExacte::contrainteRespectee()
 	}
 }
 
-bool ContrainteSommeExacte::reduireDomaines(Variable * var)
+bool ContrainteSommeInferieure::reduireDomaines(Variable * var)
 {
-	//TODO : Rediger la fonction
 	for (Variable* v : variables)
 	{
 		if (v->getValeur() == VALEUR_NON_DEFINIE)
 		{
 			//Reduction du domaine
-			//Regarder si chaque valeur du domaine + somme dépasse le seuil, si c'est le cas on supprime
+			//Regarder si chaque valeur du domaine + somme dépasse ou atteint le seuil, si c'est le cas on supprime
 			//On supprime egalement les valeurs qui donnent la somme egale s'il y a plus d'une valeur non assignee
 			for (int valeur : v->getDomaine())
 			{
-				if ((valeur + this->somme > seuil) ||  (valeur + somme >= seuil && this->nbVariablesNonAssignees > 1))
+				if ( (valeur + somme >= seuil))
 				{
 					v->reduireDomaine(valeur);
 				}
@@ -69,9 +66,10 @@ bool ContrainteSommeExacte::reduireDomaines(Variable * var)
 	return true;
 }
 
-std::ostream & ContrainteSommeExacte::afficherCaracteristiques(std::ostream & os)const
+
+std::ostream & ContrainteSommeInferieure::afficherCaracteristiques(std::ostream & os)const
 {
-	os << "Contrainte Somme Exacte" << std::endl;
+	os << "Contrainte Somme Inferieure" << std::endl;
 	for (Variable* var : variables)
 	{
 		os << "x" << var->getNom();
@@ -81,10 +79,11 @@ std::ostream & ContrainteSommeExacte::afficherCaracteristiques(std::ostream & os
 		}
 		else
 		{
-			os << " = ";
+			os << " < ";
 		}
 	}
 	os << this->seuil;
 	os << std::endl;
 	return os;
+
 }
