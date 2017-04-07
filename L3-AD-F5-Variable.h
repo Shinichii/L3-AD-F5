@@ -4,7 +4,7 @@
 
 #ifndef L3_AD_F5_VARIABLE_H
 #define L3_AD_F5_VARIABLE_H
-#define VALEUR_NON_DEFINIE 325687
+#define VALEUR_NON_DEFINIE -325687
 
 #include <iostream>
 

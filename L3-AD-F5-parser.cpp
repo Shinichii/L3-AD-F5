@@ -106,13 +106,19 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 	{
 		std::string ligne = *it;
 		char c = ligne[0];
-		int code = c - '0';
+		std::string code;
+		code += (c);
 		int i = 1;
-		Contrainte *nouvelleContrainte = p.ajouterContrainte(code);
+		while (ligne[i] != ' ' && i < ligne.length())
+		{
+			code += ligne[i];
+			i++;
+		}
+		Contrainte *nouvelleContrainte = p.ajouterContrainte(std::stoi(code));
 		if (nouvelleContrainte != NULL)
 		{
 			ContrainteSeuil* casted = (ContrainteSeuil*)nouvelleContrainte;
-			if (code >= CONTRAINTE_SOMME_EXACTE && code <= CONTRAINTE_SOMME_SUPERIEURE_EGALE)
+			if (std::stoi(code) >= CONTRAINTE_SOMME_EXACTE && std::stoi(code) <= CONTRAINTE_SOMME_PONDEREE)
 			{
 				std::string tmp;
 				while (ligne[i] == ' ' && i < ligne.length())
@@ -126,13 +132,12 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 				}
 				casted->setSeuil(std::stoi(tmp));
 			}
-			if (code == 7)
+			if (std::stoi(code) == CONTRAINTE_SOMME_PONDEREE)
 			{
 				ContrainteSommePonderee* casted = (ContrainteSommePonderee*)nouvelleContrainte;
+				bool ponderation = true;
 				while (i < ligne.length())
 				{
-					bool ponderation = true;
-					bool resultat = false;
 					std::string tmp;
 					c = ligne[i];
 					while (c != ' ' && c != '\n' && c != '\0' && c != '-' && i < ligne.length())
@@ -141,7 +146,7 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 						i++;
 						c = ligne[i];
 					}
-					if (tmp != "" && resultat == false)
+					if (tmp != "")
 					{
 						if (ponderation)
 						{
@@ -151,23 +156,6 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 						else
 						{
 							casted->ajouterVariable(p.chercherVariable(std::stoi(tmp)));
-							ponderation = true;
-						}
-						if (c == '=')
-						{
-							resultat = true;
-						}
-					}
-					else
-					{
-						if (ponderation)
-						{
-							casted->ajouterPonderationResultat(std::stoi(tmp));
-							ponderation = false;
-						}
-						else
-						{
-							casted->ajouterResultat(p.chercherVariable(std::stoi(tmp)));
 							ponderation = true;
 						}
 					}
