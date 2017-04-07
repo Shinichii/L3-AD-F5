@@ -86,15 +86,23 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 		break;
 	case CONTRAINTE_INFERIEURE_EGALE:
 		c = new ContrainteInferieureEgale();
+		contraintes.push_back(c);
 		break;
 	case CONTRAINTE_SUPERIEURE_EGALE:
 		c = new ContrainteSuperieureEgale();
+		contraintes.push_back(c);
 		break;
 	case CONTRAINTE_SOMME_INFERIEURE_EGALE:
 		c = new ContrainteSommeSuperieureEgale();
+		contraintes.push_back(c);
 		break;
 	case CONTRAINTE_SOMME_SUPERIEURE_EGALE:
 		c = new ContrainteSommeSuperieureEgale();
+		contraintes.push_back(c);
+		break;
+	case CONTRAINTE_SOMME_PONDEREE:
+		c = new ContrainteSommePonderee();
+		contraintes.push_back(c);
 		break;
 	default:
 		std::cout << "[INFO] Code Contrainte non reconnue" << std::endl;
