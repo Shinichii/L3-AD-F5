@@ -14,6 +14,7 @@ bool ContrainteSommeInferieure::contrainteRespectee()
 {
 	this->resetSomme();
 	this->remettreAZeroVariablesNonAssignees();
+	int somme = 0;
 	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
@@ -24,10 +25,10 @@ bool ContrainteSommeInferieure::contrainteRespectee()
 		else
 		{
 			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme");
-			this->ajouterALaSomme((*it)->getValeur());
+			somme += (*it)->getValeur();
 		}
 	}
-	if ((this->somme < this->seuil ))
+	if ((this->somme < this->seuil))
 	{
 		DEBUG_MSG("[INFO] Somme des variables egale a la valeur attendue. Contrainte respectee");
 		return true;

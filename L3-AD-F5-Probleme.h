@@ -76,6 +76,9 @@ public:
 	Etat resolutionProblemeVariablePlusContrainte(Etat e);
 	Variable* chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees);
 
+	Etat resolutionProblemeVariableMoinsContrainte(Etat e);
+	Variable* chercherVariableLaMoinsContrainte(std::vector<Variable*> nonAssignees);
+
 	Etat resolutionProblemeVariableLaPlusContraignante(Etat e);
 	Variable* chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees);
 

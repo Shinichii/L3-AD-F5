@@ -93,7 +93,7 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 		contraintes.push_back(c);
 		break;
 	case CONTRAINTE_SOMME_INFERIEURE_EGALE:
-		c = new ContrainteSommeSuperieureEgale();
+		c = new ContrainteSommeInferieureEgale();
 		contraintes.push_back(c);
 		break;
 	case CONTRAINTE_SOMME_SUPERIEURE_EGALE:
@@ -117,9 +117,10 @@ void Probleme::resoudreProbleme()
 	std::cout << "[1] : Resolution par recherche en profondeur (methode naive)"<<std::endl;
 	std::cout << "[2] : Resolution avec reduction des domaines de valeurs (RDV)" << std::endl;
 	std::cout << "[3] : Resolution avec RDV en choississant la variable la plus contrainte" << std::endl;
-	std::cout << "[4] : Resolution avec RDV en choississant la variable la plus contraignante" << std::endl;
-	std::cout << "[5] : Resolution avec RDV en choississant la variable la moins contraignante" << std::endl;
-	while (!(cin >> choixUtilisateur) || choixUtilisateur < 1 || choixUtilisateur > 5)
+	std::cout << "[4] : Resolution avec RDV en choississant la variable la moins contrainte" << std::endl;
+	std::cout << "[5] : Resolution avec RDV en choississant la variable la plus contraignante" << std::endl;
+	std::cout << "[6] : Resolution avec RDV en choississant la variable la moins contraignante" << std::endl;
+	while (!(cin >> choixUtilisateur) || choixUtilisateur < 1 || choixUtilisateur > 6)
 	{
 		if (cin.fail())
 		{
@@ -172,6 +173,19 @@ void Probleme::resoudreProbleme()
 		break;
 	case 4:
 		stats.demarrerTimer();
+		e = resolutionProblemeVariableMoinsContrainte(constructionEtatInitialReductionDomaineValeurs());
+		stats.terminerTimer();
+		if (e.etat == echec)
+		{
+			sauverResultat(false, "Reduction des domaines de valeurs en choisisant la variable la moins contrainte");
+		}
+		if (e.etat == succes)
+		{
+			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la moins contrainte");
+		}
+		break;
+	case 5:
+		stats.demarrerTimer();
 		e = resolutionProblemeVariableLaPlusContraignante(constructionEtatInitialReductionDomaineValeurs());
 		stats.terminerTimer();
 		if (e.etat == echec)
@@ -183,7 +197,7 @@ void Probleme::resoudreProbleme()
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
 		}
 		break;
-	case 5:
+	case 6:
 		stats.demarrerTimer();
 		e = resolutionProblemeVariableLaMoinsContraignante(constructionEtatInitialReductionDomaineValeurs());
 		stats.terminerTimer();
@@ -428,6 +442,84 @@ Variable * Probleme::chercherVariableLaPlusContrainte(std::vector<Variable*> non
 		}
 	}
 	return variableLaPlusContrainte;
+}
+
+Etat Probleme::resolutionProblemeVariableMoinsContrainte(Etat e)
+{
+	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
+	std::cout << "Variables non assignees : " << nonAssignees.size() << std::endl;
+	if (nonAssignees.size() == 0)
+	{
+		e.etat = succes;
+		return e;
+	}
+	Variable* variable = this->chercherVariableLaMoinsContrainte(nonAssignees);
+	std::vector<int> domaineTemporaire = variable->getDomaine();
+	for (int valeur : domaineTemporaire)
+	{
+		std::cout << "[ " << variable->getNom() << " ]" << " = " << "[ " << valeur << " ]" << std::endl;
+		variable->setValeur(valeur);
+		if (this->estConsistant())
+		{
+			Etat e2 = e;
+			std::vector < std::vector<int>> domaines;
+			e2.variablesAssignees.push_back(variable);
+			for (Variable* var : nonAssignees)
+			{
+				domaines.push_back(var->getDomaine());
+			}
+			variable->reduireDomaineAUneValeur(variable->getValeur());
+			bool resultatReduction = this->reductionDomaineValeurs(variable);
+			if (resultatReduction == true)
+			{
+				stats.incrementerNb_Noeuds();
+				e2 = this->resolutionProblemeReductionValeur(e2);
+				if (e2.etat == succes)
+				{
+					return e2;
+				}
+				else
+				{
+					for (int i = 0; i < nonAssignees.size(); i++)
+					{
+						nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+					}
+					domaines.clear();
+				}
+			}
+			else
+			{
+				stats.incrementerNb_Elagages();
+				stats.mettreAJourValeurProfondeurMaxElagage(nonAssignees.size());
+				for (int i = 0; i < nonAssignees.size(); i++)
+				{
+					nonAssignees.at(i)->remettreDomaine(domaines.at(i));
+				}
+				variable->remettreValeursInitiales();
+			}
+		}
+	}
+	variable->remettreValeursInitiales();
+	e.etat = echec;
+	return Etat(e);
+}
+
+Variable * Probleme::chercherVariableLaMoinsContrainte(std::vector<Variable*> nonAssignees)
+{
+	if (nonAssignees.size() <= 0)
+	{
+		DEBUG_MSG("[ERREUR] : Vecteur nonAssignees n'a pas d'element");
+		return NULL;
+	}
+	Variable* variableLaMoinsContrainte = nonAssignees.at(0);
+	for (int i = 1; i < nonAssignees.size(); i++)
+	{
+		if (variableLaMoinsContrainte->getDomaine().size() > nonAssignees.at(i)->getDomaine().size())
+		{
+			variableLaMoinsContrainte = nonAssignees.at(i);
+		}
+	}
+	return variableLaMoinsContrainte;
 }
 
 Etat Probleme::resolutionProblemeVariableLaPlusContraignante(Etat e)
