@@ -27,7 +27,7 @@ bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 			this->ajouterALaSomme((*it)->getValeur());
 		}
 	}
-	if (this->somme >= this->seuil && nbVariablesNonAssignees == 0)
+	if ((this->somme >= this->seuil && nbVariablesNonAssignees == 0) || (nbVariablesNonAssignees > 0))
 	{
 		DEBUG_MSG("[INFO] Somme des variables superieure ou egale a la valeur attendue. Contrainte respectee");
 		return true;
@@ -47,7 +47,16 @@ bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
 	{
 		if (v->getValeur() == VALEUR_NON_DEFINIE)
 		{
-			sommeIntermediaire += *(std::max_element(v->getDomaine().begin(), v->getDomaine().end()));
+			std::vector<int> domaineTemporaire = v->getDomaine();
+			if ((std::min_element(domaineTemporaire.begin(), domaineTemporaire.end())) != domaineTemporaire.end())
+			{
+				int tmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				sommeIntermediaire += tmp;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
@@ -58,15 +67,16 @@ bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
 	{
 		if (v->getValeur() == VALEUR_NON_DEFINIE)
 		{
-			int tmp = *(std::max_element(v->getDomaine().begin(), v->getDomaine().end()));
-			sommeIntermediaire -= tmp;
 			std::vector<int> domaineTemporaire = v->getDomaine();
+			int tmp = *(std::max_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+			sommeIntermediaire -= tmp;
 			for (int val : domaineTemporaire)
 			{
 				if (sommeIntermediaire + val < seuil)
 				{
 					v->reduireDomaine(val);
-					if (v->getDomaine().size() == 0)
+					int s = v->getDomaine().size();
+					if (s == 0)
 					{
 						return false;
 					}

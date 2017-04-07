@@ -41,26 +41,47 @@ bool ContrainteSommeInferieure::contrainteRespectee()
 
 bool ContrainteSommeInferieure::reduireDomaines(Variable * var)
 {
+	int sommeIntermediaire = 0;
 	for (Variable* v : variables)
 	{
 		if (v->getValeur() == VALEUR_NON_DEFINIE)
 		{
-			//Reduction du domaine
-			//Regarder si chaque valeur du domaine + somme dépasse ou atteint le seuil, si c'est le cas on supprime
-			//On supprime egalement les valeurs qui donnent la somme egale s'il y a plus d'une valeur non assignee
-			for (int valeur : v->getDomaine())
+			std::vector<int> domaineTemporaire = v->getDomaine();
+			if ((std::min_element(domaineTemporaire.begin(), domaineTemporaire.end())) != domaineTemporaire.end())
 			{
-				if ( (valeur + somme >= seuil))
-				{
-					v->reduireDomaine(valeur);
-				}
+				int tmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+				sommeIntermediaire += tmp;
 			}
-			int s = v->getDomaine().size();
-			if (s == 0)
+			else
 			{
-				DEBUG_MSG("[INFO] : Domaine vide, solution non viable");
 				return false;
 			}
+		}
+		else
+		{
+			sommeIntermediaire += v->getValeur();
+		}
+	}
+	for (Variable* v : variables)
+	{
+		if (v->getValeur() == VALEUR_NON_DEFINIE)
+		{
+			std::vector<int> domaineTemporaire = v->getDomaine();
+			int tmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+			sommeIntermediaire -= tmp;
+			for (int val : domaineTemporaire)
+			{
+				if (sommeIntermediaire + val >= seuil)
+				{
+					v->reduireDomaine(val); 
+					int s = v->getDomaine().size();
+					if (s == 0)
+					{
+						return false;
+					}
+				}
+			}
+			sommeIntermediaire += tmp;
 		}
 	}
 	return true;
