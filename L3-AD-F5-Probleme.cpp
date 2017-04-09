@@ -395,7 +395,7 @@ Etat Probleme::resolutionProblemeVariablePlusContrainte(Etat e)
 			if (resultatReduction == true)
 			{
 				stats.incrementerNb_Noeuds();
-				e2 = this->resolutionProblemeReductionValeur(e2);
+				e2 = this->resolutionProblemeVariablePlusContrainte(e2);
 				if (e2.etat == succes)
 				{
 					return e2;
@@ -473,7 +473,7 @@ Etat Probleme::resolutionProblemeVariableMoinsContrainte(Etat e)
 			if (resultatReduction == true)
 			{
 				stats.incrementerNb_Noeuds();
-				e2 = this->resolutionProblemeReductionValeur(e2);
+				e2 = this->resolutionProblemeVariableMoinsContrainte(e2);
 				if (e2.etat == succes)
 				{
 					return e2;
@@ -551,7 +551,7 @@ Etat Probleme::resolutionProblemeVariableLaPlusContraignante(Etat e)
 			if (resultatReduction == true)
 			{
 				stats.incrementerNb_Noeuds();
-				e2 = this->resolutionProblemeReductionValeur(e2);
+				e2 = this->resolutionProblemeVariableLaPlusContraignante(e2);
 				if (e2.etat == succes)
 				{
 					return e2;
@@ -632,7 +632,7 @@ Etat Probleme::resolutionProblemeVariableLaMoinsContraignante(Etat e)
 			if (resultatReduction == true)
 			{
 				stats.incrementerNb_Noeuds();
-				e2 = this->resolutionProblemeReductionValeur(e2);
+				e2 = this->resolutionProblemeVariableLaMoinsContraignante(e2);
 				if (e2.etat == succes)
 				{
 					return e2;
