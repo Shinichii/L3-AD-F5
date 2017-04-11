@@ -499,7 +499,15 @@ Etat Probleme::resolutionProblemeVariablePlusContrainte(Etat e)
 	e.etat = echec;
 	return Etat(e);
 }
-
+/*
+Fonction	: chercherVariableLaPlusContrainte
+Parametre	: L'ensemble des variables non assignees 
+Renvoie		: Pointeur sur la variable la plus contrainte
+Description : Cette fonction prend le premier element de nonAssignees comme variable la plus contrainte
+Pour chaque element suivant il verifie si la taille du domaine est moins grande que celle de la variable la plus contrainte actuelle
+Si c'est le cas alors variableLaPlusContrainte pointe desormais sur cet element
+A la fin la fonction retourne variableLaPlusContrainte
+*/
 Variable * Probleme::chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees)
 {
 	if (nonAssignees.size() <= 0)
@@ -593,7 +601,15 @@ Etat Probleme::resolutionProblemeVariableMoinsContrainte(Etat e)
 	e.etat = echec;
 	return Etat(e);
 }
-
+/*
+Fonction	: chercherVariableLaMoinsContrainte
+Parametre	: L'ensemble des variables non assignees
+Renvoie		: Pointeur sur la variable la moins contrainte
+Description : Cette fonction prend le premier element de nonAssignees comme variable la plus contrainte
+Pour chaque element suivant il verifie si la taille du domaine est plus grande que celle de la variable la moins contrainte actuelle
+Si c'est le cas alors variableLaMoinsContrainte pointe desormais sur cet element
+A la fin la fonction retourne variableLaMoinsContrainte
+*/
 Variable * Probleme::chercherVariableLaMoinsContrainte(std::vector<Variable*> nonAssignees)
 {
 	if (nonAssignees.size() <= 0)
@@ -687,7 +703,17 @@ Etat Probleme::resolutionProblemeVariableLaPlusContraignante(Etat e)
 	e.etat = echec;
 	return Etat(e);
 }
-
+/*
+Fonction	: chercherVariableLaPlusContraignante
+Parametre	: L'ensemble des variables non assignees
+Renvoie		: Pointeur sur la variable la plus contraignante
+Description : On initialise un tableau d'entier correspondant au nombre de fois que la variable en i de nonAssignees est presente dans une contrainte ayant au moins une variable sans valeur assignee
+On parcourt toutes les variables
+Pour chaque variable on parcourt toutes les contraintes
+Si elles contiennent la variable et que le nombre de variables non assignees est superieure a 0 on incremente un compteur
+Apres avoir parcouru les contraintes on ajoute cette valeur au tableau d'entiers
+A la fin de ce parcours on obtient un tableau et on renvoie la variable a la position de l'element maximum du tableau d'entier
+*/
 Variable * Probleme::chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees)
 {
 	std::vector<int> coeffContraignante;
@@ -784,6 +810,17 @@ Etat Probleme::resolutionProblemeVariableLaMoinsContraignante(Etat e)
 	e.etat = echec;
 	return Etat(e);
 }
+/*
+Fonction	: chercherVariableLaMoinsContraignante
+Parametre	: L'ensemble des variables non assignees
+Renvoie		: Pointeur sur la variable la moins contraignante
+Description : On initialise un tableau d'entier correspondant au nombre de fois que la variable en i de nonAssignees est presente dans une contrainte ayant au moins une variable sans valeur assignee
+On parcourt toutes les variables
+Pour chaque variable on parcourt toutes les contraintes
+Si elles contiennent la variable et que le nombre de variables non assignees est superieure a 0 on incremente un compteur
+Apres avoir parcouru les contraintes on ajoute cette valeur au tableau d'entiers
+A la fin de ce parcours on obtient un tableau et on renvoie la variable a la position de l'element minimum du tableau d'entier
+*/
 
 Variable * Probleme::chercherVariableLaMoinsContraignante(std::vector<Variable*> nonAssignees)
 {
