@@ -14,6 +14,7 @@ bool ContrainteSommeInferieure::contrainteRespectee()
 {
 	this->resetSomme();
 	this->remettreAZeroVariablesNonAssignees();
+	int somme = 0;
 	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
@@ -24,10 +25,10 @@ bool ContrainteSommeInferieure::contrainteRespectee()
 		else
 		{
 			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme");
-			this->ajouterALaSomme((*it)->getValeur());
+			somme += (*it)->getValeur();
 		}
 	}
-	if ((this->somme < this->seuil ))
+	if ((this->somme < this->seuil))
 	{
 		DEBUG_MSG("[INFO] Somme des variables egale a la valeur attendue. Contrainte respectee");
 		return true;
@@ -38,7 +39,19 @@ bool ContrainteSommeInferieure::contrainteRespectee()
 		return false;
 	}
 }
-
+/*
+Fonction : reduireDomaines (heritee de la classe Contrainte)
+Parametres : Un pointeur vers la variable attribue var
+Renvoie : Un booleen true ou false indiquant si la reduction de domaine n'amene pas a une situation bloquante
+Explication: Cette fonction parcourt toutes les variables associees a la contrainte.
+Si la valeur est definie elle l'ajoute a une somme intermediaire
+Sinon elle prend la valeur minimale du domaine
+On reitere a nouveau dans les varibles non attribuees, on retire leur valeur min de la somme et on regarde pour chaque
+valeur du domaine si l'ajouter a la somme rendra la somme superieure ou egale au seuil
+Si c'est le cas on retire la valeur de son domaine
+Si un domaine est amene a etre vide apres cette operation, la fonction renverra false
+A la fin, puisqu'on a pu terminer l'iteration on renvoie true
+*/
 bool ContrainteSommeInferieure::reduireDomaines(Variable * var)
 {
 	int sommeIntermediaire = 0;

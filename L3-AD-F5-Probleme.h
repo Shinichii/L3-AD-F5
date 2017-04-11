@@ -46,7 +46,7 @@ class Probleme {
 
 
 private:
-     std::string nom_Probleme;
+
      std::vector<Variable*> variables;
 	 std::vector<Contrainte*> contraintes;
 	 Statistiques stats;
@@ -56,7 +56,6 @@ public:
     Probleme();
 
 	Statistiques getStatistiques();
-    Probleme(std::string Nom_Probleme);
 
     //affichage
     void afficher();
@@ -75,6 +74,9 @@ public:
 
 	Etat resolutionProblemeVariablePlusContrainte(Etat e);
 	Variable* chercherVariableLaPlusContrainte(std::vector<Variable*> nonAssignees);
+
+	Etat resolutionProblemeVariableMoinsContrainte(Etat e);
+	Variable* chercherVariableLaMoinsContrainte(std::vector<Variable*> nonAssignees);
 
 	Etat resolutionProblemeVariableLaPlusContraignante(Etat e);
 	Variable* chercherVariableLaPlusContraignante(std::vector<Variable*> nonAssignees);

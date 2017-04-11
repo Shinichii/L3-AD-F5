@@ -39,7 +39,19 @@ bool ContrainteSommeSuperieureEgale::contrainteRespectee()
 	}
 
 }
-
+/*
+Fonction : reduireDomaines (heritee de la classe Contrainte)
+Parametres : Un pointeur vers la variable attribue var
+Renvoie : Un booleen true ou false indiquant si la reduction de domaine n'amene pas a une situation bloquante
+Explication: Cette fonction parcourt toutes les variables associees a la contrainte.
+Si la valeur est definie elle l'ajoute a une somme intermediaire
+Sinon elle prend la valeur maximale du domaine
+On reitere a nouveau dans les varibles non attribuees, on retire leur valeur max de la somme et on regarde pour chaque
+valeur du domaine si l'ajouter a la somme rendra la somme inferieure au seuil
+Si c'est le cas on retire la valeur de son domaine
+Si un domaine est amene a etre vide apres cette operation, la fonction renverra false
+A la fin, puisqu'on a pu terminer l'iteration on renvoie true
+*/
 bool ContrainteSommeSuperieureEgale::reduireDomaines(Variable * var)
 {
 	int sommeIntermediaire = 0;

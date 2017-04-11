@@ -41,7 +41,19 @@ bool ContrainteSuperieure::contrainteRespectee()
 	}
 	return true;
 }
-
+/*
+Fonction : reduireDomaines (heritee de la classe Contrainte)
+Parametres : Un pointeur vers la variable attribue var
+Renvoie : Un booleen true ou false indiquant si la reduction de domaine n'amene pas a une situation bloquante
+Explication: Cette fonction parcourt toutes les variables associees a la contrainte. 
+Pour toutes les variables avant la variable associee, puisque les variables sont dans un ordre croissant strict
+On retire de leur domaine toutes les valeurs superieures a var->getValeur()
+Si un domaine se retrouve vide apres cette operation, la fonction renvoie false
+Une fois la variable atteinte, on passe le booleen reduire a vrai
+Pour toutes les variables apres la variable associee on retire de leur domaine toutes les valeurs inferieures a var->getValeur()
+Si un domaine se retrouve vide apres cette operation, la fonction renverra egalement false
+Si on a fini d'iterer alors la reduction de domaines n'entraine pas un etat bloquant et on renvoie true
+*/
 bool ContrainteSuperieure::reduireDomaines(Variable * var)
 {
 	bool reduire = false;
