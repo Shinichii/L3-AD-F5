@@ -1,11 +1,11 @@
 #pragma once
 #include "L3-AD-F5-ContrainteSeuil.h"
 
-class ContrainteSommeInferieureEgale : public ContrainteSeuil
+class ContrainteSommeInferieure : public ContrainteSeuil
 {
 
 public:
-	ContrainteSommeInferieureEgale();
+	ContrainteSommeInferieure();
 	bool contrainteRespectee();
 	bool reduireDomaines(Variable* var);
 

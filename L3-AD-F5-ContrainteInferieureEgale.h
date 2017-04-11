@@ -1,14 +1,13 @@
 #pragma once
-#include "L3-AD-F5-ContrainteSeuil.h"
+#include "L3-AD-F5-Contrainte.h"
 
-class ContrainteSommeInferieureEgale : public ContrainteSeuil
+class ContrainteInferieureEgale : public Contrainte
 {
 
 public:
-	ContrainteSommeInferieureEgale();
+	ContrainteInferieureEgale();
 	bool contrainteRespectee();
 	bool reduireDomaines(Variable* var);
-
 
 	std::ostream& afficherCaracteristiques(std::ostream& os)const;
 };

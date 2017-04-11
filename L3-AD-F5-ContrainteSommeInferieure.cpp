@@ -1,6 +1,6 @@
-#include "L3-AD-F5-ContrainteSommeInferieureEgale.h"
+#include "L3-AD-F5-ContrainteSommeInferieure.h"
 
-ContrainteSommeInferieureEgale::ContrainteSommeInferieureEgale()
+ContrainteSommeInferieure::ContrainteSommeInferieure()
 {
 }
 /*
@@ -10,10 +10,11 @@ Renvoie : Un booleen true ou false indiquant si la contrainte est bien respectee
 Explication: Cette fonction verifie que la somme est inférieure ou egale a un seuil
 Si cela n'est pas le cas la fonction renverra false
 */
-bool ContrainteSommeInferieureEgale::contrainteRespectee()
+bool ContrainteSommeInferieure::contrainteRespectee()
 {
 	this->resetSomme();
 	this->remettreAZeroVariablesNonAssignees();
+	int somme = 0;
 	for (std::list<Variable*>::iterator it = variables.begin(); it != variables.end(); it++)
 	{
 		if ((*it)->getValeur() == VALEUR_NON_DEFINIE)
@@ -24,10 +25,10 @@ bool ContrainteSommeInferieureEgale::contrainteRespectee()
 		else
 		{
 			DEBUG_MSG("[INFO] : Ajout de la valeur " << (*it)->getValeur() << "a la somme");
-			this->ajouterALaSomme((*it)->getValeur());
+			somme += (*it)->getValeur();
 		}
 	}
-	if ((this->somme <= this->seuil))
+	if ((this->somme < this->seuil))
 	{
 		DEBUG_MSG("[INFO] Somme des variables egale a la valeur attendue. Contrainte respectee");
 		return true;
@@ -46,12 +47,12 @@ Explication: Cette fonction parcourt toutes les variables associees a la contrai
 Si la valeur est definie elle l'ajoute a une somme intermediaire
 Sinon elle prend la valeur minimale du domaine
 On reitere a nouveau dans les varibles non attribuees, on retire leur valeur min de la somme et on regarde pour chaque
-valeur du domaine si l'ajouter a la somme rendra la somme superieure au seuil
+valeur du domaine si l'ajouter a la somme rendra la somme superieure ou egale au seuil
 Si c'est le cas on retire la valeur de son domaine
 Si un domaine est amene a etre vide apres cette operation, la fonction renverra false
 A la fin, puisqu'on a pu terminer l'iteration on renvoie true
 */
-bool ContrainteSommeInferieureEgale::reduireDomaines(Variable * var)
+bool ContrainteSommeInferieure::reduireDomaines(Variable * var)
 {
 	int sommeIntermediaire = 0;
 	for (Variable* v : variables)
@@ -83,7 +84,7 @@ bool ContrainteSommeInferieureEgale::reduireDomaines(Variable * var)
 			sommeIntermediaire -= tmp;
 			for (int val : domaineTemporaire)
 			{
-				if (sommeIntermediaire + val > seuil)
+				if (sommeIntermediaire + val >= seuil)
 				{
 					v->reduireDomaine(val); 
 					int s = v->getDomaine().size();
@@ -100,9 +101,9 @@ bool ContrainteSommeInferieureEgale::reduireDomaines(Variable * var)
 }
 
 
-std::ostream & ContrainteSommeInferieureEgale::afficherCaracteristiques(std::ostream & os)const
+std::ostream & ContrainteSommeInferieure::afficherCaracteristiques(std::ostream & os)const
 {
-	os << "Contrainte Somme Inferieure ou Egale" << std::endl;
+	os << "Contrainte Somme Inferieure" << std::endl;
 	for (Variable* var : variables)
 	{
 		os << "x" << var->getNom();
@@ -112,7 +113,7 @@ std::ostream & ContrainteSommeInferieureEgale::afficherCaracteristiques(std::ost
 		}
 		else
 		{
-			os << " <= ";
+			os << " < ";
 		}
 	}
 	os << this->seuil;

@@ -4,42 +4,7 @@
 */
 
 #include "L3-AD-F5-parser.h"
-/*
-	Fonction : ouvrirFichier
-	Parametre: chemin
-	Description : Cette fonction tente d'ouvrir le fichier passé en argument
-	Elle renvoie ensuite une valeur booleenne pour indiquer si le fichier est bien ouvert
-*/
-bool ouvrirFichier(const std::string chemin, std::fstream &F)
-{
-	DEBUG_MSG("[DEBUG] Ouverture du fichier " << chemin);
-	F.open(chemin);
-	if(F.is_open())
-	{
-		DEBUG_MSG("[DEBUG] Succes !");
-		return true;
-	}
-	else
-	{
-		DEBUG_MSG("[ERROR] Le fichier ne s'est pas ouvert !");
-		return false;
-	}
-}
-bool fermerFichier(std::fstream &F)
-{
-	DEBUG_MSG("[DEBUG]Fermeture du fichier ");
-	F.close();
-	if(F.is_open())
-	{
-		DEBUG_MSG("[ERROR] Le fichier ne s'est pas ferme correctement");
-		return false;
-	}
-	else
-	{
-		DEBUG_MSG("[DEBUG] Le fichier s'est ferme avec succes");
-		return true;
-	}
-}
+
 
 std::vector<std::string> importerFichier(std::fstream & F)
 {
@@ -59,14 +24,12 @@ std::vector<std::string> importerFichier(std::fstream & F)
 
 bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier)
 {
-	/*@ TO DO
-		Creer un cas au cas où le fichier ne peut se creer 
-	*/
 	std::fstream F;
 	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
 	if (!F.is_open())
 	{
-		std::cout << "BUG";
+		std::cout << "[ERREUR] Le fichier ne peut etre cree" << std::endl;
+		exit(EXIT_FAILURE);
 	}
 	for (std::vector<std::string>::iterator it = vect.begin(); it != vect.end(); it++)
 	{
@@ -75,5 +38,149 @@ bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichie
 	fermerFichier(F);
 
 	return false;
+}
+
+//Lecture du fichier selon le modele du prof.
+void lectureFichier(std::fstream & F, Probleme &p)
+{
+	if (!F.is_open())
+	{
+		return;
+	}
+	std::vector<std::string> lignes = importerFichier(F);
+	std::vector<std::string>::iterator it = lignes.begin(); //Les lignes sont stockees de maniere contigues;
+	
+	it = traitementVariables(it, p);
+	traitementContraintes(it, p);
+}
+
+std::vector<std::string>::iterator traitementVariables(std::vector<std::string>::iterator it, Probleme & p)
+{
+	int nbVariables = std::stoi(*it);
+	for (int i = 0; i < nbVariables; i++)
+	{
+		it++;
+		std::string domaineVariable = *it;
+		char c = ' ';
+		int nomVariable = 0;
+		std::vector<int> domaineVariableTraduit;
+		std::string bufferNomVariable;
+		bufferNomVariable += domaineVariable[0];
+		int k = 1;
+		while(domaineVariable[k] != ' '){
+			bufferNomVariable += domaineVariable[k];
+			k++;
+		}
+		nomVariable = std::stoi(bufferNomVariable);
+		do
+		{
+			std::string buffer;
+			k++;
+			c = domaineVariable[k];
+			if (c != ' ' && c != '\n' && k < domaineVariable.length())
+			{
+				do
+				{
+					buffer += c;
+					k++;
+					c = domaineVariable[k];
+				} while (c != ' ' && k < domaineVariable.length());
+				domaineVariableTraduit.push_back(std::stoi(buffer));
+			}
+			else
+			{
+				domaineVariableTraduit.push_back(c - '0');
+			}
+		} while (k < domaineVariable.length());
+		p.ajouterVariable(nomVariable, domaineVariableTraduit);
+	}
+	return ++it;
+}
+
+void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
+{
+	while (*it != "-1")
+	{
+		std::string ligne = *it;
+		char c = ligne[0];
+		std::string code;
+		code += (c);
+		int i = 1;
+		while (ligne[i] != ' ' && i < ligne.length())
+		{
+			code += ligne[i];
+			i++;
+		}
+		Contrainte *nouvelleContrainte = p.ajouterContrainte(std::stoi(code));
+		if (nouvelleContrainte != NULL)
+		{
+			ContrainteSeuil* casted = (ContrainteSeuil*)nouvelleContrainte;
+			if (std::stoi(code) >= CONTRAINTE_SOMME_EXACTE && std::stoi(code) <= CONTRAINTE_SOMME_PONDEREE)
+			{
+				std::string tmp;
+				while (ligne[i] == ' ' && i < ligne.length())
+				{
+					i++;
+				}
+				while (ligne[i] != ' ' && i < ligne.length())
+				{
+					tmp += ligne[i];
+					i++;
+				}
+				casted->setSeuil(std::stoi(tmp));
+			}
+			if (std::stoi(code) == CONTRAINTE_SOMME_PONDEREE)
+			{
+				ContrainteSommePonderee* casted = (ContrainteSommePonderee*)nouvelleContrainte;
+				bool ponderation = true;
+				while (i < ligne.length())
+				{
+					std::string tmp;
+					c = ligne[i];
+					while (c != ' ' && c != '\n' && c != '\0' && c != '-' && i < ligne.length())
+					{
+						tmp += c;
+						i++;
+						c = ligne[i];
+					}
+					if (tmp != "")
+					{
+						if (ponderation)
+						{
+							casted->ajouterPonderationVariable(std::stoi(tmp));
+							ponderation = false;
+						}
+						else
+						{
+							casted->ajouterVariable(p.chercherVariable(std::stoi(tmp)));
+							ponderation = true;
+						}
+					}
+					i++;
+				}
+			}
+			while (i < ligne.length())
+			{
+				std::string tmp;
+				c = ligne[i];
+				while (c != ' ' && c != '\n' && c != '\0' && c != '-' && i < ligne.length())
+				{
+					tmp += c;
+					i++;
+					c = ligne[i];
+				}
+				if (tmp != "")
+				{
+					nouvelleContrainte->ajouterVariable(p.chercherVariable(std::stoi(tmp)));
+				}
+				if (c == '-')
+				{
+					i = ligne.length();
+				}
+				i++;
+			}
+		}
+		it++;
+	}
 }
 
