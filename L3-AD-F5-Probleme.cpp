@@ -15,11 +15,6 @@ Statistiques Probleme::getStatistiques()
 	return this->stats;
 }
 
-Probleme::Probleme(string Nom_Probleme)//fonction de test
-{
-    nom_Probleme=Nom_Probleme;
-
-}
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -105,11 +100,17 @@ Contrainte* Probleme::ajouterContrainte(int typeContrainte)
 		contraintes.push_back(c);
 		break;
 	default:
-		std::cout << "[INFO] Code Contrainte non reconnue" << std::endl;
+		std::cout << "[ERREUR] Code Contrainte non reconnue" << std::endl;
 	}
 	return c;
 }
-
+/*
+Fonction	: resoudreProbleme
+Parametre	: Aucun
+Renvoie		: Rien
+Description : Fonction IHM qui permet a l'utilisateur de choisir la facon de resoudre le probleme
+Une fois la resolution terminee, la fonction lance la sauvegarde des donnees.
+*/
 void Probleme::resoudreProbleme()
 {
 	int choixUtilisateur;
@@ -216,7 +217,13 @@ void Probleme::resoudreProbleme()
 	}
 	return;
 }
-
+/*
+Fonction	: constructionEtatInitial
+Parametre	: Aucun
+Renvoie		: L'etat de base e
+Description : Cette fonction cree un premier etat pour la recherche de solution
+Il cree l'ensemble XA des valeurs assignees pour la resolution du probleme.
+*/
 Etat Probleme::constructionEtatInitial()
 {
 	Etat e;
@@ -230,7 +237,13 @@ Etat Probleme::constructionEtatInitial()
 	e.etat = indetermine;
 	return Etat(e);
 }
-
+/*
+Fonction	: constructionEtatInitialReductionDomaineValeurs
+Parametre	: Aucun
+Renvoie		: L'etat de base e
+Description : Cette fonction cree un premier etat pour la recherche de solution avec reduction des domaines de valeurs
+Il cree l'ensemble XA des valeurs assignees pour la resolution du probleme et fait une premiere reduction de valeurs.
+*/
 Etat Probleme::constructionEtatInitialReductionDomaineValeurs()
 {
 	Etat e = this->constructionEtatInitial();
@@ -249,7 +262,22 @@ Etat Probleme::constructionEtatInitialReductionDomaineValeurs()
 	}
 	return Etat(e);
 }
-
+/*
+Fonction	: resolutionProblemeRechercheProfondeurDAbord
+Parametre	: L'etat initial e
+Renvoie		: L'etat e avec e.etat = succes si une solution a ete trouvee, e.etat = echec sinon
+Description : Cet algorithme implemente la resolution du probleme par la methode naive
+Cette methode est plus longue a l'execution que les autres et ne devrait etre utilisee que pour souligner cet aspect.
+On deduit de l'ensemble variableAssignees les variables non assignees 
+Si l'ensemble est vide c'est qu'on a atteint une feuille de l'arbre, que toutes les valeurs sont assignees et qu'on a donc une solution
+De ce fait on renvoie succes.
+Sinon on prend la premiere variable non assignee
+Ensuite pour chaque valeur de son domaine on assigne a la variable cette valeur
+Puis on verifie si ce choix est consistant avec les contraintes
+Si c'est le cas on fait un appel recursif de la fonction avec cette variable dans l'ensemble assigne
+Si la valeur renvoyee est succes alors on remonte la valeur dans les appels recursifs
+A la fin si aucune solution n'a ete deduite on remet la variable a sa valeur initiale (NON_ASSIGNEE) et on renvoie echec
+*/
 Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 {
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
@@ -283,7 +311,14 @@ Etat Probleme::resolutionProblemeRechercheProfondeurDAbord(Etat e)
 		e.etat = echec;
 		return e;
 }
-
+/*
+Fonction	: reductionDomaineValeurs
+Parametre	: Variable assignee v
+Renvoie		: Booleen vrai ou faux qui indique si la reduction des domaines laisse la possibilite d'une solution
+Description	: La fonction verifie pour chaque contrainte si elle contient la variable, si c'est le cas
+elle appelle la methode de reduction des domaines de la contrainte et garde son resulat en memoire dans la variable change.
+A la fin du parcours des contraintes elle renverra change.
+*/
 bool Probleme::reductionDomaineValeurs(Variable * v)
 {
 	bool change = true;
@@ -297,7 +332,13 @@ bool Probleme::reductionDomaineValeurs(Variable * v)
 	}
 	return change;
 }
-
+/*
+Fonction	: remettreDomaineValeurs
+Parametre	: Variable v
+Renvoie		: Rien
+Description	: Fonction qui n'est plus utilisee
+Elle etait censee a la base remettre la valeur de la variable v dans les domaines des variables qui avaient ete reduites.
+*/
 void Probleme::remettreDomaineValeurs(Variable * v)
 {
 	for (Contrainte* c : this->contraintes)
@@ -306,6 +347,23 @@ void Probleme::remettreDomaineValeurs(Variable * v)
 	}
 }
 
+/*
+Fonction	: resolutionProblemeReductionValeur
+Parametre	: L'etat initial avec une premiere reduction des valeurs e
+Renvoie		: L'etat e avec e.etat = succes si une solution a ete trouvee, e.etat = echec sinon
+Description : Cet algorithme implemente la resolution du probleme par la methode de reduction des valeurs
+On deduit de l'ensemble e.variableAssignees les variables non assignees
+Si l'ensemble est vide c'est qu'on a atteint une feuille de l'arbre, que toutes les valeurs sont assignees et qu'on a donc une solution
+De ce fait on renvoie succes.
+Sinon on prend la premiere variable non assignee
+Ensuite pour chaque valeur de son domaine on assigne a la variable cette valeur
+Puis on verifie si ce choix est consistant avec les contraintes
+Si c'est le cas on fait une reduction des domaines des variables avec la variable assignee en argument et on verifie que ce choix est possible
+Si c'est le cas on procede a un appel recursif de la fonction avec cette variable dans l'ensemble assigne
+Si la valeur renvoyee est succes alors on remonte la valeur dans les appels recursifs
+Sinon on retablit les domaines avant l'appel et la reduction
+A la fin si aucune solution n'a ete deduite on remet la variable a sa valeur initiale (NON_ASSIGNEE) et on renvoie echec
+*/
 Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 {
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
@@ -365,7 +423,23 @@ Etat Probleme::resolutionProblemeReductionValeur(Etat e)
 	e.etat = echec;
 	return Etat(e);
 }
-
+/*
+Fonction	: resolutionProblemeReductionVariablePlusContrainte
+Parametre	: L'etat initial avec une premiere reduction des valeurs e
+Renvoie		: L'etat e avec e.etat = succes si une solution a ete trouvee, e.etat = echec sinon
+Description : Cet algorithme implemente la resolution du probleme par la methode de reduction des valeurs avec une stratégie dans le choix des valeurs
+On deduit de l'ensemble e.variableAssignees les variables non assignees
+Si l'ensemble est vide c'est qu'on a atteint une feuille de l'arbre, que toutes les valeurs sont assignees et qu'on a donc une solution
+De ce fait on renvoie succes.
+Sinon on prend la variable la plus contrainte (renvoyee par chercherVariableLaPlusContrainte)
+Ensuite pour chaque valeur de son domaine on assigne a la variable cette valeur
+Puis on verifie si ce choix est consistant avec les contraintes
+Si c'est le cas on fait une reduction des domaines des variables avec la variable assignee en argument et on verifie que ce choix est possible
+Si c'est le cas on procede a un appel recursif de la fonction avec cette variable dans l'ensemble assigne
+Si la valeur renvoyee est succes alors on remonte la valeur dans les appels recursifs
+Sinon on retablit les domaines avant l'appel et la reduction
+A la fin si aucune solution n'a ete deduite on remet la variable a sa valeur initiale (NON_ASSIGNEE) et on renvoie echec
+*/
 Etat Probleme::resolutionProblemeVariablePlusContrainte(Etat e)
 {
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
@@ -443,7 +517,23 @@ Variable * Probleme::chercherVariableLaPlusContrainte(std::vector<Variable*> non
 	}
 	return variableLaPlusContrainte;
 }
-
+/*
+Fonction	: resolutionProblemeReductionVariableMoinsContrainte
+Parametre	: L'etat initial avec une premiere reduction des valeurs e
+Renvoie		: L'etat e avec e.etat = succes si une solution a ete trouvee, e.etat = echec sinon
+Description : Cet algorithme implemente la resolution du probleme par la methode de reduction des valeurs avec une stratégie dans le choix des variables de la variable la moins contrainte
+On deduit de l'ensemble e.variableAssignees les variables non assignees
+Si l'ensemble est vide c'est qu'on a atteint une feuille de l'arbre, que toutes les valeurs sont assignees et qu'on a donc une solution
+De ce fait on renvoie succes.
+Sinon on prend la variable la moins contrainte (renvoyee par chercherVariableLaMoinsContrainte)
+Ensuite pour chaque valeur de son domaine on assigne a la variable cette valeur
+Puis on verifie si ce choix est consistant avec les contraintes
+Si c'est le cas on fait une reduction des domaines des variables avec la variable assignee en argument et on verifie que ce choix est possible
+Si c'est le cas on procede a un appel recursif de la fonction avec cette variable dans l'ensemble assigne
+Si la valeur renvoyee est succes alors on remonte la valeur dans les appels recursifs
+Sinon on retablit les domaines avant l'appel et la reduction
+A la fin si aucune solution n'a ete deduite on remet la variable a sa valeur initiale (NON_ASSIGNEE) et on renvoie echec
+*/
 Etat Probleme::resolutionProblemeVariableMoinsContrainte(Etat e)
 {
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
@@ -521,7 +611,23 @@ Variable * Probleme::chercherVariableLaMoinsContrainte(std::vector<Variable*> no
 	}
 	return variableLaMoinsContrainte;
 }
-
+/*
+Fonction	: resolutionProblemeReductionVariablePlusContraignante
+Parametre	: L'etat initial avec une premiere reduction des valeurs e
+Renvoie		: L'etat e avec e.etat = succes si une solution a ete trouvee, e.etat = echec sinon
+Description : Cet algorithme implemente la resolution du probleme par la methode de reduction des valeurs avec une stratégie dans le choix des variables de la variable la plus contraignante
+On deduit de l'ensemble e.variableAssignees les variables non assignees
+Si l'ensemble est vide c'est qu'on a atteint une feuille de l'arbre, que toutes les valeurs sont assignees et qu'on a donc une solution
+De ce fait on renvoie succes.
+Sinon on prend la variable la plus contrainte (renvoyee par chercherVariableLaPlusContraignante)
+Ensuite pour chaque valeur de son domaine on assigne a la variable cette valeur
+Puis on verifie si ce choix est consistant avec les contraintes
+Si c'est le cas on fait une reduction des domaines des variables avec la variable assignee en argument et on verifie que ce choix est possible
+Si c'est le cas on procede a un appel recursif de la fonction avec cette variable dans l'ensemble assigne
+Si la valeur renvoyee est succes alors on remonte la valeur dans les appels recursifs
+Sinon on retablit les domaines avant l'appel et la reduction
+A la fin si aucune solution n'a ete deduite on remet la variable a sa valeur initiale (NON_ASSIGNEE) et on renvoie echec
+*/
 Etat Probleme::resolutionProblemeVariableLaPlusContraignante(Etat e)
 {
 	std::vector<Variable*> nonAssignees = fusionExclusive(this->variables, e.variablesAssignees);
@@ -601,7 +707,23 @@ Variable * Probleme::chercherVariableLaPlusContraignante(std::vector<Variable*> 
 	return nonAssignees.at(std::distance(coeffContraignante.begin(),
 		std::max_element(coeffContraignante.begin(), coeffContraignante.end())));
 }
-
+/*
+Fonction	: resolutionProblemeReductionVariableMoinsContraignante
+Parametre	: L'etat initial avec une premiere reduction des valeurs e
+Renvoie		: L'etat e avec e.etat = succes si une solution a ete trouvee, e.etat = echec sinon
+Description : Cet algorithme implemente la resolution du probleme par la methode de reduction des valeurs avec une stratégie dans le choix des variables de la variable la moins contraignante
+On deduit de l'ensemble e.variableAssignees les variables non assignees
+Si l'ensemble est vide c'est qu'on a atteint une feuille de l'arbre, que toutes les valeurs sont assignees et qu'on a donc une solution
+De ce fait on renvoie succes.
+Sinon on prend la variable la moins contraignante (renvoyee par chercherVariableLaMoinsContraignante)
+Ensuite pour chaque valeur de son domaine on assigne a la variable cette valeur
+Puis on verifie si ce choix est consistant avec les contraintes
+Si c'est le cas on fait une reduction des domaines des variables avec la variable assignee en argument et on verifie que ce choix est possible
+Si c'est le cas on procede a un appel recursif de la fonction avec cette variable dans l'ensemble assigne
+Si la valeur renvoyee est succes alors on remonte la valeur dans les appels recursifs
+Sinon on retablit les domaines avant l'appel et la reduction
+A la fin si aucune solution n'a ete deduite on remet la variable a sa valeur initiale (NON_ASSIGNEE) et on renvoie echec
+*/
 Etat Probleme::resolutionProblemeVariableLaMoinsContraignante(Etat e)
 {
 
@@ -682,7 +804,17 @@ Variable * Probleme::chercherVariableLaMoinsContraignante(std::vector<Variable*>
 	return nonAssignees.at(std::distance(coeffContraignante.begin(),
 		std::min_element(coeffContraignante.begin(), coeffContraignante.end())));
 }
-
+/*
+Fonction	: sauverResultat
+Parametre	: Un booleen indiquant si la solution a ete trouvee, une chaine de caracteres indiquant la methode utilisee
+Renvoie		: Rien
+Description : Cette fonction sauve le resultat de la tentative de résolution du programme dans un fichier texte
+Sont inscrits dans le fichier la methode de resolution utilisee, les domaines et valeurs initiales (s'il y en a) des variables
+Ainsi que les contraintes du probleme
+S'il y a une solution de trouvee, le programme ecrit les valeurs trouvees pour chaque variable
+Sinon il indique qu'aucune solution n'a ete trouvee
+Dans les deux cas la fonction finit par inscrire les statistiques de la resolution (Se referer a la classe Statistiques)
+*/
 void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 {
 	std::string path;
@@ -727,7 +859,12 @@ void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 	F << stats;
 	fermerNouveauFichier(F);
 }
-
+/*
+Fonction	: estConsistant
+Parametre	: Aucun
+Renvoie		: Un booleen
+Description : Cette fonction verifie que pour les valeurs assignees aux variables toutes les contraintes soient bien respectees
+*/
 bool Probleme::estConsistant()
 {
 	for (Contrainte* contrainte : this->contraintes)
@@ -739,7 +876,13 @@ bool Probleme::estConsistant()
 	}
 	return true;
 }
-
+/*
+Fonction	: fusionExclusive
+Parametre	: Deux std::vector<Variable*>, un qui contient l'ensemble de base, l'autre l'ensemble a exclure
+Renvoie		: Le tableau variables \ aExclure
+Description : Cette fonction recupere les valeurs de variables non presentes dans aExclure et les stocke dans un std::vector<Variable*>
+fusionne qu'il renvoie a la fin
+*/
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure)
 {
 	std::vector<Variable*> fusionne;

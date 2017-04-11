@@ -28,7 +28,15 @@ bool ContrainteEgalite::contrainteRespectee()
 	}
 	return true;
 }
-
+/*
+Fonction : reduireDomaines (heritee de la classe Contrainte)
+Parametres : Un pointeur vers la variable attribue var
+Renvoie : Un booleen true ou false indiquant si la reduction de domaine n'amene pas a une situation bloquante
+Explication: Cette fonction parcourt toutes les variables associees a la contrainte.
+Pour chaque variable differente de var, on retire de leur domaines toutes les valeurs differentes de var->getValeur()
+Si un domaine se retrouve vide, la fonction renverra false
+Si elle a fini d'iterer sur les variables de la contrainte elle renverra true
+*/
 bool ContrainteEgalite::reduireDomaines(Variable * var)
 {
 	for (Variable* v : variables)

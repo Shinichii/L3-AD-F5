@@ -11,10 +11,12 @@
 	Parametres : Un vecteur de type string qui va contenir le chemin de chaque fichier correspondant a
  	l'extension contenu dans le dossier
 	Un string qui va correspondre a l'extension du fichier recherche
+	Description : Le fichier va chercher dans le dossier de l'executable tous les fichiers qui correspondent a l'extension
+	passe en argument de la fonction. Elle les met ensuite dans la liste des fichiers selectionnables.
 */
 void recupererElements(vector <string>& listeFichiers, string extension)
 {
-	std::string path = "D:\\AideDecision\\representation";
+	std::string path = "./";
 
 	for(auto &p : fs::directory_iterator(path))
 	{

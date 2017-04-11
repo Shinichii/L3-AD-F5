@@ -24,9 +24,6 @@ std::vector<std::string> importerFichier(std::fstream & F)
 
 bool sauvegarderDansFichier(std::vector<std::string> vect, std::string nomFichier)
 {
-	/*@ TO DO
-		Creer un cas au cas où le fichier ne peut se creer 
-	*/
 	std::fstream F;
 	F.open("L3-AD-F5-" + nomFichier + ".txt", std::ios::out);
 	if (!F.is_open())
