@@ -146,10 +146,12 @@ void Probleme::resoudreProbleme()
 		stats.terminerTimer();
 		if (e.etat == echec)
 		{
+			std::cout << "Pas de solution trouvee" << std::endl;
 			sauverResultat(false, "Recherche en Profondeur d'abord");
 		}
 		if (e.etat == succes)
 		{
+			afficherSolution();
 			sauverResultat(true, "Recherche en Profondeur d'abord");
 		}
 		break;
@@ -159,10 +161,12 @@ void Probleme::resoudreProbleme()
 		stats.terminerTimer();
 		if (e.etat == echec)
 		{
+			std::cout << "Pas de solution trouvee" << std::endl;
 			sauverResultat(false, "Reduction des domaines de valeurs");
 		}
 		if (e.etat == succes)
 		{
+			afficherSolution();
 			sauverResultat(true, "Reduction des domaines de valeurs");
 		}
 		break;
@@ -172,10 +176,12 @@ void Probleme::resoudreProbleme()
 		stats.terminerTimer();
 		if (e.etat == echec)
 		{
+			std::cout << "Pas de solution trouvee" << std::endl;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisisant la variable la plus contrainte");
 		}
 		if (e.etat == succes)
 		{
+			afficherSolution();
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contrainte");
 		}
 		break;
@@ -185,10 +191,12 @@ void Probleme::resoudreProbleme()
 		stats.terminerTimer();
 		if (e.etat == echec)
 		{
+			std::cout << "Pas de solution trouvee" << std::endl;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisisant la variable la moins contrainte");
 		}
 		if (e.etat == succes)
 		{
+			afficherSolution();
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la moins contrainte");
 		}
 		break;
@@ -198,10 +206,12 @@ void Probleme::resoudreProbleme()
 		stats.terminerTimer();
 		if (e.etat == echec)
 		{
+			std::cout << "Pas de solution trouvee" << std::endl;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
 		}
 		if (e.etat == succes)
 		{
+			afficherSolution();
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
 		}
 		break;
@@ -211,10 +221,12 @@ void Probleme::resoudreProbleme()
 		stats.terminerTimer();
 		if (e.etat == echec)
 		{
+			std::cout << "Pas de solution trouvee" << std::endl;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisissant la variable la moins contraignante");
 		}
 		if (e.etat == succes)
 		{
+			afficherSolution();
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la moins contraignante");
 		}
 		break;
@@ -861,6 +873,18 @@ Dans les deux cas la fonction finit par inscrire les statistiques de la resoluti
 */
 void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 {
+	char reponse;
+	std::cout << "Voulez vous sauvegarder le resume dans un fichier texte ? (O/N)";
+	do
+	{
+		reponse = 'K';
+		std::cin >> reponse;
+	} while (cin.bad() && reponse != 'O' && reponse != 'o' && reponse != 'n' && reponse != 'N');
+	if (reponse != 'o' && reponse != 'O')
+	{
+		std::cout << "Le fichier ne sera pas sauvegarde.";
+		return;
+	}
 	std::string path;
 	std::cout << "Entrer le nom du fichier pour sauvegarder" << std::endl;
 	std::cin >> path;
@@ -902,6 +926,8 @@ void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 	//Afficher les stats
 	F << stats;
 	fermerNouveauFichier(F);
+	std::cout << "[INFO] : Sauvegarde terminee ! Vous pouvez retrouver le resume de la resolution dans le fichier : " << "./" <<path << ".txt"; 
+
 }
 /*
 Fonction	: estConsistant
@@ -919,6 +945,14 @@ bool Probleme::estConsistant()
 		}
 	}
 	return true;
+}
+void Probleme::afficherSolution()
+{
+	std::cout << "===========[SOLUTION TROUVEE]===========" << std::endl;
+	for (Variable *var : variables)
+	{
+		std::cout << "Variable n°" << var->getNom() << " = " << var->getValeur() << std::endl;
+	}
 }
 /*
 Fonction	: fusionExclusive

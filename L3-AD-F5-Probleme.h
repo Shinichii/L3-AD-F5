@@ -88,6 +88,8 @@ public:
 	//Avec les contraintes
 	bool estConsistant();
 	//Fonction pour découvrir la variable impliquée dans le moins de contraintes portant sur des variables non assignees
+
+	void afficherSolution();
 };
 std::vector<Variable*> fusionExclusive(std::vector<Variable*> variables, std::vector<Variable*> aExclure);
 

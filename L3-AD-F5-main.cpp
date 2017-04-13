@@ -27,7 +27,6 @@ int main() {
 		p.resoudreProbleme();
 
 		fermerFichier(F);
-		std::cout << "Sauvegarde terminee" << std::endl;
 
 		std::cout << "Voulez-vous continuer ? (O/N)" << std::endl;
 		do
