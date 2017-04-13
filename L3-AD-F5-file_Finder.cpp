@@ -46,7 +46,7 @@ string choisirElement(string extension)
 	}
 	for(unsigned int i = 0; i < listeFichiers.size(); i++)
 	{
-		cout << i + 1 << " : " << listeFichiers[i].substr(3) << endl;
+		cout << i + 1 << " : " << listeFichiers[i] << endl;
 	}
 	do
 	{

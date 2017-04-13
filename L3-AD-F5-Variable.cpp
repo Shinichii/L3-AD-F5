@@ -2,7 +2,6 @@
 // Created by mathieu on 26/02/2017.
 // Revised by Aurelien on 11/03/2017
 
-#include <stdlib.h>
 #include "L3-AD-F5-Variable.h"
 
 

@@ -23,9 +23,16 @@ Statistiques Probleme::getStatistiques()
 
 void Probleme::afficher()
 {
+	std::cout << "===========[VARIABLES]===========" << std::endl;
 	for (Variable* variable : variables)
 	{
 		std::cout << *variable;
+	}
+	std::cout << "===========[CONTRAINTES]===========" << std::endl;
+	for (int i = 0; i < contraintes.size(); i++)
+	{
+		std::cout << "Contrainte n° " << i + 1 << std::endl;
+		std::cout << *(contraintes.at(i)) << std::endl;
 	}
 
 }
