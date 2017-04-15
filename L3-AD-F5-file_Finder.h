@@ -10,6 +10,7 @@
 #include <vector>
 using namespace std;
 
+#define PATH_PAR_DEFAUT "D:\\AideDecision\\representation"
 namespace fs = std::experimental::filesystem;
 
 bool extensionValide(string s, string extension);

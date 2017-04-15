@@ -45,7 +45,9 @@ void lectureFichier(std::fstream & F, Probleme &p)
 {
 	if (!F.is_open())
 	{
-		return;
+		std::cout << "[ERREUR] : Le fichier n'a pas pu etre ouvert !" << std::endl;
+		std::cout << "Le programme va desormais quitter";
+		exit(EXIT_FAILURE);
 	}
 	std::vector<std::string> lignes = importerFichier(F);
 	std::vector<std::string>::iterator it = lignes.begin(); //Les lignes sont stockees de maniere contigues;
@@ -137,7 +139,7 @@ void traitementContraintes(std::vector<std::string>::iterator it, Probleme & p)
 				{
 					std::string tmp;
 					c = ligne[i];
-					while (c != ' ' && c != '\n' && c != '\0' && c != '-' && i < ligne.length())
+					while (c != ' ' && c != '\n' && c != '\0' && i < ligne.length())
 					{
 						tmp += c;
 						i++;

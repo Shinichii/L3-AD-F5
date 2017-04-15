@@ -18,7 +18,13 @@ int main() {
 		std::vector<std::string> vc;
 		std::fstream F;
 		s = choisirElement(".txt");
-
+		if (s == "erreurDeTypeFichierNonTrouveIMPOSSIBLE")
+		{
+			std::cout << "Le programme va desormais quitter.";
+			std::cout << std::endl << "Appuyez sur une touche pour quitter.";
+			std::cin >> s;
+			return -1;
+		}
 		ouvrirFichier(s, F);
 		Probleme p;
 		lectureFichier(F, p);

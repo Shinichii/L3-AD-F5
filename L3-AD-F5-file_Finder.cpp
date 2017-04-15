@@ -16,7 +16,7 @@
 */
 void recupererElements(vector <string>& listeFichiers, string extension)
 {
-	std::string path = "./";
+	std::string path = PATH_PAR_DEFAUT;
 
 	for(auto &p : fs::directory_iterator(path))
 	{
@@ -41,8 +41,8 @@ string choisirElement(string extension)
 	recupererElements(listeFichiers, extension);
 	if(listeFichiers.size() == 0)
 	{
-		cout << "[WARNING] Aucun element du type : " << extension << " n'a ete trouve" << endl;
-		return NULL;
+		cout << "[ERREUR] Aucun element du type : " << extension << " n'a ete trouve" << endl;
+		return string("erreurDeTypeFichierNonTrouveIMPOSSIBLE");
 	}
 	for(unsigned int i = 0; i < listeFichiers.size(); i++)
 	{
