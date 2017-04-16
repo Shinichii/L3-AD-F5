@@ -34,7 +34,7 @@ int main() {
 
 		fermerFichier(F);
 
-		std::cout << "Voulez-vous continuer ? (O/N)" << std::endl;
+		std::cout << "Voulez-vous continuer ? (O/N) ";
 		do
 		{
 			reponse = 'K';

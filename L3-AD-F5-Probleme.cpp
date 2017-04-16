@@ -882,7 +882,7 @@ void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 	} while (cin.bad() && reponse != 'O' && reponse != 'o' && reponse != 'n' && reponse != 'N');
 	if (reponse != 'o' && reponse != 'O')
 	{
-		std::cout << "Le fichier ne sera pas sauvegarde.";
+		std::cout << "Le fichier ne sera pas sauvegarde." << std::endl;
 		return;
 	}
 	std::string path;
