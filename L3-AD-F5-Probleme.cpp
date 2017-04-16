@@ -926,7 +926,7 @@ void Probleme::sauverResultat(bool solutionTrouvee, std::string methodeUtilisee)
 	//Afficher les stats
 	F << stats;
 	fermerNouveauFichier(F);
-	std::cout << "[INFO] : Sauvegarde terminee ! Vous pouvez retrouver le resume de la resolution dans le fichier : " << "./" <<path << ".txt"; 
+	std::cout << "[INFO] : Sauvegarde terminee ! Vous pouvez retrouver le resume de la resolution dans le fichier : " << "./" <<path << ".txt" <<std::endl; 
 
 }
 /*

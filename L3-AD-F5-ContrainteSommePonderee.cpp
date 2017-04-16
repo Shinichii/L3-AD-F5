@@ -46,13 +46,18 @@ bool ContrainteSommePonderee::reduireDomaines(Variable * var)
 				coeffMin -= mintmp * ponderation[i];
 				int maxtmp = *(std::max_element(domaineTemporaire.begin(), domaineTemporaire.end()));
 				coeffMax -= maxtmp * ponderation[i];
-				if (sommeIntermediaire + (val * ponderation[i]) + coeffMin > seuil || sommeIntermediaire + (val*ponderation[i]) + coeffMax < seuil)
+				if (abs(sommeIntermediaire + (val*ponderation[i]) + coeffMax) < abs(seuil) )
 				{
 					v->reduireDomaine(val);
 					int s = v->getDomaine().size();
 					if (s == 0)
 					{
 						return false;
+					}
+					else
+					{
+						mintmp = *(std::min_element(domaineTemporaire.begin(), domaineTemporaire.end()));
+						maxtmp = *(std::max_element(domaineTemporaire.begin(), domaineTemporaire.end()));
 					}
 				}
 				coeffMin += mintmp * ponderation[i];

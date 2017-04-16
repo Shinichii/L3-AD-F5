@@ -1,6 +1,7 @@
 #pragma once
 #include "L3-AD-F5-ContrainteSeuil.h"
 #include <vector>
+#include <cmath>
 class ContrainteSommePonderee : public ContrainteSeuil
 {
 private:
