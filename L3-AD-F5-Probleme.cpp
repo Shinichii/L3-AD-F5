@@ -147,11 +147,13 @@ void Probleme::resoudreProbleme()
 		if (e.etat == echec)
 		{
 			std::cout << "Pas de solution trouvee" << std::endl;
+			std::cout << stats;
 			sauverResultat(false, "Recherche en Profondeur d'abord");
 		}
 		if (e.etat == succes)
 		{
 			afficherSolution();
+			std::cout << stats;
 			sauverResultat(true, "Recherche en Profondeur d'abord");
 		}
 		break;
@@ -162,11 +164,13 @@ void Probleme::resoudreProbleme()
 		if (e.etat == echec)
 		{
 			std::cout << "Pas de solution trouvee" << std::endl;
+			std::cout << stats;
 			sauverResultat(false, "Reduction des domaines de valeurs");
 		}
 		if (e.etat == succes)
 		{
 			afficherSolution();
+			std::cout << stats;
 			sauverResultat(true, "Reduction des domaines de valeurs");
 		}
 		break;
@@ -177,11 +181,13 @@ void Probleme::resoudreProbleme()
 		if (e.etat == echec)
 		{
 			std::cout << "Pas de solution trouvee" << std::endl;
+			std::cout << stats;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisisant la variable la plus contrainte");
 		}
 		if (e.etat == succes)
 		{
 			afficherSolution();
+			std::cout << stats;
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contrainte");
 		}
 		break;
@@ -192,11 +198,13 @@ void Probleme::resoudreProbleme()
 		if (e.etat == echec)
 		{
 			std::cout << "Pas de solution trouvee" << std::endl;
+			std::cout << stats;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisisant la variable la moins contrainte");
 		}
 		if (e.etat == succes)
 		{
 			afficherSolution();
+			std::cout << stats;
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la moins contrainte");
 		}
 		break;
@@ -207,11 +215,13 @@ void Probleme::resoudreProbleme()
 		if (e.etat == echec)
 		{
 			std::cout << "Pas de solution trouvee" << std::endl;
+			std::cout << stats;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
 		}
 		if (e.etat == succes)
 		{
 			afficherSolution();
+			std::cout << stats;
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la plus contraignante");
 		}
 		break;
@@ -222,11 +232,13 @@ void Probleme::resoudreProbleme()
 		if (e.etat == echec)
 		{
 			std::cout << "Pas de solution trouvee" << std::endl;
+			std::cout << stats;
 			sauverResultat(false, "Reduction des domaines de valeurs en choisissant la variable la moins contraignante");
 		}
 		if (e.etat == succes)
 		{
 			afficherSolution();
+			std::cout << stats;
 			sauverResultat(true, "Reduction des domaines de valeurs en choisissant la variable la moins contraignante");
 		}
 		break;
